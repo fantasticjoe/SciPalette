@@ -52,19 +52,19 @@ export function CodeExport({ palette }: CodeExportProps) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-gray-900">Export Code</h3>
+        <h3 className="font-display text-2xl font-bold tracking-[-0.02em] text-[#212c33]">Export Code</h3>
         <CopyButton text={code} />
       </div>
 
-      <div className="flex flex-wrap gap-2 border-b border-gray-200">
+      <div className="flex flex-wrap gap-2 border-b border-[#dadcd6]">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 -mb-px ${
+            className={`-mb-px border-b-2 px-4 py-2 text-sm font-bold transition-colors ${
               activeTab === tab.id
-                ? "border-gray-900 text-gray-900"
-                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                ? "border-[#4f6d5f] text-[#2f453d]"
+                : "border-transparent text-[rgb(33_44_51_/_0.58)] hover:border-[rgb(79_109_95_/_0.26)] hover:text-[#212c33]"
             }`}
           >
             {tab.label}
@@ -73,7 +73,7 @@ export function CodeExport({ palette }: CodeExportProps) {
       </div>
 
       <div className="relative">
-        <pre className="bg-gray-50 rounded-lg p-4 overflow-x-auto text-sm font-mono text-gray-800 border border-gray-200">
+        <pre className="overflow-x-auto rounded-[18px] border border-[#dadcd6] bg-[rgb(248_245_236_/_0.78)] p-4 font-mono text-sm leading-6 text-[#212c33] shadow-inner">
           {code}
         </pre>
       </div>

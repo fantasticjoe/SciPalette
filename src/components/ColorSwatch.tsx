@@ -12,18 +12,18 @@ export function ColorSwatch({ color, showDetails = false }: ColorSwatchProps) {
   return (
     <div className="group">
       <div
-        className="w-full h-20 rounded-lg shadow-sm transition-transform group-hover:scale-105"
+        className="h-24 w-full rounded-[18px] border border-[#dadcd6] shadow-sm transition-transform duration-300 group-hover:-translate-y-0.5"
         style={{ backgroundColor: color }}
         title={color}
       />
       {showDetails && (
-        <div className="mt-2 space-y-1">
+        <div className="mt-3 space-y-1">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-mono text-gray-700">{color}</span>
-            <CopyButton text={color} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+            <span className="font-mono text-sm font-semibold text-[#212c33]">{color}</span>
+            <CopyButton text={color} className="opacity-100 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100" />
           </div>
           {rgb && (
-            <p className="text-xs text-gray-500 font-mono">
+            <p className="font-mono text-xs text-[rgb(33_44_51_/_0.58)]">
               RGB({rgb.r}, {rgb.g}, {rgb.b})
             </p>
           )}

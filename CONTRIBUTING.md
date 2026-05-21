@@ -6,60 +6,80 @@
 
 ## 简体中文
 
-感谢你愿意为 SciPalette 做出贡献！本项目欢迎新的配色方案、问题修复、文档改进等各类贡献。
+感谢你愿意为 SciPalette 做出贡献。本项目欢迎新的配色方案、问题修复、文档改进和可访问性改进。
 
 ### 开发环境
 
-- Node.js >= 20.9
+- Node.js >= 22.0.0
+- npm
 
 ```bash
 npm install
 npm run dev
 ```
 
+Astro 会在终端输出本地开发地址，通常是 http://localhost:4321/SciPalette/。
+
 ### 提交前自检
 
-在提交 Pull Request 前，请确保以下命令全部通过：
+在提交 Pull Request 前，请确保以下命令通过：
 
 ```bash
-npm run lint        # 代码风格检查
-npm run typecheck   # 类型检查
-npm run build       # 生产构建
+npm run typecheck
+npm run build
 ```
+
+当前项目没有配置单独的 `lint` 脚本；CI 会运行类型检查和生产构建。
 
 ### 贡献一个配色方案
 
-这是最常见、也最受欢迎的贡献方式。
+这是最常见的贡献方式。
 
-1. 在 `lib/palettes.ts` 的 `palettes` 数组中追加一项。
+1. 在 `src/lib/palettes.ts` 的 `palettes` 数组中追加一项。
 2. 字段要求：
    - `id`：全局唯一，使用 kebab-case。
-   - `name` / `nameEn`：中、英文名称。
-   - `category`：必须是 `sequential`、`diverging` 或 `qualitative` 之一。
-   - `colorblindSafe`：是否色盲友好。**请勿凭感觉填写**，建议使用 [Coblis](https://www.color-blindness.com/coblis-color-blindness-simulator/) 等工具验证后再标注 `true`。
-   - `colors`：合法的 HEX 颜色数组，建议 3–8 个颜色。
-   - `description`：一句话说明适用场景。
-3. 运行上述自检命令，确认本地构建通过。
+   - `name`：配色方案名称。
+   - `description`：一句话说明适用场景和特点。
+   - `category`：必须是 `categorical`、`sequential`、`diverging` 或 `heatmap` 之一。
+   - `colors`：合法 HEX 颜色数组，建议至少 3 个颜色。
+   - `recommendedFor`：推荐图类型，可选 `bar`、`line`、`scatter`、`umap`、`heatmap`、`volcano`、`boxplot`。
+   - `tags`：用于搜索和相似推荐的标签。
+   - `colorblindSafe`：是否色盲友好。请勿凭感觉填写，建议使用 Coblis 等工具验证后再标注 `true`。
+   - `background`：推荐背景，可选 `white`、`light`、`dark`。
+   - `source`：可选，说明灵感来源、论文、工具或理论依据。
+3. 运行自检命令，确认本地构建通过。
 
 示例：
 
 ```ts
 {
   id: "viridis-lite",
-  name: "翠绿轻量",
-  nameEn: "Viridis Lite",
+  name: "Viridis Lite",
+  description: "Perceptually uniform sequential palette for heatmaps and density plots.",
   category: "sequential",
-  colorblindSafe: true,
   colors: ["#440154", "#3B528B", "#21908C", "#5DC863", "#FDE725"],
-  description: "感知均匀的连续配色，适合热力图与密度图。",
+  recommendedFor: ["heatmap", "scatter"],
+  tags: ["sequential", "perceptually-uniform", "continuous"],
+  colorblindSafe: true,
+  background: "white",
+  source: "Inspired by matplotlib viridis"
 }
 ```
+
+### 修改界面或功能
+
+- 页面入口在 `src/pages/`。
+- React 交互组件在 `src/components/`。
+- 配色数据和导出逻辑在 `src/lib/`。
+- 全局样式和设计变量在 `src/styles/global.css`。
+- 项目使用 Astro 静态输出，并在 `astro.config.ts` 配置了 `base: "/SciPalette"`；新增站内链接时要保留这个部署路径。
 
 ### 提交规范
 
 - 分支命名：`feat/xxx`、`fix/xxx`、`docs/xxx`
-- 提交信息遵循 [Conventional Commits](https://www.conventionalcommits.org/)
+- 提交信息建议遵循 [Conventional Commits](https://www.conventionalcommits.org/)
 - 一个 PR 聚焦一件事
+- 文档改动请尽量同步更新中英文 README 中的对应内容
 
 ### 报告问题
 
@@ -69,44 +89,80 @@ npm run build       # 生产构建
 
 ## English
 
-Thanks for your interest in contributing to SciPalette! New palettes, bug fixes, and documentation improvements are all welcome.
+Thanks for your interest in contributing to SciPalette. New palettes, bug fixes, documentation improvements, and accessibility improvements are welcome.
 
 ### Development Environment
 
-- Node.js >= 20.9
+- Node.js >= 22.0.0
+- npm
 
 ```bash
 npm install
 npm run dev
 ```
 
+Astro prints the local development URL in the terminal, usually http://localhost:4321/SciPalette/.
+
 ### Pre-submission Checks
 
-Before opening a Pull Request, make sure all of the following pass:
+Before opening a Pull Request, make sure the following commands pass:
 
 ```bash
-npm run lint        # Lint
-npm run typecheck   # Type check
-npm run build       # Production build
+npm run typecheck
+npm run build
 ```
+
+The project does not currently define a separate `lint` script; CI runs type checking and the production build.
 
 ### Contributing a Palette
 
-1. Append an entry to the `palettes` array in `lib/palettes.ts`.
+This is the most common contribution type.
+
+1. Append an entry to the `palettes` array in `src/lib/palettes.ts`.
 2. Field requirements:
    - `id`: globally unique, kebab-case.
-   - `name` / `nameEn`: Chinese and English names.
-   - `category`: one of `sequential`, `diverging`, or `qualitative`.
-   - `colorblindSafe`: verify with a tool like [Coblis](https://www.color-blindness.com/coblis-color-blindness-simulator/) before setting `true`.
-   - `colors`: valid HEX colors, 3–8 recommended.
-   - `description`: one-line note on when to use it.
+   - `name`: palette name.
+   - `description`: one-line note on where the palette works best.
+   - `category`: one of `categorical`, `sequential`, `diverging`, or `heatmap`.
+   - `colors`: valid HEX color array, with at least 3 colors recommended.
+   - `recommendedFor`: suggested plot types, chosen from `bar`, `line`, `scatter`, `umap`, `heatmap`, `volcano`, and `boxplot`.
+   - `tags`: search and similarity tags.
+   - `colorblindSafe`: verify with a tool such as Coblis before setting `true`.
+   - `background`: recommended background, one of `white`, `light`, or `dark`.
+   - `source`: optional note about inspiration, papers, tools, or theory.
 3. Run the checks above to confirm the build passes.
+
+Example:
+
+```ts
+{
+  id: "viridis-lite",
+  name: "Viridis Lite",
+  description: "Perceptually uniform sequential palette for heatmaps and density plots.",
+  category: "sequential",
+  colors: ["#440154", "#3B528B", "#21908C", "#5DC863", "#FDE725"],
+  recommendedFor: ["heatmap", "scatter"],
+  tags: ["sequential", "perceptually-uniform", "continuous"],
+  colorblindSafe: true,
+  background: "white",
+  source: "Inspired by matplotlib viridis"
+}
+```
+
+### Updating UI or Functionality
+
+- Page entry points live in `src/pages/`.
+- Interactive React components live in `src/components/`.
+- Palette data and export helpers live in `src/lib/`.
+- Global styles and design variables live in `src/styles/global.css`.
+- The project uses Astro static output with `base: "/SciPalette"` in `astro.config.ts`; preserve that deployment path when adding internal links.
 
 ### Commit Conventions
 
 - Branch names: `feat/xxx`, `fix/xxx`, `docs/xxx`
-- Follow [Conventional Commits](https://www.conventionalcommits.org/)
+- Commit messages should follow [Conventional Commits](https://www.conventionalcommits.org/)
 - Keep each PR focused on a single change
+- For documentation changes, keep the Chinese and English README files aligned when relevant
 
 ### Reporting Issues
 

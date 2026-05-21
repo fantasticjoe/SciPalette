@@ -6,73 +6,172 @@ English | [简体中文](./README.md)
 
 [![CI](https://github.com/fantasticjoe/scipalette/actions/workflows/ci.yml/badge.svg)](https://github.com/fantasticjoe/scipalette/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![Deploy](https://img.shields.io/badge/deploy-GitHub%20Pages-222.svg)](https://pages.github.com/)
 
-SciPalette collects carefully curated color palettes ready for academic publication. It covers the three main types — **sequential**, **diverging**, and **qualitative** — and flags colorblind-safe palettes, helping researchers make figure colors that are both beautiful and rigorous.
+## Overview
+
+SciPalette is a static palette library built for scientific visualization. It focuses on research papers, single-cell atlases, medical statistics, bioinformatics figures, and other publication figures where color needs to be readable, accessible, and easy to reuse.
+
+Primary users include researchers, bioinformaticians, data scientists, and medical statisticians.
 
 ## Features
 
-- Browse a curated set of scientific color palettes
-- One-click copy of color values (HEX)
-- Colorblind-safe palettes clearly labeled
-- Organized by purpose: sequential / diverging / qualitative
+- **20+ curated palettes** across categorical, sequential, diverging, and heatmap families.
+- **Multi-dimensional filtering** by search query, category, plot type, color count, and colorblind-safe status.
+- **Scientific plot previews** for recommended use cases such as bar, line, scatter, UMAP, heatmap, and volcano plots.
+- **One-click copying** for HEX values, plus quick Python and R copy actions on palette cards.
+- **Code export** for HEX, Python/matplotlib, R/ggplot2, Scanpy, Seurat, and GraphPad Prism.
+- **Accessibility labeling** for colorblind-safe palettes.
+- **Static deployment** through Astro, suitable for GitHub Pages and other static hosts.
+- **Responsive UI** for desktop, tablet, and mobile browsing.
+
+## Tech Stack
+
+| Technology | Version | Purpose |
+| --- | --- | --- |
+| Astro | 5 | Static site framework |
+| React | 19 | Interactive components |
+| TypeScript | 5 | Types and type checking |
+| Tailwind CSS | 4 | Styling |
+| Lucide React | 1 | Icons |
 
 ## Getting Started
 
-Requirements: **Node.js >= 20.9**.
+### Requirements
+
+- Node.js >= 22.0.0
+- npm
+
+### Local Development
 
 ```bash
+git clone https://github.com/fantasticjoe/scipalette.git
+cd scipalette
 npm install
-npm run dev        # starts at http://localhost:3000
-npm run build      # production build
+npm run dev
 ```
 
-## Available Scripts
+Astro prints the development URL in the terminal, usually http://localhost:4321/SciPalette/.
 
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Start the development server |
-| `npm run build` | Build for production |
-| `npm run start` | Run the built production server |
-| `npm run lint` | Run ESLint |
-| `npm run typecheck` | Run TypeScript type checking |
+### Build and Preview
+
+```bash
+npm run typecheck
+npm run build
+npm run preview
+```
+
+`npm run build` writes the static site to `dist/`. The project uses `base: "/SciPalette"` in `astro.config.ts` so generated links work under the GitHub Pages repository path.
 
 ## Project Structure
 
-```
-app/                Next.js App Router pages
-components/         Reusable React components
-lib/                Palette data source
+```text
+scipalette/
+├── src/
+│   ├── pages/
+│   │   ├── index.astro              # Home page and browser entry
+│   │   └── palettes/[id].astro      # Static palette detail pages
+│   ├── layouts/
+│   │   └── BaseLayout.astro         # HTML shell and SEO meta
+│   ├── components/
+│   │   ├── PaletteBrowser.tsx       # Interactive home-page browser
+│   │   ├── PaletteFilters.tsx       # Search and filter controls
+│   │   ├── PaletteGrid.tsx          # Palette card grid
+│   │   ├── PaletteCard.tsx          # Palette card
+│   │   ├── ColorSwatch.tsx          # Color swatch display and copy
+│   │   ├── PlotPreview.tsx          # Scientific plot previews
+│   │   ├── CodeExport.tsx           # Multi-format code export
+│   │   ├── CopyButton.tsx           # Copy button
+│   │   └── BadgeList.tsx            # Badge list
+│   ├── lib/
+│   │   ├── palettes.ts              # Palette data source
+│   │   ├── palette-utils.ts         # Filtering, export, and similarity helpers
+│   │   ├── types.ts                 # TypeScript types
+│   │   └── utils.ts                 # Shared utilities
+│   └── styles/
+│       └── global.css               # Tailwind and global design variables
+├── public/                          # Static assets
+├── .github/workflows/               # CI, deploy, and release workflows
+├── astro.config.ts                  # Astro config
+├── package.json
+├── CONTRIBUTING.md
+├── LICENSE
+└── README.md
 ```
 
 ## Adding a Palette
 
-All palettes live in `lib/palettes.ts`. Append an entry to the `palettes` array:
+Edit `src/lib/palettes.ts` and append an entry to the `palettes` array:
 
 ```ts
 {
-  id: "my-palette",
-  name: "我的配色",
-  nameEn: "My Palette",
-  category: "sequential",    // sequential | diverging | qualitative
+  id: "your-palette-id",
+  name: "Your Palette Name",
+  description: "Describe where this palette works best.",
+  category: "categorical",
+  colors: ["#4E79A7", "#F28E2B", "#E15759"],
+  recommendedFor: ["bar", "scatter"],
+  tags: ["publication", "multi-group"],
   colorblindSafe: true,
-  colors: ["#08306B", "#2171B5", "#6BAED6"],
-  description: "One-line description of its use.",
+  background: "white",
+  source: "Optional source note"
 }
 ```
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
+Relevant types:
 
-## Tech Stack
+```ts
+type PaletteCategory = "categorical" | "sequential" | "diverging" | "heatmap";
 
-- [Next.js 16](https://nextjs.org/)
-- [React 19](https://react.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS 4](https://tailwindcss.com/)
+type PlotType =
+  | "bar"
+  | "line"
+  | "scatter"
+  | "umap"
+  | "heatmap"
+  | "volcano"
+  | "boxplot";
+
+type Palette = {
+  id: string;
+  name: string;
+  description: string;
+  category: PaletteCategory;
+  colors: string[];
+  recommendedFor: PlotType[];
+  tags: string[];
+  colorblindSafe: boolean;
+  background: "white" | "light" | "dark";
+  source?: string;
+};
+```
+
+After adding a palette, run:
+
+```bash
+npm run typecheck
+npm run build
+```
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for the contribution workflow.
+
+## Roadmap
+
+- [ ] Extract palettes from uploaded images
+- [ ] Color vision deficiency simulation
+- [ ] Grayscale contrast checks
+- [ ] Adobe ASE export
+- [ ] CSS variable export
+- [ ] User-submitted palettes
+- [ ] GitHub-based contribution workflow
+- [ ] DOI / paper figure inspiration collection
+- [ ] AI-assisted palette recommendations
+- [ ] Palette comparison view
 
 ## Contributing
 
-Contributions of new palettes, bug fixes, and documentation improvements are welcome! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md).
+Contributions of new palettes, bug fixes, and documentation improvements are welcome. Please read [CONTRIBUTING.md](./CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md).
 
 ## License
 
-MIT — see [LICENSE](./LICENSE).
+MIT, see [LICENSE](./LICENSE).

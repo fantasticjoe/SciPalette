@@ -26,139 +26,130 @@ const similarPalettes = getSimilarPalettes(palette);
 ---
 
 <BaseLayout title={`${palette.name} - SciPalette`} description={palette.description}>
-  <div class="min-h-screen bg-white">
-    <!-- Header -->
-    <header class="border-b border-gray-100">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <a href="/SciPalette/" class="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors">
+  <div class="min-h-screen text-[#212c33]">
+    <header class="border-b border-[#dadcd6] bg-[rgb(251_249_242_/_0.72)] backdrop-blur">
+      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <a href="/SciPalette/" class="inline-flex items-center gap-2 rounded-[14px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.86)] px-3 py-1.5 text-sm font-bold text-[#212c33] transition-colors hover:bg-[rgb(122_158_141_/_0.12)]">
           <ArrowLeft class="w-4 h-4" />
           Back to all palettes
         </a>
       </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <main class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <div class="space-y-12">
-        <!-- Palette Header -->
-        <div>
-          <div class="flex items-start justify-between gap-4 mb-4">
+        <div class="rounded-[20px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.82)] p-6 shadow-[0_24px_70px_rgb(33_44_51_/_0.06)] sm:p-8">
+          <div class="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <h1 class="text-4xl font-bold text-gray-900 mb-2">{palette.name}</h1>
-              <p class="text-lg text-gray-600">{palette.description}</p>
+              <p class="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">palette detail</p>
+              <h1 class="font-display text-5xl font-bold tracking-[-0.04em] text-[#212c33] sm:text-6xl">{palette.name}</h1>
+              <p class="mt-3 max-w-3xl text-lg leading-8 text-[rgb(33_44_51_/_0.72)]">{palette.description}</p>
             </div>
             {palette.colorblindSafe && (
-              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium bg-green-100 text-green-700 shrink-0">
+              <span class="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[rgb(79_109_95_/_0.26)] bg-[rgb(122_158_141_/_0.16)] px-3 py-1.5 text-sm font-bold text-[#2f453d]">
                 <Check class="w-4 h-4" />
                 Colorblind Safe
               </span>
             )}
           </div>
 
-          <!-- Metadata -->
-          <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-6">
+          <div class="mb-6 flex flex-wrap items-center gap-3 text-sm font-semibold text-[rgb(33_44_51_/_0.66)]">
             <span class="capitalize font-medium">{palette.category}</span>
-            <span>•</span>
+            <span class="h-1 w-1 rounded-full bg-[#4f6d5f]"></span>
             <span>{palette.colors.length} colors</span>
-            <span>•</span>
+            <span class="h-1 w-1 rounded-full bg-[#4f6d5f]"></span>
             <span class="capitalize">Best on {palette.background} background</span>
             {palette.source && (
               <>
-                <span>•</span>
-                <span class="text-gray-500">{palette.source}</span>
+                <span class="h-1 w-1 rounded-full bg-[#4f6d5f]"></span>
+                <span class="text-[rgb(33_44_51_/_0.56)]">{palette.source}</span>
               </>
             )}
           </div>
 
-          <!-- Tags -->
           {palette.recommendedFor.length > 0 && (
             <div class="mb-4">
-              <h3 class="text-sm font-medium text-gray-700 mb-2">Recommended for:</h3>
+              <h3 class="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[rgb(33_44_51_/_0.66)]">Recommended for</h3>
               <BadgeList items={palette.recommendedFor} client:load />
             </div>
           )}
 
           {palette.tags.length > 0 && (
             <div>
-              <h3 class="text-sm font-medium text-gray-700 mb-2">Tags:</h3>
+              <h3 class="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[rgb(33_44_51_/_0.66)]">Tags</h3>
               <BadgeList items={palette.tags} variant="default" client:load />
             </div>
           )}
         </div>
 
-        <!-- Color Strip -->
         <div>
-          <h2 class="text-2xl font-bold text-gray-900 mb-4">Colors</h2>
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          <h2 class="font-display mb-4 text-4xl font-bold tracking-[-0.02em] text-[#212c33]">Colors</h2>
+          <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
             {palette.colors.map((color, index) => (
               <ColorSwatch color={color} showDetails client:visible />
             ))}
           </div>
         </div>
 
-        <!-- Plot Previews -->
         <div>
-          <h2 class="text-2xl font-bold text-gray-900 mb-4">Preview in Scientific Plots</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <h2 class="font-display mb-4 text-4xl font-bold tracking-[-0.02em] text-[#212c33]">Preview in scientific plots</h2>
+          <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
             {palette.recommendedFor.includes("bar") && (
-              <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
-                <h3 class="text-sm font-medium text-gray-700 mb-3">Bar Plot</h3>
+              <div class="rounded-[18px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.76)] p-6 shadow-sm">
+                <h3 class="mb-3 text-sm font-bold text-[#212c33]">Bar Plot</h3>
                 <PlotPreview palette={palette} type="bar" client:visible />
               </div>
             )}
             {palette.recommendedFor.includes("line") && (
-              <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
-                <h3 class="text-sm font-medium text-gray-700 mb-3">Line Plot</h3>
+              <div class="rounded-[18px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.76)] p-6 shadow-sm">
+                <h3 class="mb-3 text-sm font-bold text-[#212c33]">Line Plot</h3>
                 <PlotPreview palette={palette} type="line" client:visible />
               </div>
             )}
             {palette.recommendedFor.includes("scatter") && (
-              <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
-                <h3 class="text-sm font-medium text-gray-700 mb-3">Scatter Plot</h3>
+              <div class="rounded-[18px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.76)] p-6 shadow-sm">
+                <h3 class="mb-3 text-sm font-bold text-[#212c33]">Scatter Plot</h3>
                 <PlotPreview palette={palette} type="scatter" client:visible />
               </div>
             )}
             {palette.recommendedFor.includes("umap") && (
-              <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
-                <h3 class="text-sm font-medium text-gray-700 mb-3">UMAP</h3>
+              <div class="rounded-[18px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.76)] p-6 shadow-sm">
+                <h3 class="mb-3 text-sm font-bold text-[#212c33]">UMAP</h3>
                 <PlotPreview palette={palette} type="umap" client:visible />
               </div>
             )}
             {palette.recommendedFor.includes("heatmap") && (
-              <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
-                <h3 class="text-sm font-medium text-gray-700 mb-3">Heatmap</h3>
+              <div class="rounded-[18px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.76)] p-6 shadow-sm">
+                <h3 class="mb-3 text-sm font-bold text-[#212c33]">Heatmap</h3>
                 <PlotPreview palette={palette} type="heatmap" client:visible />
               </div>
             )}
             {palette.recommendedFor.includes("volcano") && (
-              <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
-                <h3 class="text-sm font-medium text-gray-700 mb-3">Volcano Plot</h3>
+              <div class="rounded-[18px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.76)] p-6 shadow-sm">
+                <h3 class="mb-3 text-sm font-bold text-[#212c33]">Volcano Plot</h3>
                 <PlotPreview palette={palette} type="volcano" client:visible />
               </div>
             )}
           </div>
         </div>
 
-        <!-- Code Export -->
-        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-200">
+        <div class="rounded-[20px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.82)] p-6 shadow-[0_22px_70px_rgb(33_44_51_/_0.06)] sm:p-8">
           <CodeExport palette={palette} client:visible />
         </div>
 
-        <!-- Similar Palettes -->
         {similarPalettes.length > 0 && (
           <div>
-            <h2 class="text-2xl font-bold text-gray-900 mb-6">Similar Palettes</h2>
+            <h2 class="font-display mb-6 text-4xl font-bold tracking-[-0.02em] text-[#212c33]">Similar palettes</h2>
             <PaletteGrid palettes={similarPalettes} client:visible />
           </div>
         )}
       </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-gray-100 mt-16">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <p class="text-center text-sm text-gray-500">
-          SciPalette · A curated collection of scientific color palettes
+    <footer class="mt-16 border-t border-[#dadcd6] bg-[rgb(251_249_242_/_0.62)]">
+      <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <p class="text-center text-sm font-medium text-[rgb(33_44_51_/_0.58)]">
+          SciPalette, a curated collection of scientific color palettes.
         </p>
       </div>
     </footer>

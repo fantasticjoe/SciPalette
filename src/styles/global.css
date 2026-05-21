@@ -1,9 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  --sp-ink: #212c33;
+  --sp-muted: rgb(33 44 51 / 0.72);
+  --sp-soft: rgb(33 44 51 / 0.56);
+  --sp-paper: #f8f5ec;
+  --sp-panel: rgb(248 245 236 / 0.8);
+  --sp-strong: rgb(251 249 242 / 0.92);
+  --sp-wash: rgb(122 158 141 / 0.16);
+  --sp-line: #dadcd6;
+  --sp-line-strong: rgb(79 109 95 / 0.26);
+  --sp-green: #4f6d5f;
+  --sp-green-deep: #2f453d;
+  --sp-shadow: 0 24px 70px rgb(33 44 51 / 0.08);
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", "Noto Serif SC", serif;
+  --font-ui: "Source Sans 3", "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
+}
 
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
 html,
@@ -13,9 +30,10 @@ body {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  margin: 0;
+  background: var(--sp-paper);
+  color: var(--sp-ink);
+  font-family: var(--font-ui);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -23,4 +41,19 @@ body {
 code,
 pre {
   font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+::selection {
+  background: rgb(122 158 141 / 0.28);
+}
+
+button,
+a,
+input,
+select {
+  -webkit-tap-highlight-color: transparent;
 }

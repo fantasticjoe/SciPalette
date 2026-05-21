@@ -26,26 +26,29 @@ export function PaletteFilters({
   colorCount,
   onColorCountChange,
 }: PaletteFiltersProps) {
+  const controlClass =
+    "w-full rounded-[14px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.9)] px-3 py-2.5 text-sm font-semibold text-[#212c33] shadow-sm outline-none transition focus:border-[rgb(79_109_95_/_0.45)] focus:ring-3 focus:ring-[rgb(79_109_95_/_0.16)]";
+
   return (
-    <div className="space-y-6">
+    <div className="rounded-[20px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.76)] p-5 shadow-[0_24px_70px_rgb(33_44_51_/_0.06)] backdrop-blur-sm sm:p-6">
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+        <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#4f6d5f]" />
         <input
           type="text"
-          placeholder="Search palettes, tags, or use cases..."
+          placeholder="Search UMAP, clinical, heatmap, colorblind-safe..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-gray-400 focus:ring-2 focus:ring-gray-200 focus:outline-none transition-colors text-gray-900 placeholder:text-gray-400"
+          className="w-full rounded-[18px] border border-[#dadcd6] bg-[rgb(248_245_236_/_0.72)] py-4 pl-12 pr-4 text-base font-semibold text-[#212c33] outline-none transition placeholder:text-[rgb(33_44_51_/_0.52)] focus:border-[rgb(79_109_95_/_0.45)] focus:ring-4 focus:ring-[rgb(79_109_95_/_0.14)]"
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+          <label className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-[rgb(33_44_51_/_0.66)]">Category</label>
           <select
             value={category}
             onChange={(e) => onCategoryChange(e.target.value as PaletteCategory | "all")}
-            className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-gray-400 focus:ring-2 focus:ring-gray-200 focus:outline-none transition-colors text-gray-900"
+            className={controlClass}
           >
             <option value="all">All Categories</option>
             <option value="categorical">Categorical</option>
@@ -56,11 +59,11 @@ export function PaletteFilters({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Plot Type</label>
+          <label className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-[rgb(33_44_51_/_0.66)]">Plot Type</label>
           <select
             value={plotType}
             onChange={(e) => onPlotTypeChange(e.target.value as PlotType | "all")}
-            className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-gray-400 focus:ring-2 focus:ring-gray-200 focus:outline-none transition-colors text-gray-900"
+            className={controlClass}
           >
             <option value="all">All Plots</option>
             <option value="bar">Bar Plot</option>
@@ -74,11 +77,11 @@ export function PaletteFilters({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Color Count</label>
+          <label className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-[rgb(33_44_51_/_0.66)]">Color Count</label>
           <select
             value={colorCount}
             onChange={(e) => onColorCountChange(e.target.value)}
-            className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-gray-400 focus:ring-2 focus:ring-gray-200 focus:outline-none transition-colors text-gray-900"
+            className={controlClass}
           >
             <option value="all">All</option>
             <option value="2-4">2-4 colors</option>
@@ -89,15 +92,15 @@ export function PaletteFilters({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Accessibility</label>
-          <label className="flex items-center gap-3 px-3 py-2 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors">
+          <label className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-[rgb(33_44_51_/_0.66)]">Accessibility</label>
+          <label className="flex cursor-pointer items-center gap-3 rounded-[14px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.9)] px-3 py-2.5 text-sm font-semibold text-[#212c33] shadow-sm transition hover:bg-[rgb(122_158_141_/_0.1)]">
             <input
               type="checkbox"
               checked={colorblindOnly}
               onChange={(e) => onColorblindOnlyChange(e.target.checked)}
-              className="w-4 h-4 rounded border-gray-300 text-gray-900 focus:ring-2 focus:ring-gray-200"
+              className="h-4 w-4 rounded border-[#dadcd6] accent-[#4f6d5f] focus:ring-2 focus:ring-[rgb(79_109_95_/_0.28)]"
             />
-            <span className="text-sm text-gray-900">Colorblind-safe only</span>
+            <span>Colorblind-safe only</span>
           </label>
         </div>
       </div>

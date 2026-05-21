@@ -1,7 +1,7 @@
 import type { Palette } from "../lib/types";
 import { BadgeList } from "./BadgeList";
 import { CopyButton } from "./CopyButton";
-import { Eye, Code2 } from "lucide-react";
+import { CheckCircle2, Code2, Eye } from "lucide-react";
 import { generatePythonCode, generateRCode } from "../lib/palette-utils";
 
 interface PaletteCardProps {
@@ -10,75 +10,79 @@ interface PaletteCardProps {
 
 export default function PaletteCard({ palette }: PaletteCardProps) {
   return (
-    <div className="group bg-white rounded-2xl border border-gray-200 overflow-hidden transition-all hover:shadow-lg hover:border-gray-300">
-      {/* Color strip */}
-      <div className="flex h-16">
-        {palette.colors.map((color, index) => (
-          <div
-            key={index}
-            className="flex-1 transition-transform group-hover:scale-105"
-            style={{ backgroundColor: color }}
-            title={color}
-          />
-        ))}
+    <article className="group flex h-full flex-col overflow-hidden rounded-[18px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.86)] shadow-[0_18px_50px_rgb(33_44_51_/_0.05)] transition duration-300 hover:-translate-y-0.5 hover:border-[rgb(79_109_95_/_0.32)] hover:shadow-[0_24px_70px_rgb(33_44_51_/_0.08)]">
+      <div className="relative p-3 pb-0">
+        <div className="flex h-18 overflow-hidden rounded-[12px] border border-[#dadcd6]">
+          {palette.colors.map((color, index) => (
+            <div
+              key={index}
+              className="flex-1 transition-transform duration-200 group-hover:scale-y-105"
+              style={{ backgroundColor: color }}
+              title={color}
+            />
+          ))}
+        </div>
+        <div className="absolute right-6 top-6 rounded-full border border-[#dadcd6] bg-[rgb(248_245_236_/_0.92)] px-2.5 py-1 text-xs font-bold text-[#212c33] shadow-sm">
+          {palette.colors.length} colors
+        </div>
       </div>
 
-      {/* Content */}
-      <div className="p-5 space-y-4">
+      <div className="flex flex-1 flex-col p-5">
         <div>
-          <div className="flex items-start justify-between gap-2 mb-2">
-            <h3 className="text-lg font-semibold text-gray-900 group-hover:text-gray-700 transition-colors">
+          <div className="mb-2 flex items-start justify-between gap-3">
+            <h3 className="font-display text-2xl font-bold leading-tight text-[#212c33]">
               {palette.name}
             </h3>
             {palette.colorblindSafe && (
-              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-700 shrink-0">
-                Colorblind Safe
+              <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-[rgb(79_109_95_/_0.24)] bg-[rgb(122_158_141_/_0.14)] px-2 py-0.5 text-xs font-bold text-[#4f6d5f]">
+                <CheckCircle2 className="h-3.5 w-3.5" />
+                Safe
               </span>
             )}
           </div>
-          <p className="text-sm text-gray-600 line-clamp-2">{palette.description}</p>
+          <p className="line-clamp-2 text-[0.95rem] leading-6 text-[rgb(33_44_51_/_0.7)]">{palette.description}</p>
         </div>
 
-        <div className="flex items-center gap-4 text-xs text-gray-500">
+        <div className="my-4 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-[rgb(33_44_51_/_0.58)]">
           <span className="capitalize">{palette.category}</span>
-          <span>•</span>
-          <span>{palette.colors.length} colors</span>
+          <span className="h-1 w-1 rounded-full bg-[#4f6d5f]" />
+          <span>{palette.background} background</span>
         </div>
 
         {palette.recommendedFor.length > 0 && (
           <BadgeList items={palette.recommendedFor.slice(0, 3)} variant="default" />
         )}
 
-        <div className="flex items-center gap-2 pt-2">
+        <div className="mt-auto flex items-center gap-2 pt-5">
           <a
             href={`/SciPalette/palettes/${palette.id}`}
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors"
+            className="inline-flex items-center justify-center gap-1.5 rounded-[14px] bg-[#212c33] px-4 py-2 text-sm font-bold text-[#f8f5ec] transition-colors hover:bg-[#2f453d] focus:outline-none focus:ring-2 focus:ring-[rgb(79_109_95_/_0.34)] focus:ring-offset-2"
           >
-            <Eye className="w-4 h-4" />
+            <Eye className="h-4 w-4" />
             View Details
           </a>
           <CopyButton text={palette.colors.join(", ")} className="flex-1" />
         </div>
 
-        <div className="flex gap-2 pt-2 border-t border-gray-100">
+        <div className="mt-3 flex gap-2 border-t border-[#dadcd6] pt-3">
           <button
             onClick={() => navigator.clipboard.writeText(generatePythonCode(palette.colors))}
-            className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors"
+            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-[12px] bg-[rgb(122_158_141_/_0.12)] px-3 py-1.5 text-xs font-bold text-[#4f6d5f] transition-colors hover:bg-[rgb(122_158_141_/_0.18)]"
             title="Copy Python code"
           >
-            <Code2 className="w-3.5 h-3.5" />
+            <Code2 className="h-3.5 w-3.5" />
             Python
           </button>
           <button
             onClick={() => navigator.clipboard.writeText(generateRCode(palette.colors))}
-            className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-purple-50 text-purple-700 hover:bg-purple-100 transition-colors"
+            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-[12px] bg-[rgb(248_245_236_/_0.9)] px-3 py-1.5 text-xs font-bold text-[#6f6246] transition-colors hover:bg-[rgb(122_158_141_/_0.1)]"
             title="Copy R code"
           >
-            <Code2 className="w-3.5 h-3.5" />
+            <Code2 className="h-3.5 w-3.5" />
             R
           </button>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
