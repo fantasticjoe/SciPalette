@@ -14,6 +14,8 @@ interface PaletteLibrarySectionProps {
   onColorblindOnlyChange: (value: boolean) => void;
   colorCount: string;
   onColorCountChange: (count: string) => void;
+  hasActiveFilters: boolean;
+  onResetFilters: () => void;
 }
 
 export function PaletteLibrarySection({
@@ -28,6 +30,8 @@ export function PaletteLibrarySection({
   onColorblindOnlyChange,
   colorCount,
   onColorCountChange,
+  hasActiveFilters,
+  onResetFilters,
 }: PaletteLibrarySectionProps) {
   return (
     <section id="palettes" className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -43,6 +47,8 @@ export function PaletteLibrarySection({
           onColorblindOnlyChange={onColorblindOnlyChange}
           colorCount={colorCount}
           onColorCountChange={onColorCountChange}
+          hasActiveFilters={hasActiveFilters}
+          onReset={onResetFilters}
         />
 
         <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-end">

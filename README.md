@@ -95,6 +95,7 @@ scipalette/
 │   ├── lib/
 │   │   ├── site.ts                  # 站点常量与导航链接
 │   │   ├── homepage.ts              # 首页派生数据与分组逻辑
+│   │   ├── filter-options.ts        # 筛选选项配置
 │   │   ├── palettes.ts              # 配色数据源
 │   │   ├── palette-utils.ts         # 筛选、导出和相似推荐逻辑
 │   │   ├── types.ts                 # TypeScript 类型定义

@@ -20,6 +20,21 @@ export default function PaletteBrowser() {
     [searchQuery, category, plotType, colorblindOnly, colorCount]
   );
 
+  const hasActiveFilters =
+    Boolean(searchQuery) ||
+    category !== "all" ||
+    plotType !== "all" ||
+    colorblindOnly ||
+    colorCount !== "all";
+
+  const resetFilters = () => {
+    setSearchQuery("");
+    setCategory("all");
+    setPlotType("all");
+    setColorblindOnly(false);
+    setColorCount("all");
+  };
+
   const handleRandomPalette = () => {
     const random = getRandomPalette();
     navigator.clipboard.writeText(random.colors.join(", "));
@@ -54,6 +69,8 @@ export default function PaletteBrowser() {
         onColorblindOnlyChange={setColorblindOnly}
         colorCount={colorCount}
         onColorCountChange={setColorCount}
+        hasActiveFilters={hasActiveFilters}
+        onResetFilters={resetFilters}
       />
 
       {isDefaultView && <FeaturedPaletteSections groups={featuredGroups} />}

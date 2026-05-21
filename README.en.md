@@ -95,6 +95,7 @@ scipalette/
 │   ├── lib/
 │   │   ├── site.ts                  # Site constants and navigation links
 │   │   ├── homepage.ts              # Home-page derived data and grouping logic
+│   │   ├── filter-options.ts        # Filter option configuration
 │   │   ├── palettes.ts              # Palette data source
 │   │   ├── palette-utils.ts         # Filtering, export, and similarity helpers
 │   │   ├── types.ts                 # TypeScript types
