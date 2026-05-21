@@ -29,6 +29,6 @@ body:
     id: environment
     attributes:
       label: 运行环境 / Environment
-      placeholder: "Node: 20.9.0, OS: macOS 15, Browser: Chrome 130"
+      placeholder: "Node: 22.0.0, OS: macOS 15, Browser: Chrome 130"
     validations:
       required: false

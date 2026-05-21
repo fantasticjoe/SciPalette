@@ -6,7 +6,7 @@ English | [简体中文](./README.md)
 
 [![CI](https://github.com/fantasticjoe/SciPalette/actions/workflows/ci.yml/badge.svg)](https://github.com/fantasticjoe/SciPalette/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
-[![Deploy](https://img.shields.io/badge/deploy-GitHub%20Pages-222.svg)](https://pages.github.com/)
+[![Deploy](https://github.com/fantasticjoe/SciPalette/actions/workflows/deploy.yml/badge.svg)](https://github.com/fantasticjoe/SciPalette/actions/workflows/deploy.yml)
 
 ## Overview
 
@@ -178,7 +178,6 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the contribution workflow.
 - [ ] Adobe ASE export
 - [ ] CSS variable export
 - [ ] User-submitted palettes
-- [ ] GitHub-based contribution workflow
 - [ ] DOI / paper figure inspiration collection
 - [ ] AI-assisted palette recommendations
 - [ ] Palette comparison view

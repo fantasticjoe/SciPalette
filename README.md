@@ -6,7 +6,7 @@
 
 [![CI](https://github.com/fantasticjoe/SciPalette/actions/workflows/ci.yml/badge.svg)](https://github.com/fantasticjoe/SciPalette/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
-[![Deploy](https://img.shields.io/badge/deploy-GitHub%20Pages-222.svg)](https://pages.github.com/)
+[![Deploy](https://github.com/fantasticjoe/SciPalette/actions/workflows/deploy.yml/badge.svg)](https://github.com/fantasticjoe/SciPalette/actions/workflows/deploy.yml)
 
 ## 简介
 
@@ -178,7 +178,6 @@ npm run build
 - [ ] 导出 Adobe ASE 文件
 - [ ] 导出 CSS 变量
 - [ ] 用户提交配色方案
-- [ ] 基于 GitHub 的贡献工作流
 - [ ] DOI / 论文图灵感收集
 - [ ] AI 辅助配色推荐
 - [ ] 配色方案对比视图

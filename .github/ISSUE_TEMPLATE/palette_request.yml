@@ -13,16 +13,17 @@ body:
     attributes:
       label: 类别 / Category
       options:
+        - categorical（分类型）
         - sequential（连续型）
         - diverging（分歧型）
-        - qualitative（分类型）
+        - heatmap（热图）
     validations:
       required: true
   - type: textarea
     id: colors
     attributes:
       label: 颜色值 / Colors
-      description: HEX 颜色，建议 3–8 个。
+      description: HEX 颜色，建议至少 3 个。请按数组或逗号分隔列表提供。
     validations:
       required: true
   - type: dropdown

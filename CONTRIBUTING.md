@@ -31,6 +31,16 @@ npm run build
 
 当前项目没有配置单独的 `lint` 脚本；CI 会运行类型检查和生产构建。
 
+### Pull Request 流程
+
+1. 从 `main` 创建聚焦分支，例如 `feat/new-palette`、`fix/filter-reset` 或 `docs/readme-update`。
+2. 按 [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) 的改动边界修改最小必要文件。
+3. 对界面改动，请检查桌面宽度和约 390px 的移动端宽度；保持导航简洁、控件稳定、圆角克制。
+4. 运行 `npm run typecheck` 和 `npm run build`。
+5. 打开 PR，并填写 `.github/PULL_REQUEST_TEMPLATE.md` 中的自检清单。
+
+CI 会在 PR 和 `main` 推送时运行。`main` 推送还会触发 GitHub Pages 部署。
+
 ### 贡献一个配色方案
 
 这是最常见的贡献方式。
@@ -86,7 +96,7 @@ npm run build
 
 ### 报告问题
 
-通过 [GitHub Issues](https://github.com/fantasticjoe/scipalette/issues) 提交。
+通过 [GitHub Issues](https://github.com/fantasticjoe/SciPalette/issues) 提交。
 
 ---
 
@@ -116,6 +126,16 @@ npm run build
 ```
 
 The project does not currently define a separate `lint` script; CI runs type checking and the production build.
+
+### Pull Request Flow
+
+1. Create a focused branch from `main`, such as `feat/new-palette`, `fix/filter-reset`, or `docs/readme-update`.
+2. Keep edits scoped to the ownership boundaries in [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
+3. For UI changes, check desktop and a mobile width around 390px; keep navigation simple, controls stable, and corner radius restrained.
+4. Run `npm run typecheck` and `npm run build`.
+5. Open a PR and complete the checklist in `.github/PULL_REQUEST_TEMPLATE.md`.
+
+CI runs on pull requests and pushes to `main`. Pushes to `main` also trigger GitHub Pages deployment.
 
 ### Contributing a Palette
 
@@ -172,4 +192,4 @@ Example:
 
 ### Reporting Issues
 
-Open an issue via [GitHub Issues](https://github.com/fantasticjoe/scipalette/issues).
+Open an issue via [GitHub Issues](https://github.com/fantasticjoe/SciPalette/issues).
