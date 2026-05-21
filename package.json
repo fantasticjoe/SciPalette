@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "科研配色方案库 — 为科研人员打造的发表级配色工具。A curated, publication-ready color palette library for researchers.",
   "license": "MIT",
-  "homepage": "https://github.com/fantasticjoe/scipalette#readme",
+  "homepage": "https://fantasticjoe.github.io/SciPalette/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fantasticjoe/scipalette.git"
