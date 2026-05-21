@@ -1,17 +1,14 @@
-"use client";
-
-import Link from "next/link";
-import { Palette } from "@/lib/types";
+import type { Palette } from "../lib/types";
 import { BadgeList } from "./BadgeList";
 import { CopyButton } from "./CopyButton";
 import { Eye, Code2 } from "lucide-react";
-import { generatePythonCode, generateRCode } from "@/lib/palette-utils";
+import { generatePythonCode, generateRCode } from "../lib/palette-utils";
 
 interface PaletteCardProps {
   palette: Palette;
 }
 
-export function PaletteCard({ palette }: PaletteCardProps) {
+export default function PaletteCard({ palette }: PaletteCardProps) {
   return (
     <div className="group bg-white rounded-2xl border border-gray-200 overflow-hidden transition-all hover:shadow-lg hover:border-gray-300">
       {/* Color strip */}
@@ -28,7 +25,6 @@ export function PaletteCard({ palette }: PaletteCardProps) {
 
       {/* Content */}
       <div className="p-5 space-y-4">
-        {/* Header */}
         <div>
           <div className="flex items-start justify-between gap-2 mb-2">
             <h3 className="text-lg font-semibold text-gray-900 group-hover:text-gray-700 transition-colors">
@@ -43,31 +39,27 @@ export function PaletteCard({ palette }: PaletteCardProps) {
           <p className="text-sm text-gray-600 line-clamp-2">{palette.description}</p>
         </div>
 
-        {/* Metadata */}
         <div className="flex items-center gap-4 text-xs text-gray-500">
           <span className="capitalize">{palette.category}</span>
           <span>•</span>
           <span>{palette.colors.length} colors</span>
         </div>
 
-        {/* Tags */}
         {palette.recommendedFor.length > 0 && (
           <BadgeList items={palette.recommendedFor.slice(0, 3)} variant="default" />
         )}
 
-        {/* Actions */}
         <div className="flex items-center gap-2 pt-2">
-          <Link
-            href={`/palettes/${palette.id}`}
+          <a
+            href={`/SciPalette/palettes/${palette.id}`}
             className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors"
           >
             <Eye className="w-4 h-4" />
             View Details
-          </Link>
+          </a>
           <CopyButton text={palette.colors.join(", ")} className="flex-1" />
         </div>
 
-        {/* Quick export buttons */}
         <div className="flex gap-2 pt-2 border-t border-gray-100">
           <button
             onClick={() => navigator.clipboard.writeText(generatePythonCode(palette.colors))}

@@ -1,14 +1,12 @@
-"use client";
-
 import { useState, useMemo } from "react";
-import { PaletteFilters } from "@/components/PaletteFilters";
-import { PaletteGrid } from "@/components/PaletteGrid";
-import { palettes } from "@/lib/palettes";
-import { filterPalettes, getRandomPalette } from "@/lib/palette-utils";
-import { PaletteCategory, PlotType } from "@/lib/types";
+import { PaletteFilters } from "./PaletteFilters";
+import PaletteGrid from "./PaletteGrid";
+import { palettes } from "../lib/palettes";
+import { filterPalettes, getRandomPalette } from "../lib/palette-utils";
+import type { PaletteCategory, PlotType } from "../lib/types";
 import { Palette, Shuffle } from "lucide-react";
 
-export default function HomePage() {
+export default function PaletteBrowser() {
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState<PaletteCategory | "all">("all");
   const [plotType, setPlotType] = useState<PlotType | "all">("all");
@@ -26,7 +24,6 @@ export default function HomePage() {
     alert(`Copied ${random.name} to clipboard!\n${random.colors.join(", ")}`);
   };
 
-  // Featured sections
   const singleCellPalettes = palettes.filter(p => p.tags.includes("single-cell") || p.tags.includes("scRNA-seq"));
   const colorblindSafePalettes = palettes.filter(p => p.colorblindSafe);
   const heatmapPalettes = palettes.filter(p => p.category === "heatmap" || p.recommendedFor.includes("heatmap"));
@@ -70,7 +67,6 @@ export default function HomePage() {
       {/* Main Content */}
       <section id="palettes" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="space-y-8">
-          {/* Filters */}
           <PaletteFilters
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
@@ -84,7 +80,6 @@ export default function HomePage() {
             onColorCountChange={setColorCount}
           />
 
-          {/* Results count */}
           <div className="flex items-center justify-between">
             <p className="text-sm text-gray-600">
               Showing <span className="font-semibold text-gray-900">{filteredPalettes.length}</span> palette
@@ -92,7 +87,6 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Palette Grid */}
           <PaletteGrid palettes={filteredPalettes} />
         </div>
       </section>
@@ -100,7 +94,6 @@ export default function HomePage() {
       {/* Featured Sections */}
       {!searchQuery && category === "all" && plotType === "all" && !colorblindOnly && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
-          {/* Single-cell palettes */}
           {singleCellPalettes.length > 0 && (
             <div>
               <div className="mb-6">
@@ -111,7 +104,6 @@ export default function HomePage() {
             </div>
           )}
 
-          {/* Colorblind-safe palettes */}
           {colorblindSafePalettes.length > 0 && (
             <div>
               <div className="mb-6">
@@ -122,7 +114,6 @@ export default function HomePage() {
             </div>
           )}
 
-          {/* Heatmap gradients */}
           {heatmapPalettes.length > 0 && (
             <div>
               <div className="mb-6">

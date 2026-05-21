@@ -1,7 +1,5 @@
-"use client";
-
 import { useMemo } from "react";
-import { Palette } from "@/lib/types";
+import type { Palette } from "../lib/types";
 
 interface PlotPreviewProps {
   palette: Palette;
@@ -18,7 +16,6 @@ function seededRandom(seed: number) {
 export function PlotPreview({ palette, type }: PlotPreviewProps) {
   const colors = palette.colors;
 
-  // Deterministic data computed once via useMemo so render stays pure.
   const barHeights = useMemo(() => colors.slice(0, 6).map((_, i) => 60 + seededRandom(i * 11) * 80), [colors]);
   const linePoints = useMemo(() => colors.slice(0, 4).map((_, i) =>
     Array.from({ length: 8 }, (_, j) => {
@@ -59,19 +56,9 @@ export function PlotPreview({ palette, type }: PlotPreviewProps) {
       <svg viewBox="0 0 400 200" className="w-full h-auto">
         <line x1="40" y1="160" x2="360" y2="160" stroke="#333" strokeWidth="1.5" />
         <line x1="40" y1="20" x2="40" y2="160" stroke="#333" strokeWidth="1.5" />
-
         {colors.slice(0, 6).map((color, i) => (
-          <rect
-            key={i}
-            x={60 + i * 50}
-            y={160 - barHeights[i]}
-            width="35"
-            height={barHeights[i]}
-            fill={color}
-            opacity="0.9"
-          />
+          <rect key={i} x={60 + i * 50} y={160 - barHeights[i]} width="35" height={barHeights[i]} fill={color} opacity="0.9" />
         ))}
-
         <text x="15" y="90" fontSize="10" fill="#666" transform="rotate(-90 15 90)">Expression</text>
         <text x="200" y="185" fontSize="10" fill="#666" textAnchor="middle">Groups</text>
       </svg>
@@ -83,18 +70,9 @@ export function PlotPreview({ palette, type }: PlotPreviewProps) {
       <svg viewBox="0 0 400 200" className="w-full h-auto">
         <line x1="40" y1="160" x2="360" y2="160" stroke="#333" strokeWidth="1.5" />
         <line x1="40" y1="20" x2="40" y2="160" stroke="#333" strokeWidth="1.5" />
-
         {colors.slice(0, 4).map((color, i) => (
-          <polyline
-            key={i}
-            points={linePoints[i]}
-            fill="none"
-            stroke={color}
-            strokeWidth="2.5"
-            opacity="0.9"
-          />
+          <polyline key={i} points={linePoints[i]} fill="none" stroke={color} strokeWidth="2.5" opacity="0.9" />
         ))}
-
         <text x="15" y="90" fontSize="10" fill="#666" transform="rotate(-90 15 90)">Value</text>
         <text x="200" y="185" fontSize="10" fill="#666" textAnchor="middle">Time</text>
       </svg>
@@ -106,7 +84,6 @@ export function PlotPreview({ palette, type }: PlotPreviewProps) {
       <svg viewBox="0 0 400 200" className="w-full h-auto">
         <line x1="40" y1="160" x2="360" y2="160" stroke="#333" strokeWidth="1.5" />
         <line x1="40" y1="20" x2="40" y2="160" stroke="#333" strokeWidth="1.5" />
-
         {colors.slice(0, 5).map((color, groupIdx) => (
           <g key={groupIdx}>
             {scatterPositions[groupIdx].map(({ x, y }, i) => (
@@ -114,7 +91,6 @@ export function PlotPreview({ palette, type }: PlotPreviewProps) {
             ))}
           </g>
         ))}
-
         <text x="15" y="90" fontSize="10" fill="#666" transform="rotate(-90 15 90)">PC2</text>
         <text x="200" y="185" fontSize="10" fill="#666" textAnchor="middle">PC1</text>
       </svg>
@@ -125,7 +101,6 @@ export function PlotPreview({ palette, type }: PlotPreviewProps) {
     return (
       <svg viewBox="0 0 400 200" className="w-full h-auto">
         <rect x="40" y="20" width="320" height="140" fill="#fafafa" />
-
         {colors.map((color, clusterIdx) => (
           <g key={clusterIdx}>
             {umapData[clusterIdx].points.map(({ x, y }, i) => (
@@ -133,7 +108,6 @@ export function PlotPreview({ palette, type }: PlotPreviewProps) {
             ))}
           </g>
         ))}
-
         <text x="200" y="185" fontSize="10" fill="#666" textAnchor="middle">UMAP 1</text>
         <text x="15" y="90" fontSize="10" fill="#666" transform="rotate(-90 15 90)">UMAP 2</text>
       </svg>
@@ -145,7 +119,6 @@ export function PlotPreview({ palette, type }: PlotPreviewProps) {
     const cols = 10;
     const cellWidth = 30;
     const cellHeight = 15;
-
     return (
       <svg viewBox="0 0 400 200" className="w-full h-auto">
         {Array.from({ length: rows }, (_, i) =>
@@ -153,15 +126,8 @@ export function PlotPreview({ palette, type }: PlotPreviewProps) {
             const colorIdx = Math.floor((i * cols + j) / (rows * cols) * colors.length);
             const color = colors[Math.min(colorIdx, colors.length - 1)];
             return (
-              <rect
-                key={`${i}-${j}`}
-                x={50 + j * cellWidth}
-                y={20 + i * cellHeight}
-                width={cellWidth - 1}
-                height={cellHeight - 1}
-                fill={color}
-                opacity="0.9"
-              />
+              <rect key={`${i}-${j}`} x={50 + j * cellWidth} y={20 + i * cellHeight}
+                width={cellWidth - 1} height={cellHeight - 1} fill={color} opacity="0.9" />
             );
           })
         )}
@@ -175,25 +141,20 @@ export function PlotPreview({ palette, type }: PlotPreviewProps) {
     const upColor = colors[colors.length - 1] || "#E64B35";
     const downColor = colors[0] || "#4DBBD5";
     const nsColor = colors[Math.floor(colors.length / 2)] || "#999999";
-
     return (
       <svg viewBox="0 0 400 200" className="w-full h-auto">
         <line x1="200" y1="160" x2="200" y2="20" stroke="#ddd" strokeWidth="1" strokeDasharray="4" />
         <line x1="40" y1="160" x2="360" y2="160" stroke="#333" strokeWidth="1.5" />
         <line x1="40" y1="20" x2="40" y2="160" stroke="#333" strokeWidth="1.5" />
-
         {volcanoPoints.map(({ x, y }, i) => {
           const logFC = (x - 200) / 50;
           const pValue = (160 - y) / 40;
-
           let color = nsColor;
           if (Math.abs(logFC) > 1 && pValue > 1.3) {
             color = logFC > 0 ? upColor : downColor;
           }
-
           return <circle key={i} cx={x} cy={y} r="2.5" fill={color} opacity="0.6" />;
         })}
-
         <text x="200" y="185" fontSize="10" fill="#666" textAnchor="middle">log2 Fold Change</text>
         <text x="15" y="90" fontSize="10" fill="#666" transform="rotate(-90 15 90)">-log10 p-value</text>
       </svg>

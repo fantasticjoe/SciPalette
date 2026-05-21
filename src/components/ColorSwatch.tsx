@@ -1,6 +1,4 @@
-"use client";
-
-import { hexToRgb } from "@/lib/palette-utils";
+import { hexToRgb } from "../lib/palette-utils";
 import { CopyButton } from "./CopyButton";
 
 interface ColorSwatchProps {

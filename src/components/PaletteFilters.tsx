@@ -1,6 +1,4 @@
-"use client";
-
-import { PaletteCategory, PlotType } from "@/lib/types";
+import { PaletteCategory, PlotType } from "../lib/types";
 import { Search } from "lucide-react";
 
 interface PaletteFiltersProps {
@@ -30,7 +28,6 @@ export function PaletteFilters({
 }: PaletteFiltersProps) {
   return (
     <div className="space-y-6">
-      {/* Search */}
       <div className="relative">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
         <input
@@ -42,9 +39,7 @@ export function PaletteFilters({
         />
       </div>
 
-      {/* Filters grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Category filter */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
           <select
@@ -60,7 +55,6 @@ export function PaletteFilters({
           </select>
         </div>
 
-        {/* Plot type filter */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Plot Type</label>
           <select
@@ -79,7 +73,6 @@ export function PaletteFilters({
           </select>
         </div>
 
-        {/* Color count filter */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Color Count</label>
           <select
@@ -95,7 +88,6 @@ export function PaletteFilters({
           </select>
         </div>
 
-        {/* Colorblind safe toggle */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Accessibility</label>
           <label className="flex items-center gap-3 px-3 py-2 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors">

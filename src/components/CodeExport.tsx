@@ -1,7 +1,5 @@
-"use client";
-
 import { useState } from "react";
-import { Palette } from "@/lib/types";
+import type { Palette } from "../lib/types";
 import {
   generatePythonCode,
   generateRCode,
@@ -9,7 +7,7 @@ import {
   generateSeuratCode,
   generateGraphPadCode,
   generateHexList,
-} from "@/lib/palette-utils";
+} from "../lib/palette-utils";
 import { CopyButton } from "./CopyButton";
 
 interface CodeExportProps {
@@ -58,7 +56,6 @@ export function CodeExport({ palette }: CodeExportProps) {
         <CopyButton text={code} />
       </div>
 
-      {/* Tabs */}
       <div className="flex flex-wrap gap-2 border-b border-gray-200">
         {tabs.map((tab) => (
           <button
@@ -75,7 +72,6 @@ export function CodeExport({ palette }: CodeExportProps) {
         ))}
       </div>
 
-      {/* Code block */}
       <div className="relative">
         <pre className="bg-gray-50 rounded-lg p-4 overflow-x-auto text-sm font-mono text-gray-800 border border-gray-200">
           {code}
