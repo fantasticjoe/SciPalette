@@ -80,6 +80,11 @@ scipalette/
 │   │   ├── PaletteLibrarySection.tsx # Filterable palette library section
 │   │   ├── FeaturedPaletteSections.tsx # Featured home sections
 │   │   ├── PaletteFilters.tsx       # Search and filter controls
+│   │   ├── PaletteDetailHeader.astro # Detail title and metadata
+│   │   ├── PaletteColorSection.astro # Detail color section
+│   │   ├── PalettePreviewSection.astro # Detail plot preview section
+│   │   ├── PaletteExportSection.astro # Detail export section
+│   │   ├── SimilarPalettesSection.astro # Similar palette section
 │   │   ├── PaletteGrid.tsx          # Palette card grid
 │   │   ├── PaletteCard.tsx          # Palette card
 │   │   ├── ColorSwatch.tsx          # Color swatch display and copy

@@ -80,6 +80,11 @@ scipalette/
 │   │   ├── PaletteLibrarySection.tsx # 可筛选配色库区块
 │   │   ├── FeaturedPaletteSections.tsx # 首页推荐区块
 │   │   ├── PaletteFilters.tsx       # 搜索与筛选控件
+│   │   ├── PaletteDetailHeader.astro # 详情页标题与元数据
+│   │   ├── PaletteColorSection.astro # 详情页色块区块
+│   │   ├── PalettePreviewSection.astro # 详情页图表预览区块
+│   │   ├── PaletteExportSection.astro # 详情页导出区块
+│   │   ├── SimilarPalettesSection.astro # 相似配色推荐区块
 │   │   ├── PaletteGrid.tsx          # 配色卡片网格
 │   │   ├── PaletteCard.tsx          # 配色卡片
 │   │   ├── ColorSwatch.tsx          # 单色块展示与复制

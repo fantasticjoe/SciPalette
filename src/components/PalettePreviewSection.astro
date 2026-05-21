@@ -1,0 +1,35 @@
+---
+import { PlotPreview } from "./PlotPreview";
+import type { Palette, PlotType } from "../lib/types";
+
+interface Props {
+  palette: Palette;
+}
+
+const { palette } = Astro.props;
+
+const previewTypes: { type: PlotType; label: string }[] = [
+  { type: "bar", label: "Bar Plot" },
+  { type: "line", label: "Line Plot" },
+  { type: "scatter", label: "Scatter Plot" },
+  { type: "umap", label: "UMAP" },
+  { type: "heatmap", label: "Heatmap" },
+  { type: "volcano", label: "Volcano Plot" },
+];
+
+const visiblePreviews = previewTypes.filter(({ type }) => palette.recommendedFor.includes(type));
+---
+
+{visiblePreviews.length > 0 && (
+  <section>
+    <h2 class="font-display mb-4 text-4xl font-bold tracking-[-0.02em] text-[#212c33]">Preview in scientific plots</h2>
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+      {visiblePreviews.map(({ type, label }) => (
+        <div class="border border-[#dadcd6] bg-[rgb(251_249_242_/_0.7)] p-5">
+          <h3 class="mb-3 text-sm font-bold text-[#212c33]">{label}</h3>
+          <PlotPreview palette={palette} type={type} client:visible />
+        </div>
+      ))}
+    </div>
+  </section>
+)}

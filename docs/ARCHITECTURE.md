@@ -11,6 +11,11 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 - `src/components/HomeHero.tsx` owns the home hero and random palette copy action surface.
 - `src/components/PaletteLibrarySection.tsx` owns the filterable palette library section.
 - `src/components/FeaturedPaletteSections.tsx` owns the curated home-page recommendation sections.
+- `src/components/PaletteDetailHeader.astro` owns palette metadata, tags, and accessibility labeling on detail pages.
+- `src/components/PaletteColorSection.astro` owns the detail-page color swatch grid.
+- `src/components/PalettePreviewSection.astro` owns detail-page scientific plot preview panels.
+- `src/components/PaletteExportSection.astro` owns the detail-page export panel shell.
+- `src/components/SimilarPalettesSection.astro` owns detail-page similar palette recommendations.
 - `src/components/*.tsx` owns interactive UI rendered by Astro client directives.
 - `src/lib/palettes.ts` is the palette data source.
 - `src/lib/homepage.ts` owns home-page grouping helpers and derived counts.
@@ -28,6 +33,7 @@ Use these boundaries when preparing a PR:
 - **Filtering or export behavior:** edit `src/lib/palette-utils.ts` first; keep component changes limited to wiring or labels.
 - **Home-page hero or featured sections:** edit the matching home component first; edit `src/components/PaletteBrowser.tsx` only when state wiring changes.
 - **Home-page grouping rules:** edit `src/lib/homepage.ts`; keep rendering components focused on presentation.
+- **Palette detail page presentation:** edit the matching `PaletteDetail*` or `SimilarPalettesSection` component first; edit `src/pages/palettes/[id].astro` only when route data or section ordering changes.
 - **Global navigation or repository links:** edit `src/lib/site.ts` and, if needed, `src/components/SiteHeader.astro`.
 - **Shared page chrome:** edit `src/layouts/BaseLayout.astro`; avoid adding page-specific content there.
 - **Visual polish:** prefer the smallest component that owns the surface. Keep repeated visual rules in `src/styles/global.css` only when they are true site-wide tokens.

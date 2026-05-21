@@ -1,0 +1,19 @@
+---
+import { ColorSwatch } from "./ColorSwatch";
+import type { Palette } from "../lib/types";
+
+interface Props {
+  palette: Palette;
+}
+
+const { palette } = Astro.props;
+---
+
+<section>
+  <h2 class="font-display mb-4 text-4xl font-bold tracking-[-0.02em] text-[#212c33]">Colors</h2>
+  <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+    {palette.colors.map((color) => (
+      <ColorSwatch color={color} showDetails client:visible />
+    ))}
+  </div>
+</section>

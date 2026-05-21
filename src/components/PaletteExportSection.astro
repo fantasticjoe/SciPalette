@@ -1,0 +1,14 @@
+---
+import { CodeExport } from "./CodeExport";
+import type { Palette } from "../lib/types";
+
+interface Props {
+  palette: Palette;
+}
+
+const { palette } = Astro.props;
+---
+
+<section class="border border-[#dadcd6] bg-[rgb(251_249_242_/_0.78)] p-6 shadow-[0_16px_48px_rgb(33_44_51_/_0.04)] sm:p-8">
+  <CodeExport palette={palette} client:visible />
+</section>
