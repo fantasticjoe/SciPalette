@@ -38,7 +38,7 @@ Use these boundaries when preparing a PR:
 - **Palette detail page presentation:** edit the matching `PaletteDetail*` or `SimilarPalettesSection` component first; edit `src/pages/palettes/[id].astro` only when route data or section ordering changes.
 - **Global navigation or repository links:** edit `src/lib/site.ts` and, if needed, `src/components/SiteHeader.astro`.
 - **Shared page chrome:** edit `src/layouts/BaseLayout.astro`; avoid adding page-specific content there.
-- **Visual polish:** prefer the smallest component that owns the surface. Keep repeated visual rules in `src/styles/global.css` only when they are true site-wide tokens.
+- **Visual polish:** prefer the smallest component that owns the surface. Use the shared `sp-panel`, `sp-panel-muted`, `sp-button-*`, `sp-chip`, and `sp-control` classes from `src/styles/global.css` before adding new repeated border, radius, or control styles.
 - **Docs-only changes:** update both `README.md` and `README.en.md` when user-facing behavior or commands change.
 
 ## Design Principles

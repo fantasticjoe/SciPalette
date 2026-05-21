@@ -22,7 +22,7 @@ export function HomeHero({
     <section className="relative overflow-hidden border-b border-[#dadcd6] bg-[#f8f5ec]">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 pb-16 pt-16 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8 lg:pb-24 lg:pt-24">
         <div className="flex flex-col justify-center">
-          <div className="mb-7 inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(79_109_95_/_0.22)] bg-[rgb(122_158_141_/_0.12)] px-3 py-1 text-sm font-semibold text-[#4f6d5f]">
+          <div className="sp-chip mb-7 w-fit px-3 py-1 text-sm">
             <Palette className="h-4 w-4" />
             Publication-ready palettes for research figures
           </div>
@@ -38,14 +38,14 @@ export function HomeHero({
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <a
               href="#palettes"
-              className="inline-flex items-center justify-center gap-2 rounded-[14px] bg-[#212c33] px-6 py-3 text-sm font-bold text-[#f8f5ec] shadow-[0_18px_45px_rgb(33_44_51_/_0.16)] transition hover:bg-[#2f453d]"
+              className="sp-button-primary px-6 py-3 text-sm shadow-[0_14px_32px_rgb(33_44_51_/_0.12)]"
             >
               <Database className="h-5 w-5" />
               Explore Palettes
             </a>
             <button
               onClick={onCopyRandomPalette}
-              className="inline-flex items-center justify-center gap-2 rounded-[14px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.86)] px-6 py-3 text-sm font-bold text-[#212c33] shadow-sm transition hover:border-[rgb(79_109_95_/_0.32)] hover:bg-[rgb(122_158_141_/_0.12)]"
+              className="sp-button-secondary px-6 py-3 text-sm shadow-sm"
             >
               {copiedPaletteName ? <Check className="h-5 w-5" /> : <Shuffle className="h-5 w-5" />}
               {copiedPaletteName ? `Copied ${copiedPaletteName}` : "Copy Random Palette"}
@@ -54,8 +54,8 @@ export function HomeHero({
         </div>
 
         <div className="relative">
-          <div className="relative rounded-[20px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.84)] p-5 shadow-[0_28px_90px_rgb(33_44_51_/_0.08)]">
-            <div className="rounded-[18px] border border-[rgb(79_109_95_/_0.18)] bg-[#f8f5ec] p-5">
+          <div className="sp-panel relative rounded-lg p-5">
+            <div className="border border-[rgb(79_109_95_/_0.18)] bg-[#f8f5ec] p-5">
               <div className="mb-5 flex items-start justify-between gap-4">
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#4f6d5f]">Specimen sheet</p>
@@ -67,7 +67,7 @@ export function HomeHero({
                 {specimenPalette.colors.slice(0, 12).map((color, index) => (
                   <div
                     key={`${color}-${index}`}
-                    className="h-14 rounded-[12px] border border-[rgb(33_44_51_/_0.08)] shadow-inner"
+                    className="h-14 rounded border border-[rgb(33_44_51_/_0.08)] shadow-inner"
                     style={{ backgroundColor: color }}
                   />
                 ))}

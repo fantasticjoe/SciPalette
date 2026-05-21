@@ -20,8 +20,7 @@ export function CopyButton({ text, className }: CopyButtonProps) {
     <button
       onClick={handleCopy}
       className={cn(
-        "inline-flex items-center justify-center gap-1.5 rounded-[14px] px-3 py-1.5 text-sm font-semibold transition-colors",
-        "border border-[#dadcd6] bg-[rgb(251_249_242_/_0.88)] text-[#212c33] hover:border-[rgb(79_109_95_/_0.32)] hover:bg-[rgb(122_158_141_/_0.12)]",
+        "sp-button-secondary px-3 py-1.5 text-sm font-semibold",
         "focus:outline-none focus:ring-2 focus:ring-[rgb(79_109_95_/_0.28)] focus:ring-offset-2 focus:ring-offset-[#f8f5ec]",
         className
       )}

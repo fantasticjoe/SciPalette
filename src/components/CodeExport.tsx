@@ -73,7 +73,7 @@ export function CodeExport({ palette }: CodeExportProps) {
       </div>
 
       <div className="relative">
-        <pre className="overflow-x-auto rounded-[18px] border border-[#dadcd6] bg-[rgb(248_245_236_/_0.78)] p-4 font-mono text-sm leading-6 text-[#212c33] shadow-inner">
+        <pre className="overflow-x-auto rounded-md border border-[#dadcd6] bg-[rgb(248_245_236_/_0.78)] p-4 font-mono text-sm leading-6 text-[#212c33] shadow-inner">
           {code}
         </pre>
       </div>

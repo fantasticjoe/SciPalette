@@ -12,7 +12,7 @@ export function ColorSwatch({ color, showDetails = false }: ColorSwatchProps) {
   return (
     <div className="group">
       <div
-        className="h-24 w-full rounded-[18px] border border-[#dadcd6] shadow-sm transition-transform duration-300 group-hover:-translate-y-0.5"
+        className="h-24 w-full rounded-md border border-[#dadcd6] shadow-sm transition-transform duration-300 group-hover:-translate-y-0.5"
         style={{ backgroundColor: color }}
         title={color}
       />

@@ -10,9 +10,9 @@ interface PaletteCardProps {
 
 export default function PaletteCard({ palette }: PaletteCardProps) {
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-[18px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.86)] shadow-[0_18px_50px_rgb(33_44_51_/_0.05)] transition duration-300 hover:-translate-y-0.5 hover:border-[rgb(79_109_95_/_0.32)] hover:shadow-[0_24px_70px_rgb(33_44_51_/_0.08)]">
+    <article className="sp-panel group flex h-full flex-col overflow-hidden rounded-lg transition duration-300 hover:-translate-y-0.5 hover:border-[rgb(79_109_95_/_0.32)] hover:shadow-[0_24px_70px_rgb(33_44_51_/_0.08)]">
       <div className="relative p-3 pb-0">
-        <div className="flex h-18 overflow-hidden rounded-[12px] border border-[#dadcd6]">
+        <div className="flex h-18 overflow-hidden rounded-md border border-[#dadcd6]">
           {palette.colors.map((color, index) => (
             <div
               key={index}
@@ -22,7 +22,7 @@ export default function PaletteCard({ palette }: PaletteCardProps) {
             />
           ))}
         </div>
-        <div className="absolute right-6 top-6 rounded-full border border-[#dadcd6] bg-[rgb(248_245_236_/_0.92)] px-2.5 py-1 text-xs font-bold text-[#212c33] shadow-sm">
+        <div className="absolute right-6 top-6 border border-[#dadcd6] bg-[rgb(248_245_236_/_0.92)] px-2.5 py-1 text-xs font-bold text-[#212c33] shadow-sm">
           {palette.colors.length} colors
         </div>
       </div>
@@ -34,7 +34,7 @@ export default function PaletteCard({ palette }: PaletteCardProps) {
               {palette.name}
             </h3>
             {palette.colorblindSafe && (
-              <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-[rgb(79_109_95_/_0.24)] bg-[rgb(122_158_141_/_0.14)] px-2 py-0.5 text-xs font-bold text-[#4f6d5f]">
+              <span className="sp-chip shrink-0 px-2 py-0.5 text-xs">
                 <CheckCircle2 className="h-3.5 w-3.5" />
                 Safe
               </span>
@@ -56,7 +56,7 @@ export default function PaletteCard({ palette }: PaletteCardProps) {
         <div className="mt-auto flex items-center gap-2 pt-5">
           <a
             href={`/SciPalette/palettes/${palette.id}`}
-            className="inline-flex items-center justify-center gap-1.5 rounded-[14px] bg-[#212c33] px-4 py-2 text-sm font-bold text-[#f8f5ec] transition-colors hover:bg-[#2f453d] focus:outline-none focus:ring-2 focus:ring-[rgb(79_109_95_/_0.34)] focus:ring-offset-2"
+            className="sp-button-primary px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[rgb(79_109_95_/_0.34)] focus:ring-offset-2"
           >
             <Eye className="h-4 w-4" />
             View Details
@@ -67,7 +67,7 @@ export default function PaletteCard({ palette }: PaletteCardProps) {
         <div className="mt-3 flex gap-2 border-t border-[#dadcd6] pt-3">
           <button
             onClick={() => navigator.clipboard.writeText(generatePythonCode(palette.colors))}
-            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-[12px] bg-[rgb(122_158_141_/_0.12)] px-3 py-1.5 text-xs font-bold text-[#4f6d5f] transition-colors hover:bg-[rgb(122_158_141_/_0.18)]"
+            className="sp-button-subtle flex-1 border-transparent bg-[rgb(122_158_141_/_0.12)] px-3 py-1.5 text-xs hover:bg-[rgb(122_158_141_/_0.18)]"
             title="Copy Python code"
           >
             <Code2 className="h-3.5 w-3.5" />
@@ -75,7 +75,7 @@ export default function PaletteCard({ palette }: PaletteCardProps) {
           </button>
           <button
             onClick={() => navigator.clipboard.writeText(generateRCode(palette.colors))}
-            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-[12px] bg-[rgb(248_245_236_/_0.9)] px-3 py-1.5 text-xs font-bold text-[#6f6246] transition-colors hover:bg-[rgb(122_158_141_/_0.1)]"
+            className="sp-button-secondary flex-1 border-transparent bg-[rgb(248_245_236_/_0.9)] px-3 py-1.5 text-xs text-[#6f6246]"
             title="Copy R code"
           >
             <Code2 className="h-3.5 w-3.5" />

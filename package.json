@@ -6,10 +6,10 @@
   "homepage": "https://fantasticjoe.github.io/SciPalette/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fantasticjoe/scipalette.git"
+    "url": "git+https://github.com/fantasticjoe/SciPalette.git"
   },
   "bugs": {
-    "url": "https://github.com/fantasticjoe/scipalette/issues"
+    "url": "https://github.com/fantasticjoe/SciPalette/issues"
   },
   "keywords": [
     "scientific-visualization",

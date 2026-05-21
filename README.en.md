@@ -4,7 +4,7 @@
 
 English | [简体中文](./README.md)
 
-[![CI](https://github.com/fantasticjoe/scipalette/actions/workflows/ci.yml/badge.svg)](https://github.com/fantasticjoe/scipalette/actions/workflows/ci.yml)
+[![CI](https://github.com/fantasticjoe/SciPalette/actions/workflows/ci.yml/badge.svg)](https://github.com/fantasticjoe/SciPalette/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![Deploy](https://img.shields.io/badge/deploy-GitHub%20Pages-222.svg)](https://pages.github.com/)
 
@@ -45,8 +45,8 @@ Primary users include researchers, bioinformaticians, data scientists, and medic
 ### Local Development
 
 ```bash
-git clone https://github.com/fantasticjoe/scipalette.git
-cd scipalette
+git clone https://github.com/fantasticjoe/SciPalette.git
+cd SciPalette
 npm install
 npm run dev
 ```

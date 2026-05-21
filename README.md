@@ -4,7 +4,7 @@
 
 [English](./README.en.md) | 中文
 
-[![CI](https://github.com/fantasticjoe/scipalette/actions/workflows/ci.yml/badge.svg)](https://github.com/fantasticjoe/scipalette/actions/workflows/ci.yml)
+[![CI](https://github.com/fantasticjoe/SciPalette/actions/workflows/ci.yml/badge.svg)](https://github.com/fantasticjoe/SciPalette/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![Deploy](https://img.shields.io/badge/deploy-GitHub%20Pages-222.svg)](https://pages.github.com/)
 
@@ -45,8 +45,8 @@ SciPalette 是一个专为科研可视化设计的静态配色方案库。它面
 ### 本地开发
 
 ```bash
-git clone https://github.com/fantasticjoe/scipalette.git
-cd scipalette
+git clone https://github.com/fantasticjoe/SciPalette.git
+cd SciPalette
 npm install
 npm run dev
 ```

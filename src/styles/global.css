@@ -15,6 +15,7 @@
   --sp-green: #4f6d5f;
   --sp-green-deep: #2f453d;
   --sp-shadow: 0 24px 70px rgb(33 44 51 / 0.08);
+  --sp-shadow-soft: 0 16px 42px rgb(33 44 51 / 0.05);
   --font-display: "Cormorant Garamond", Georgia, "Times New Roman", "Noto Serif SC", serif;
   --font-ui: "Source Sans 3", "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
 }
@@ -56,4 +57,92 @@ a,
 input,
 select {
   -webkit-tap-highlight-color: transparent;
+}
+
+@layer components {
+  .sp-panel {
+    border: 1px solid var(--sp-line);
+    background: var(--sp-strong);
+    box-shadow: var(--sp-shadow-soft);
+  }
+
+  .sp-panel-muted {
+    border: 1px solid var(--sp-line);
+    background: rgb(251 249 242 / 0.74);
+  }
+
+  .sp-button-primary,
+  .sp-button-secondary,
+  .sp-button-subtle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .sp-button-primary {
+    background: var(--sp-ink);
+    color: var(--sp-paper);
+  }
+
+  .sp-button-primary:hover {
+    background: var(--sp-green-deep);
+  }
+
+  .sp-button-secondary {
+    border: 1px solid var(--sp-line);
+    background: rgb(251 249 242 / 0.86);
+    color: var(--sp-ink);
+  }
+
+  .sp-button-secondary:hover {
+    border-color: rgb(79 109 95 / 0.32);
+    background: rgb(122 158 141 / 0.12);
+  }
+
+  .sp-button-subtle {
+    border: 1px solid var(--sp-line);
+    background: transparent;
+    color: var(--sp-green);
+  }
+
+  .sp-button-subtle:hover {
+    background: rgb(122 158 141 / 0.1);
+  }
+
+  .sp-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border: 1px solid rgb(79 109 95 / 0.24);
+    border-radius: 999px;
+    background: rgb(122 158 141 / 0.14);
+    color: var(--sp-green);
+    font-weight: 700;
+  }
+
+  .sp-control {
+    width: 100%;
+    border: 1px solid var(--sp-line);
+    border-radius: 0.375rem;
+    background: rgb(251 249 242 / 0.92);
+    color: var(--sp-ink);
+    outline: none;
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .sp-control:focus {
+    border-color: rgb(79 109 95 / 0.45);
+    box-shadow: 0 0 0 2px rgb(79 109 95 / 0.14);
+  }
 }
