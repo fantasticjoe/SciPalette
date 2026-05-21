@@ -1,0 +1,43 @@
+name: 配色方案建议 / Palette Suggestion
+description: 建议收录一个新的配色方案
+labels: [palette]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: 配色名称 / Palette Name
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: 类别 / Category
+      options:
+        - sequential（连续型）
+        - diverging（分歧型）
+        - qualitative（分类型）
+    validations:
+      required: true
+  - type: textarea
+    id: colors
+    attributes:
+      label: 颜色值 / Colors
+      description: HEX 颜色，建议 3–8 个。
+    validations:
+      required: true
+  - type: dropdown
+    id: colorblind
+    attributes:
+      label: 是否色盲友好 / Colorblind-safe?
+      options:
+        - "是 / Yes"
+        - "否 / No"
+        - "未验证 / Not verified"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 适用场景 / Use Case
+    validations:
+      required: true
