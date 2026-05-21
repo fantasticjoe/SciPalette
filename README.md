@@ -75,7 +75,10 @@ scipalette/
 │   │   └── BaseLayout.astro         # HTML 外壳与 SEO meta
 │   ├── components/
 │   │   ├── SiteHeader.astro         # 全站导航
-│   │   ├── PaletteBrowser.tsx       # 首页交互浏览器
+│   │   ├── PaletteBrowser.tsx       # 首页状态组合层
+│   │   ├── HomeHero.tsx             # 首页首屏
+│   │   ├── PaletteLibrarySection.tsx # 可筛选配色库区块
+│   │   ├── FeaturedPaletteSections.tsx # 首页推荐区块
 │   │   ├── PaletteFilters.tsx       # 搜索与筛选控件
 │   │   ├── PaletteGrid.tsx          # 配色卡片网格
 │   │   ├── PaletteCard.tsx          # 配色卡片
@@ -86,6 +89,7 @@ scipalette/
 │   │   └── BadgeList.tsx            # 标签列表
 │   ├── lib/
 │   │   ├── site.ts                  # 站点常量与导航链接
+│   │   ├── homepage.ts              # 首页派生数据与分组逻辑
 │   │   ├── palettes.ts              # 配色数据源
 │   │   ├── palette-utils.ts         # 筛选、导出和相似推荐逻辑
 │   │   ├── types.ts                 # TypeScript 类型定义

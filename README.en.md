@@ -75,7 +75,10 @@ scipalette/
 │   │   └── BaseLayout.astro         # HTML shell and SEO meta
 │   ├── components/
 │   │   ├── SiteHeader.astro         # Global navigation
-│   │   ├── PaletteBrowser.tsx       # Interactive home-page browser
+│   │   ├── PaletteBrowser.tsx       # Home-page state composition
+│   │   ├── HomeHero.tsx             # Home hero
+│   │   ├── PaletteLibrarySection.tsx # Filterable palette library section
+│   │   ├── FeaturedPaletteSections.tsx # Featured home sections
 │   │   ├── PaletteFilters.tsx       # Search and filter controls
 │   │   ├── PaletteGrid.tsx          # Palette card grid
 │   │   ├── PaletteCard.tsx          # Palette card
@@ -86,6 +89,7 @@ scipalette/
 │   │   └── BadgeList.tsx            # Badge list
 │   ├── lib/
 │   │   ├── site.ts                  # Site constants and navigation links
+│   │   ├── homepage.ts              # Home-page derived data and grouping logic
 │   │   ├── palettes.ts              # Palette data source
 │   │   ├── palette-utils.ts         # Filtering, export, and similarity helpers
 │   │   ├── types.ts                 # TypeScript types
