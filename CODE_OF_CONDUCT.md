@@ -30,7 +30,7 @@
 
 ### 执行
 
-如遇到滥用、骚扰或其他不可接受的行为，可通过 [GitHub Issues](https://github.com/zhouyuezhu/scipalette/issues) 进行举报。所有投诉都会被审查与调查。
+如遇到滥用、骚扰或其他不可接受的行为，可通过 [GitHub Issues](https://github.com/fantasticjoe/scipalette/issues) 进行举报。所有投诉都会被审查与调查。
 
 ---
 
@@ -58,4 +58,4 @@ Examples of unacceptable behavior:
 
 ### Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported via [GitHub Issues](https://github.com/zhouyuezhu/scipalette/issues). All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported via [GitHub Issues](https://github.com/fantasticjoe/scipalette/issues). All complaints will be reviewed and investigated promptly and fairly.

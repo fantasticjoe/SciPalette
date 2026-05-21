@@ -63,7 +63,7 @@ npm run build       # 生产构建
 
 ### 报告问题
 
-通过 [GitHub Issues](https://github.com/zhouyuezhu/scipalette/issues) 提交。
+通过 [GitHub Issues](https://github.com/fantasticjoe/scipalette/issues) 提交。
 
 ---
 
@@ -110,4 +110,4 @@ npm run build       # Production build
 
 ### Reporting Issues
 
-Open an issue via [GitHub Issues](https://github.com/zhouyuezhu/scipalette/issues).
+Open an issue via [GitHub Issues](https://github.com/fantasticjoe/scipalette/issues).

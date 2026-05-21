@@ -4,7 +4,7 @@
 
 English | [简体中文](./README.md)
 
-[![CI](https://github.com/zhouyuezhu/scipalette/actions/workflows/ci.yml/badge.svg)](https://github.com/zhouyuezhu/scipalette/actions/workflows/ci.yml)
+[![CI](https://github.com/fantasticjoe/scipalette/actions/workflows/ci.yml/badge.svg)](https://github.com/fantasticjoe/scipalette/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
 SciPalette collects carefully curated color palettes ready for academic publication. It covers the three main types — **sequential**, **diverging**, and **qualitative** — and flags colorblind-safe palettes, helping researchers make figure colors that are both beautiful and rigorous.

@@ -4,7 +4,7 @@
 
 [English](./README.en.md) | 中文
 
-[![CI](https://github.com/yourusername/scipalette/actions/workflows/ci.yml/badge.svg)](https://github.com/yourusername/scipalette/actions/workflows/ci.yml)
+[![CI](https://github.com/fantasticjoe/scipalette/actions/workflows/ci.yml/badge.svg)](https://github.com/fantasticjoe/scipalette/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![Deploy](https://img.shields.io/badge/deploy-Vercel-black.svg)](https://vercel.com)
 
@@ -47,7 +47,7 @@ SciPalette 是一个专为科研可视化设计的配色方案收集与导出工
 
 ```bash
 # 克隆仓库
-git clone https://github.com/yourusername/scipalette.git
+git clone https://github.com/fantasticjoe/scipalette.git
 cd scipalette
 
 # 安装依赖
