@@ -69,10 +69,13 @@ npm run build
 ### 修改界面或功能
 
 - 页面入口在 `src/pages/`。
+- 共享页面外壳在 `src/layouts/BaseLayout.astro`。
+- 全站导航和站点链接分别在 `src/components/SiteHeader.astro` 与 `src/lib/site.ts`。
 - React 交互组件在 `src/components/`。
 - 配色数据和导出逻辑在 `src/lib/`。
 - 全局样式和设计变量在 `src/styles/global.css`。
 - 项目使用 Astro 静态输出，并在 `astro.config.ts` 配置了 `base: "/SciPalette"`；新增站内链接时要保留这个部署路径。
+- 更详细的改动边界请参阅 [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)。
 
 ### 提交规范
 
@@ -152,10 +155,13 @@ Example:
 ### Updating UI or Functionality
 
 - Page entry points live in `src/pages/`.
+- Shared page chrome lives in `src/layouts/BaseLayout.astro`.
+- Global navigation and site links live in `src/components/SiteHeader.astro` and `src/lib/site.ts`.
 - Interactive React components live in `src/components/`.
 - Palette data and export helpers live in `src/lib/`.
 - Global styles and design variables live in `src/styles/global.css`.
 - The project uses Astro static output with `base: "/SciPalette"` in `astro.config.ts`; preserve that deployment path when adding internal links.
+- For more detailed contribution boundaries, see [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
 
 ### Commit Conventions
 

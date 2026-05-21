@@ -33,7 +33,7 @@ export default function PaletteBrowser() {
   const categoryCount = new Set(palettes.map(p => p.category)).size;
 
   return (
-    <div className="min-h-screen text-[#212c33]">
+    <>
       <section className="relative overflow-hidden border-b border-[#dadcd6] bg-[#f8f5ec]">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 pb-16 pt-16 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8 lg:pb-24 lg:pt-24">
           <div className="flex flex-col justify-center">
@@ -152,7 +152,7 @@ export default function PaletteBrowser() {
           )}
 
           {colorblindSafePalettes.length > 0 && (
-            <div>
+            <div id="accessible">
               <div className="mb-5">
                 <h2 className="font-display text-4xl font-bold tracking-[-0.02em] text-[#212c33]">Colorblind-safe palettes</h2>
                 <p className="mt-1 text-[rgb(33_44_51_/_0.68)]">Accessible to readers with common color vision deficiencies.</p>
@@ -180,6 +180,6 @@ export default function PaletteBrowser() {
           </p>
         </div>
       </footer>
-    </div>
+    </>
   );
 }

@@ -74,6 +74,7 @@ scipalette/
 │   ├── layouts/
 │   │   └── BaseLayout.astro         # HTML 外壳与 SEO meta
 │   ├── components/
+│   │   ├── SiteHeader.astro         # 全站导航
 │   │   ├── PaletteBrowser.tsx       # 首页交互浏览器
 │   │   ├── PaletteFilters.tsx       # 搜索与筛选控件
 │   │   ├── PaletteGrid.tsx          # 配色卡片网格
@@ -84,6 +85,7 @@ scipalette/
 │   │   ├── CopyButton.tsx           # 复制按钮
 │   │   └── BadgeList.tsx            # 标签列表
 │   ├── lib/
+│   │   ├── site.ts                  # 站点常量与导航链接
 │   │   ├── palettes.ts              # 配色数据源
 │   │   ├── palette-utils.ts         # 筛选、导出和相似推荐逻辑
 │   │   ├── types.ts                 # TypeScript 类型定义
@@ -92,12 +94,15 @@ scipalette/
 │       └── global.css               # Tailwind 与全局设计变量
 ├── public/                          # 静态资源
 ├── .github/workflows/               # CI、部署和发布流程
+├── docs/ARCHITECTURE.md             # 协作架构与改动边界
 ├── astro.config.ts                  # Astro 配置
 ├── package.json
 ├── CONTRIBUTING.md
 ├── LICENSE
 └── README.md
 ```
+
+协作开发和改动边界请参阅 [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)。
 
 ## 添加新配色方案
 

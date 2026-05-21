@@ -1,0 +1,24 @@
+---
+import { siteConfig } from "../lib/site";
+---
+
+<header class="border-b border-[#dadcd6] bg-[rgb(248_245_236_/_0.94)]">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8" aria-label="Primary">
+    <a href={`${siteConfig.basePath}/`} class="font-display text-2xl font-bold leading-none text-[#212c33]">
+      SciPalette
+    </a>
+    <div class="flex items-center gap-1 text-sm font-semibold text-[rgb(33_44_51_/_0.68)]">
+      {siteConfig.navigation.map((item) => (
+        <a
+          href={item.href}
+          class:list={[
+            "px-3 py-2 transition-colors hover:bg-[rgb(122_158_141_/_0.1)] hover:text-[#212c33]",
+            item.hideOnMobile && "hidden sm:inline-flex",
+          ]}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+  </nav>
+</header>

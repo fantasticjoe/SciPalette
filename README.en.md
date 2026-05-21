@@ -74,6 +74,7 @@ scipalette/
 │   ├── layouts/
 │   │   └── BaseLayout.astro         # HTML shell and SEO meta
 │   ├── components/
+│   │   ├── SiteHeader.astro         # Global navigation
 │   │   ├── PaletteBrowser.tsx       # Interactive home-page browser
 │   │   ├── PaletteFilters.tsx       # Search and filter controls
 │   │   ├── PaletteGrid.tsx          # Palette card grid
@@ -84,6 +85,7 @@ scipalette/
 │   │   ├── CopyButton.tsx           # Copy button
 │   │   └── BadgeList.tsx            # Badge list
 │   ├── lib/
+│   │   ├── site.ts                  # Site constants and navigation links
 │   │   ├── palettes.ts              # Palette data source
 │   │   ├── palette-utils.ts         # Filtering, export, and similarity helpers
 │   │   ├── types.ts                 # TypeScript types
@@ -92,12 +94,15 @@ scipalette/
 │       └── global.css               # Tailwind and global design variables
 ├── public/                          # Static assets
 ├── .github/workflows/               # CI, deploy, and release workflows
+├── docs/ARCHITECTURE.md             # Architecture and contribution boundaries
 ├── astro.config.ts                  # Astro config
 ├── package.json
 ├── CONTRIBUTING.md
 ├── LICENSE
 └── README.md
 ```
+
+For contribution boundaries and architecture notes, see [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
 
 ## Adding a Palette
 

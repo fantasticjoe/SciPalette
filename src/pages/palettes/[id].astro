@@ -8,6 +8,7 @@ import { PlotPreview } from "../../components/PlotPreview";
 import { CodeExport } from "../../components/CodeExport";
 import PaletteGrid from "../../components/PaletteGrid";
 import { ArrowLeft, Check } from "lucide-react";
+import { siteConfig } from "../../lib/site";
 
 export function getStaticPaths() {
   return palettes.map((palette) => ({
@@ -26,17 +27,14 @@ const similarPalettes = getSimilarPalettes(palette);
 ---
 
 <BaseLayout title={`${palette.name} - SciPalette`} description={palette.description}>
-  <div class="min-h-screen text-[#212c33]">
-    <header class="border-b border-[#dadcd6] bg-[rgb(251_249_242_/_0.72)] backdrop-blur">
-      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <a href="/SciPalette/" class="inline-flex items-center gap-2 rounded-[14px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.86)] px-3 py-1.5 text-sm font-bold text-[#212c33] transition-colors hover:bg-[rgb(122_158_141_/_0.12)]">
+  <>
+    <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="mb-7">
+        <a href={`${siteConfig.basePath}/`} class="inline-flex items-center gap-2 text-sm font-bold text-[rgb(33_44_51_/_0.66)] transition-colors hover:text-[#212c33]">
           <ArrowLeft class="w-4 h-4" />
           Back to all palettes
         </a>
       </div>
-    </header>
-
-    <main class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <div class="space-y-12">
         <div class="rounded-[20px] border border-[#dadcd6] bg-[rgb(251_249_242_/_0.82)] p-6 shadow-[0_24px_70px_rgb(33_44_51_/_0.06)] sm:p-8">
           <div class="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -153,5 +151,5 @@ const similarPalettes = getSimilarPalettes(palette);
         </p>
       </div>
     </footer>
-  </div>
+  </>
 </BaseLayout>

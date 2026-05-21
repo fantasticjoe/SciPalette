@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import SiteHeader from "../components/SiteHeader.astro";
 
 export interface Props {
   title?: string;
@@ -20,6 +21,9 @@ const { title = "SciPalette - Scientific Color Palettes for Publication Figures"
   <link rel="icon" type="image/svg+xml" href="/SciPalette/favicon.svg" />
 </head>
 <body>
-  <slot />
+  <div class="min-h-screen text-[#212c33]">
+    <SiteHeader />
+    <slot />
+  </div>
 </body>
 </html>
