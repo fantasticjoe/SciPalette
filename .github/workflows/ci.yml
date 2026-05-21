@@ -25,5 +25,3 @@ jobs:
       - run: npm run typecheck
 
       - run: npm run build
-        env:
-          GIT_SHA: ${{ github.sha }}

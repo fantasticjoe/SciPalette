@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   build:
-    name: Build standalone bundle
+    name: Build static bundle
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,16 +22,10 @@ jobs:
       - run: npm ci
 
       - run: npm run build
-        env:
-          GIT_SHA: ${{ github.sha }}
 
-      - name: Assemble standalone bundle
-        run: |
-          cp -r .next/static .next/standalone/.next/static
-          cp -r public .next/standalone/public
-          tar -czf scipalette-standalone.tar.gz -C .next/standalone .
+      - run: tar -czf scipalette-static.tar.gz -C out .
 
       - uses: softprops/action-gh-release@v2
         with:
-          files: scipalette-standalone.tar.gz
+          files: scipalette-static.tar.gz
           generate_release_notes: true
