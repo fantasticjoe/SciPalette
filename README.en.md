@@ -96,7 +96,7 @@ scipalette/
 │   │   ├── site.ts                  # Site constants and navigation links
 │   │   ├── homepage.ts              # Home-page derived data and grouping logic
 │   │   ├── filter-options.ts        # Filter option configuration
-│   │   ├── palettes.ts              # Palette data source
+│   │   ├── palettes/                # Individual palette files and aggregate entry
 │   │   ├── palette-utils.ts         # Filtering, export, and similarity helpers
 │   │   ├── types.ts                 # TypeScript types
 │   │   └── utils.ts                 # Shared utilities
@@ -116,7 +116,7 @@ For contribution boundaries and architecture notes, see [docs/ARCHITECTURE.md](.
 
 ## Adding a Palette
 
-Edit `src/lib/palettes.ts` and append an entry to the `palettes` array:
+To add or update a palette, edit `src/lib/palettes/<palette-id>.ts` and register it in `src/lib/palettes/index.ts`:
 
 ```ts
 {

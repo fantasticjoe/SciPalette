@@ -45,7 +45,7 @@ CI 会在 PR 和 `main` 推送时运行。`main` 推送还会触发 GitHub Pages
 
 这是最常见的贡献方式。
 
-1. 在 `src/lib/palettes.ts` 的 `palettes` 数组中追加一项。
+1. 新增或修改 `src/lib/palettes/<palette-id>.ts`，并在 `src/lib/palettes/index.ts` 中注册。
 2. 字段要求：
    - `id`：全局唯一，使用 kebab-case。
    - `name`：配色方案名称。
@@ -141,7 +141,7 @@ CI runs on pull requests and pushes to `main`. Pushes to `main` also trigger Git
 
 This is the most common contribution type.
 
-1. Append an entry to the `palettes` array in `src/lib/palettes.ts`.
+1. Add or update `src/lib/palettes/<palette-id>.ts`, then register it in `src/lib/palettes/index.ts`.
 2. Field requirements:
    - `id`: globally unique, kebab-case.
    - `name`: palette name.

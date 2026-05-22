@@ -96,7 +96,7 @@ scipalette/
 │   │   ├── site.ts                  # 站点常量与导航链接
 │   │   ├── homepage.ts              # 首页派生数据与分组逻辑
 │   │   ├── filter-options.ts        # 筛选选项配置
-│   │   ├── palettes.ts              # 配色数据源
+│   │   ├── palettes/                # 单个色板文件与聚合入口
 │   │   ├── palette-utils.ts         # 筛选、导出和相似推荐逻辑
 │   │   ├── types.ts                 # TypeScript 类型定义
 │   │   └── utils.ts                 # 通用工具
@@ -116,7 +116,7 @@ scipalette/
 
 ## 添加新配色方案
 
-编辑 `src/lib/palettes.ts`，向 `palettes` 数组追加一项：
+新增或修改色板时，编辑 `src/lib/palettes/<palette-id>.ts`，并在 `src/lib/palettes/index.ts` 中注册：
 
 ```ts
 {

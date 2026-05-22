@@ -17,7 +17,7 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 - `src/components/PaletteExportSection.astro` owns the detail-page export panel shell.
 - `src/components/SimilarPalettesSection.astro` owns detail-page similar palette recommendations.
 - `src/components/*.tsx` owns interactive UI rendered by Astro client directives.
-- `src/lib/palettes.ts` is the palette data source.
+- `src/lib/palettes/` is the palette data source. Each file owns one palette, and `src/lib/palettes/index.ts` owns the aggregated export plus lookup helpers.
 - `src/lib/homepage.ts` owns home-page grouping helpers and derived counts.
 - `src/lib/filter-options.ts` owns filter dropdown labels and values.
 - `src/lib/palette-utils.ts` owns filtering, export snippets, and similarity logic.
@@ -29,8 +29,8 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 
 Use these boundaries when preparing a PR:
 
-- **New or updated palette:** edit `src/lib/palettes.ts`; only touch UI if the data model must change.
-- **New palette field:** update `src/lib/types.ts`, `src/lib/palettes.ts`, affected components, and README examples together.
+- **New or updated palette:** edit `src/lib/palettes/<palette-id>.ts` and register it in `src/lib/palettes/index.ts`; only touch UI if the data model must change.
+- **New palette field:** update `src/lib/types.ts`, the affected `src/lib/palettes/<palette-id>.ts` files, `src/lib/palettes/index.ts`, affected components, and README examples together.
 - **Filtering or export behavior:** edit `src/lib/palette-utils.ts` first; keep component changes limited to wiring or labels.
 - **Filter labels or available filter values:** edit `src/lib/filter-options.ts`; edit `src/components/PaletteFilters.tsx` only for layout or interaction changes.
 - **Home-page hero or featured sections:** edit the matching home component first; edit `src/components/PaletteBrowser.tsx` only when state wiring changes.
