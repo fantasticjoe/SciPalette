@@ -3,6 +3,7 @@ import PaletteGrid from "./PaletteGrid";
 import type { Palette, PaletteCategory, PlotType } from "../lib/types";
 
 interface PaletteLibrarySectionProps {
+  className?: string;
   filteredPalettes: Palette[];
   searchQuery: string;
   onSearchChange: (query: string) => void;
@@ -19,6 +20,7 @@ interface PaletteLibrarySectionProps {
 }
 
 export function PaletteLibrarySection({
+  className,
   filteredPalettes,
   searchQuery,
   onSearchChange,
@@ -34,7 +36,7 @@ export function PaletteLibrarySection({
   onResetFilters,
 }: PaletteLibrarySectionProps) {
   return (
-    <section id="palettes" className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <section id="palettes" className={`sp-lift mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 ${className ?? ""}`}>
       <div className="space-y-8">
         <PaletteFilters
           searchQuery={searchQuery}

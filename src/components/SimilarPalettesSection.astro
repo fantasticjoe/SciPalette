@@ -10,7 +10,7 @@ const { palettes } = Astro.props;
 ---
 
 {palettes.length > 0 && (
-  <section>
+<section class="sp-reveal sp-reveal-delay-2">
     <h2 class="font-display mb-6 text-4xl font-bold tracking-[-0.02em] text-[#212c33]">Similar palettes</h2>
     <PaletteGrid palettes={palettes} client:visible />
   </section>

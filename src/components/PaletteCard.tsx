@@ -6,11 +6,12 @@ import { generatePythonCode, generateRCode } from "../lib/palette-utils";
 
 interface PaletteCardProps {
   palette: Palette;
+  className?: string;
 }
 
-export default function PaletteCard({ palette }: PaletteCardProps) {
+export default function PaletteCard({ palette, className }: PaletteCardProps) {
   return (
-    <article className="sp-panel group flex h-full flex-col overflow-hidden rounded-lg transition duration-300 hover:-translate-y-0.5 hover:border-[rgb(79_109_95_/_0.32)] hover:shadow-[0_24px_70px_rgb(33_44_51_/_0.08)]">
+    <article className={`sp-panel sp-lift group flex h-full flex-col overflow-hidden rounded-lg hover:border-[rgb(79_109_95_/_0.32)] hover:shadow-[0_24px_70px_rgb(33_44_51_/_0.08)] ${className ?? ""}`}>
       <div className="relative p-3 pb-0">
         <div className="flex h-18 overflow-hidden rounded-md border border-[#dadcd6]">
           {palette.colors.map((color, index) => (

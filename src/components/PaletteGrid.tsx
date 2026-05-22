@@ -8,7 +8,7 @@ interface PaletteGridProps {
 export default function PaletteGrid({ palettes }: PaletteGridProps) {
   if (palettes.length === 0) {
     return (
-      <div className="border border-dashed border-[rgb(79_109_95_/_0.3)] bg-[rgb(251_249_242_/_0.72)] py-16 text-center">
+      <div className="sp-fade-border border border-dashed border-[rgb(79_109_95_/_0.3)] bg-[rgb(251_249_242_/_0.72)] py-16 text-center">
         <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-[rgb(122_158_141_/_0.14)]">
           <svg className="h-8 w-8 text-[#4f6d5f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -25,8 +25,8 @@ export default function PaletteGrid({ palettes }: PaletteGridProps) {
 
   return (
     <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-      {palettes.map((palette) => (
-        <PaletteCard key={palette.id} palette={palette} />
+      {palettes.map((palette, index) => (
+        <PaletteCard key={palette.id} palette={palette} className={`sp-reveal sp-reveal-delay-${Math.min((index % 3) + 1, 3)}`} />
       ))}
     </div>
   );

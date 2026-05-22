@@ -2,6 +2,7 @@ import { Check, Database, Palette, Shuffle } from "lucide-react";
 import type { Palette as PaletteType } from "../lib/types";
 
 interface HomeHeroProps {
+  className?: string;
   specimenPalette: PaletteType;
   paletteCount: number;
   categoryCount: number;
@@ -11,6 +12,7 @@ interface HomeHeroProps {
 }
 
 export function HomeHero({
+  className,
   specimenPalette,
   paletteCount,
   categoryCount,
@@ -19,7 +21,7 @@ export function HomeHero({
   onCopyRandomPalette,
 }: HomeHeroProps) {
   return (
-    <section className="relative overflow-hidden border-b border-[#dadcd6] bg-[#f8f5ec]">
+    <section className={`sp-lift relative overflow-hidden border-b border-[#dadcd6] bg-[#f8f5ec] ${className ?? ""}`}>
       <div className="mx-auto grid max-w-7xl gap-12 px-4 pb-16 pt-16 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8 lg:pb-24 lg:pt-24">
         <div className="flex flex-col justify-center">
           <div className="sp-chip mb-7 w-fit px-3 py-1 text-sm">

@@ -2,14 +2,15 @@ import PaletteGrid from "./PaletteGrid";
 import type { FeaturedPaletteGroups } from "../lib/homepage";
 
 interface FeaturedPaletteSectionsProps {
+  className?: string;
   groups: FeaturedPaletteGroups;
 }
 
-export function FeaturedPaletteSections({ groups }: FeaturedPaletteSectionsProps) {
+export function FeaturedPaletteSections({ className, groups }: FeaturedPaletteSectionsProps) {
   const { singleCellPalettes, colorblindSafePalettes, heatmapPalettes } = groups;
 
   return (
-    <section className="mx-auto max-w-7xl space-y-12 px-4 py-14 sm:px-6 lg:px-8">
+    <section className={`sp-lift mx-auto max-w-7xl space-y-12 px-4 py-14 sm:px-6 lg:px-8 ${className ?? ""}`}>
       {singleCellPalettes.length > 0 && (
         <div>
           <div className="mb-5">

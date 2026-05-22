@@ -49,6 +49,7 @@ export default function PaletteBrowser() {
   return (
     <>
       <HomeHero
+        className="sp-reveal"
         specimenPalette={palettes[1]}
         paletteCount={palettes.length}
         categoryCount={categoryCount}
@@ -58,6 +59,7 @@ export default function PaletteBrowser() {
       />
 
       <PaletteLibrarySection
+        className="sp-reveal sp-reveal-delay-1"
         filteredPalettes={filteredPalettes}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -73,9 +75,9 @@ export default function PaletteBrowser() {
         onResetFilters={resetFilters}
       />
 
-      {isDefaultView && <FeaturedPaletteSections groups={featuredGroups} />}
+      {isDefaultView && <FeaturedPaletteSections className="sp-reveal sp-reveal-delay-2" groups={featuredGroups} />}
 
-      <footer className="mt-12 border-t border-[#dadcd6] bg-[rgb(251_249_242_/_0.62)]">
+      <footer className="sp-fade-border mt-12 border-t border-[#dadcd6] bg-[rgb(251_249_242_/_0.62)]">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <p className="text-center text-sm font-medium text-[rgb(33_44_51_/_0.62)]">
             SciPalette, a curated collection of scientific color palettes.
