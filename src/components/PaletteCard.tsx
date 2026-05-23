@@ -76,7 +76,7 @@ export default function PaletteCard({ palette, className }: PaletteCardProps) {
           </button>
           <button
             onClick={() => navigator.clipboard.writeText(generateRCode(palette.colors))}
-            className="sp-button-secondary flex-1 border-transparent bg-[rgb(248_245_236_/_0.9)] px-3 py-1.5 text-xs text-[#6f6246]"
+            className="sp-button-secondary flex-1 border-[rgb(191_160_90_/_0.34)] bg-[rgb(191_160_90_/_0.18)] px-3 py-1.5 text-xs text-[#4f6d5f] hover:bg-[rgb(191_160_90_/_0.28)]"
             title="Copy R code"
           >
             <Code2 className="h-3.5 w-3.5" />
