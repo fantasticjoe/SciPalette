@@ -20,7 +20,7 @@ SciPalette 是一个专为科研可视化设计的静态配色方案库。它面
 - **多维筛选**：支持按关键词、类别、图类型、颜色数量、色盲友好性筛选。
 - **科研图预览**：详情页按推荐场景展示 bar、line、scatter、UMAP、heatmap、volcano 等预览。
 - **Art2Pal Palette**：浏览器本地从 PNG、JPEG 或 WebP 图片中提取色彩风格，并重组为 categorical、sequential、diverging、neutral 科研配色。
-- **About 与设计哲学**：About 页面说明 SciPalette 的配色原则、Art2Pal 的设计哲学，以及来自《麦田与柏树》的站点视觉系统。
+- **About 与设计哲学**：About 页面说明 SciPalette 的配色原则、Art2Pal 的设计哲学、来自《麦田与柏树》的站点视觉系统，以及统一应用在标签栏、导航栏、About 页面和页脚的 Logo system。
 - **一键复制**：可复制 HEX 列表，也可从卡片直接复制 Python 或 R 代码。
 - **代码导出**：支持 HEX、Python/matplotlib、R/ggplot2、Scanpy、Seurat、GraphPad Prism。
 - **色盲友好标注**：在卡片、详情页和筛选器中标注可访问性信息。
@@ -73,7 +73,7 @@ scipalette/
 ├── src/
 │   ├── pages/
 │   │   ├── index.astro              # 首页与浏览入口
-│   │   ├── about.astro              # About、设计哲学与站点配色说明
+│   │   ├── about.astro              # About、设计哲学、站点配色与 Logo system
 │   │   ├── art2pal/index.astro      # Art2Pal Palette 本地图片取色工具
 │   │   ├── palettes/index.astro     # 完整配色浏览页
 │   │   └── palettes/[id].astro      # 配色详情页，静态生成
@@ -82,6 +82,7 @@ scipalette/
 │   ├── components/
 │   │   ├── SiteHeader.astro         # 全站导航
 │   │   ├── SiteFooter.astro         # 全站页脚
+│   │   ├── SiteMark.astro           # 复用同一 favicon.svg 的站点 Logo
 │   │   ├── PaletteBrowser.tsx       # 首页状态组合层
 │   │   ├── HomeHero.tsx             # 首页首屏
 │   │   ├── PaletteLibrarySection.tsx # 可筛选配色库区块

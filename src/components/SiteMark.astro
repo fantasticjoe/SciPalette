@@ -1,0 +1,16 @@
+---
+export interface Props {
+  class?: string;
+}
+
+const className = Astro.props.class ?? "h-8 w-8";
+---
+
+<img
+  src="/favicon.svg"
+  alt=""
+  aria-hidden="true"
+  class:list={[className, "shrink-0"]}
+  width="64"
+  height="64"
+/>

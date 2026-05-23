@@ -441,11 +441,14 @@ test("site header has an adaptive mobile navigation menu", () => {
   assert.ok(header.includes("hidden items-center"));
   assert.ok(header.includes("md:flex"));
   assert.ok(header.includes("Mobile navigation"));
+  assert.ok(header.includes('import SiteMark from "./SiteMark.astro"'));
+  assert.ok(header.includes("<SiteMark"));
 });
 
 test("site has a shared footer and about page with palette philosophy", () => {
   const baseLayout = readFileSync("src/layouts/BaseLayout.astro", "utf8");
   const footer = readFileSync("src/components/SiteFooter.astro", "utf8");
+  const mark = readFileSync("src/components/SiteMark.astro", "utf8");
   const aboutPage = readFileSync("src/pages/about.astro", "utf8");
   const artworkPath = "public/images/van-gogh-wheat-field-with-cypresses.webp";
   const site = readFileSync("src/lib/site.ts", "utf8");
@@ -455,6 +458,9 @@ test("site has a shared footer and about page with palette philosophy", () => {
 
   assert.ok(baseLayout.includes('import SiteFooter from "../components/SiteFooter.astro"'));
   assert.ok(baseLayout.includes("<SiteFooter />"));
+  assert.ok(mark.includes('src="/favicon.svg"'));
+  assert.ok(footer.includes('import SiteMark from "./SiteMark.astro"'));
+  assert.ok(footer.includes("<SiteMark"));
   assert.ok(site.includes('id: "about"'));
   assert.ok(site.includes('href: "/about/"'));
   assert.ok(footer.includes("Wheat Field with Cypresses"));
@@ -462,15 +468,24 @@ test("site has a shared footer and about page with palette philosophy", () => {
   assert.ok(footer.includes("SciPalette"));
   assert.ok(aboutPage.includes("Zhouyue Zhu"));
   assert.ok(aboutPage.includes("Biomedical Informatics"));
+  assert.ok(aboutPage.includes('import SiteMark from "../components/SiteMark.astro"'));
+  assert.ok(aboutPage.includes("Logic"));
+  assert.ok(aboutPage.includes("Problem"));
+  assert.ok(aboutPage.includes("Method"));
+  assert.ok(aboutPage.includes("Tool"));
+  assert.ok(aboutPage.includes("Visual source"));
+  assert.ok(aboutPage.includes("Logo system"));
+  assert.ok(aboutPage.includes("A small mark for color as evidence"));
+  assert.ok(aboutPage.includes("Four ordered vertical forms"));
+  assert.ok(aboutPage.includes('SiteMark class="h-48 w-48 sm:h-60 sm:w-60"'));
   assert.ok(aboutPage.includes("Color is not a finish"));
   assert.ok(aboutPage.includes("palette choice is not cosmetic"));
-  assert.ok(aboutPage.includes("SciPalette exists because"));
   assert.ok(aboutPage.includes("default rainbows"));
   assert.ok(aboutPage.includes("does not simply extract dominant colors"));
   assert.ok(aboutPage.includes("Wheat Field with Cypresses"));
   assert.ok(aboutPage.includes("麦田与柏树"));
-  assert.ok(aboutPage.includes("philosophy"));
-  assert.ok(aboutPage.includes("Website palette"));
+  assert.ok(aboutPage.includes("Author and project"));
+  assert.ok(aboutPage.includes("Built by a researcher"));
   assert.ok(aboutPage.includes("Paper ground"));
   assert.ok(aboutPage.includes("Cypress green"));
   assert.ok(aboutPage.includes("Muted wheat"));

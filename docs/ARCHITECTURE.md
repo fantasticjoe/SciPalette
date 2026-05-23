@@ -8,7 +8,8 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 - `src/layouts/BaseLayout.astro` owns the document shell, SEO defaults, and shared page chrome.
 - `src/components/SiteHeader.astro` owns the global navigation.
 - `src/components/SiteFooter.astro` owns the shared closing band and footer navigation.
-- `src/pages/about.astro` owns the About narrative, design philosophy, and site-palette presentation.
+- `src/components/SiteMark.astro` owns the shared SVG logo mark used by the favicon, navigation, About page, and footer.
+- `src/pages/about.astro` owns the About narrative, design philosophy, site-palette presentation, and large Logo system explanation.
 - `src/pages/art2pal/index.astro` owns the Art2Pal Palette route and hydrates the browser-only React tool.
 - `src/pages/palettes/index.astro` owns the searchable full palette browser route and hydrates `PaletteBrowser`.
 - `src/components/PaletteShowcase.tsx` owns the home-page showcase composition.
@@ -45,6 +46,7 @@ Use these boundaries when preparing a PR:
 - **Palette detail page presentation:** edit the matching `PaletteDetail*` or `SimilarPalettesSection` component first; edit `src/pages/palettes/[id].astro` only when route data or section ordering changes.
 - **Global navigation or repository links:** edit `src/lib/site.ts` and, if needed, `src/components/SiteHeader.astro`.
 - **About page copy or site palette presentation:** edit `src/pages/about.astro`; keep shared footer changes in `src/components/SiteFooter.astro`.
+- **Site logo identity:** edit `public/favicon.svg` for the source mark and `src/components/SiteMark.astro` for reusable page placement. Keep navigation, footer, and About page usage pointed at the same SVG so the identity does not drift.
 - **Art2Pal Palette tool:** keep route wiring in `src/pages/art2pal/index.astro`, UI in `src/components/art2pal/`, and algorithm/export logic in `src/lib/art2pal/`. Do not add a backend, account system, database, or server upload path for user images.
 - **Shared page chrome:** edit `src/layouts/BaseLayout.astro`, `src/components/SiteHeader.astro`, or `src/components/SiteFooter.astro`; avoid adding page-specific content to the layout shell.
 - **Visual polish:** prefer the smallest component that owns the surface. Use the shared `sp-panel`, `sp-panel-muted`, `sp-button-*`, `sp-chip`, and `sp-control` classes from `src/styles/global.css` before adding new repeated border, radius, or control styles.

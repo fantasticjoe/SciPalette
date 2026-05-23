@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteMark from "../components/SiteMark.astro";
 import { siteConfig } from "../lib/site";
 ---
 
@@ -8,80 +9,70 @@ import { siteConfig } from "../lib/site";
   description="About SciPalette, a focused color resource for scientific figures, and the design philosophy behind Art2Pal."
 >
   <main class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-    <section class="sp-reveal grid gap-10 border-b border-[#dadcd6] pb-14 lg:grid-cols-[0.92fr_1.08fr] lg:items-end">
-      <div>
-        <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#4f6d5f]">About SciPalette</p>
-        <h1 class="font-display mt-4 max-w-3xl text-5xl font-bold leading-[0.95] text-[#212c33] sm:text-6xl">
-          Color systems for figures that need to think clearly.
-        </h1>
-      </div>
-      <p class="max-w-2xl text-xl leading-8 text-[rgb(33_44_51_/_0.72)]">
-        SciPalette is a focused color resource for scientific figures. It treats palette choice as part of evidence design: aesthetic enough to invite attention, disciplined enough to keep the data legible.
-      </p>
-    </section>
-
-    <section class="grid gap-6 py-14 lg:grid-cols-3">
-      <article class="border border-[#dadcd6] bg-[rgb(251_249_242_/_0.72)] p-6">
-        <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Author</p>
-        <h2 class="font-display mt-3 text-3xl font-bold text-[#212c33]">Zhouyue Zhu</h2>
-        <p class="mt-4 text-[1.02rem] leading-7 text-[rgb(33_44_51_/_0.72)]">
-          Zhouyue Zhu is a Biomedical Informatics student at the ZJU-UoE Institute. His work sits between bioinformatics, visual communication, photography, and the practical problem of making complex results easier to see.
-        </p>
-        <a href="https://www.fantasticjoe.com/" class="mt-5 inline-flex text-sm font-bold text-[#4f6d5f] hover:text-[#212c33]">
-          Visit fantasticjoe.com
-        </a>
-      </article>
-
-      <article class="border border-[#dadcd6] bg-[rgb(251_249_242_/_0.72)] p-6">
-        <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Purpose</p>
-        <h2 class="font-display mt-3 text-3xl font-bold text-[#212c33]">For scientific use</h2>
-        <p class="mt-4 text-[1.02rem] leading-7 text-[rgb(33_44_51_/_0.72)]">
-          The library is built for UMAP, t-SNE, heatmaps, bar plots, sequential ramps, diverging scales, and colorblind-aware figure design. Each palette is meant to be used directly, not treated as decoration after the figure is already finished.
-        </p>
-        <a href="/art2pal/" class="mt-5 inline-flex text-sm font-bold text-[#4f6d5f] hover:text-[#212c33]">
-          Open Art2Pal
-        </a>
-      </article>
-
-      <article class="border border-[#dadcd6] bg-[rgb(251_249_242_/_0.72)] p-6">
-        <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Palette</p>
-        <h2 class="font-display mt-3 text-3xl font-bold text-[#212c33]">Wheat and cypress</h2>
-        <p class="mt-4 text-[1.02rem] leading-7 text-[rgb(33_44_51_/_0.72)]">
-          The website atmosphere comes from Vincent van Gogh's <span class="font-semibold text-[#212c33]">Wheat Field with Cypresses</span> (麦田与柏树): warm paper, green structure, muted wheat, blue-gray air, and dark ink translated into a restrained interface.
-        </p>
-        <a href="/palettes/" class="mt-5 inline-flex text-sm font-bold text-[#4f6d5f] hover:text-[#212c33]">
-          Browse palettes
-        </a>
-      </article>
-    </section>
-
-    <section class="sp-reveal sp-reveal-delay-1 border-y border-[#dadcd6] py-12">
-      <div class="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
+    <section class="sp-reveal border-b border-[#dadcd6] pb-14">
+      <div class="grid gap-10 lg:grid-cols-[0.94fr_1.06fr] lg:items-end">
         <div>
-          <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Philosophy</p>
-          <h2 class="font-display mt-3 text-4xl font-bold text-[#212c33]">Color is not a finish. It is part of the argument.</h2>
+          <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#4f6d5f]">About SciPalette</p>
+          <h1 class="font-display mt-4 max-w-3xl text-5xl font-bold leading-[0.95] text-[#212c33] sm:text-6xl">
+            Color systems for figures that need to think clearly.
+          </h1>
         </div>
-        <div class="space-y-5 text-[1.08rem] leading-8 text-[rgb(33_44_51_/_0.74)]">
+        <div class="max-w-2xl space-y-5 text-xl leading-8 text-[rgb(33_44_51_/_0.72)]">
+          <p>
+            SciPalette is a focused color resource for scientific figures. It treats palette choice as part of evidence design: aesthetic enough to invite attention, disciplined enough to keep the data legible.
+          </p>
+          <p class="text-[1.08rem] leading-7 text-[rgb(33_44_51_/_0.64)]">
+            The project connects curated palettes, browser-local palette generation, and a small visual identity around one idea: color should help readers compare, not simply decorate a finished chart.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sp-reveal sp-reveal-delay-1 py-14">
+      <div class="grid gap-10 border-b border-[#dadcd6] pb-14 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
+        <div class="lg:sticky lg:top-8">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Logic</p>
+          <h2 class="font-display mt-3 text-4xl font-bold leading-tight text-[#212c33]">Color is not a finish. It is part of the argument.</h2>
+        </div>
+
+        <div class="grid gap-8 text-[1.08rem] leading-8 text-[rgb(33_44_51_/_0.74)]">
           <p>
             Color determines what a reader notices first, which groups feel distinct, where a gradient appears to change, and whether a figure can be trusted at a glance. In scientific graphics, palette choice is not cosmetic. It shapes attention, comparison, uncertainty, and the boundary between signal and noise.
           </p>
+          <div class="grid gap-4 border-y border-[#dadcd6] py-6 sm:grid-cols-3">
+            <div>
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-[#4f6d5f]">Problem</p>
+              <p class="mt-3 text-[1rem] leading-7 text-[rgb(33_44_51_/_0.7)]">
+                Many figures still rely on default rainbows, uneven ramps, or colors that fail under labels, print, projectors, and color vision differences.
+              </p>
+            </div>
+            <div>
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-[#4f6d5f]">Method</p>
+              <p class="mt-3 text-[1rem] leading-7 text-[rgb(33_44_51_/_0.7)]">
+                SciPalette organizes color before the figure is made, so categorical, sequential, diverging, and neutral roles can be chosen deliberately.
+              </p>
+            </div>
+            <div>
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-[#4f6d5f]">Tool</p>
+              <p class="mt-3 text-[1rem] leading-7 text-[rgb(33_44_51_/_0.7)]">
+                Art2Pal starts from an artwork or image, but it does not simply extract dominant colors. It rebuilds atmosphere into scientific palette systems.
+              </p>
+            </div>
+          </div>
           <p>
-            SciPalette exists because many research figures still treat color as an afterthought: default rainbows, inconsistent category colors, ramps with uneven contrast, or palettes that look attractive but fail under labels, print, projectors, and color vision differences. The goal is to make better defaults available before the figure is made, so visual taste and scientific readability can work together instead of competing.
-          </p>
-          <p>
-            Art2Pal follows the same discipline from a different direction. It starts with an artwork or image, but it does not simply extract dominant colors. It reorganizes visual atmosphere into categorical, sequential, diverging, and neutral systems, filtering for contrast, separability, and white-background scientific use while keeping the source image's character intact.
+            The goal is to make better defaults available early, so visual taste and scientific readability can work together instead of competing after the analysis is already complete.
           </p>
         </div>
       </div>
     </section>
 
-    <section class="py-14">
-      <div class="grid gap-8 border-y border-[#dadcd6] py-10 lg:grid-cols-[0.62fr_1.38fr] lg:items-start">
+    <section class="py-2">
+      <div class="grid gap-8 lg:grid-cols-[0.62fr_1.38fr] lg:items-start">
         <div class="lg:pr-4">
-          <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Website palette</p>
-          <h2 class="font-display mt-3 text-4xl font-bold text-[#212c33]">From Wheat Field with Cypresses to interface color.</h2>
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Visual source</p>
+          <h2 class="font-display mt-3 text-4xl font-bold leading-tight text-[#212c33]">From Wheat Field with Cypresses to interface color.</h2>
           <p class="mt-4 text-[1.04rem] leading-7 text-[rgb(33_44_51_/_0.72)]">
-            This page uses the painting as a source of roles rather than a literal swatch set: paper for reading, cypress green for structure, wheat for warmth, blue-gray for atmosphere, and ink for contrast.
+            The website atmosphere comes from Vincent van Gogh's <span class="font-semibold text-[#212c33]">Wheat Field with Cypresses</span> (麦田与柏树), translated as roles rather than copied as a literal swatch set.
           </p>
         </div>
 
@@ -133,15 +124,54 @@ import { siteConfig } from "../lib/site";
       </div>
     </section>
 
-    <section class="py-12">
-      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Open project</p>
-          <h2 class="font-display mt-2 text-3xl font-bold text-[#212c33]">Built as a lightweight front-end resource.</h2>
+    <section class="border-y border-[#dadcd6] py-14">
+      <div class="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
+        <div class="flex justify-center lg:justify-start">
+          <SiteMark class="h-48 w-48 sm:h-60 sm:w-60" />
         </div>
-        <a href={siteConfig.repositoryUrl} class="sp-button-secondary w-fit px-5 py-3 text-sm">
-          View GitHub
-        </a>
+
+        <div class="lg:ml-auto lg:max-w-2xl lg:text-right">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Logo system</p>
+          <h2 class="font-display mt-3 text-4xl font-bold leading-tight text-[#212c33]">A small mark for color as evidence.</h2>
+          <p class="mt-5 text-[1.06rem] leading-8 text-[rgb(33_44_51_/_0.72)]">
+            The SciPalette mark condenses the same visual source into a figure-like symbol. Four ordered vertical forms read as palette bars, the cypress becomes the final upright mark, and the small curve in the upper left keeps the identity tied to data, comparison, and figure-making rather than decoration alone.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid gap-8 py-14 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#4f6d5f]">Author and project</p>
+        <h2 class="font-display mt-3 text-4xl font-bold leading-tight text-[#212c33]">Built by a researcher who also cares how figures are read.</h2>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2">
+        <article class="border border-[#dadcd6] bg-[rgb(251_249_242_/_0.72)] p-6">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Author</p>
+          <h3 class="font-display mt-3 text-3xl font-bold text-[#212c33]">Zhouyue Zhu</h3>
+          <p class="mt-4 text-[1.02rem] leading-7 text-[rgb(33_44_51_/_0.72)]">
+            Zhouyue Zhu is a Biomedical Informatics student at the ZJU-UoE Institute. His work sits between bioinformatics, visual communication, photography, and the practical problem of making complex results easier to see.
+          </p>
+          <a href="https://www.fantasticjoe.com/" class="mt-5 inline-flex text-sm font-bold text-[#4f6d5f] hover:text-[#212c33]">
+            Visit fantasticjoe.com
+          </a>
+        </article>
+
+        <article class="border border-[#dadcd6] bg-[rgb(251_249_242_/_0.72)] p-6">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Open project</p>
+          <h3 class="font-display mt-3 text-3xl font-bold text-[#212c33]">A lightweight front-end resource.</h3>
+          <p class="mt-4 text-[1.02rem] leading-7 text-[rgb(33_44_51_/_0.72)]">
+            The library is built for UMAP, t-SNE, heatmaps, bar plots, sequential ramps, diverging scales, and colorblind-aware figure design. It stays close to the browser and avoids accounts, databases, and unnecessary infrastructure.
+          </p>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <a href="/art2pal/" class="inline-flex text-sm font-bold text-[#4f6d5f] hover:text-[#212c33]">
+              Open Art2Pal
+            </a>
+            <a href={siteConfig.repositoryUrl} class="inline-flex text-sm font-bold text-[#4f6d5f] hover:text-[#212c33]">
+              View GitHub
+            </a>
+          </div>
+        </article>
       </div>
     </section>
   </main>

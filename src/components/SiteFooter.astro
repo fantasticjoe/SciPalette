@@ -1,6 +1,7 @@
 ---
 import { Code2, ExternalLink, Palette, UserRound } from "lucide-react";
 import { siteConfig } from "../lib/site";
+import SiteMark from "./SiteMark.astro";
 
 const footerLinks = [
   { label: "Palette Library", href: "/palettes/" },
@@ -12,7 +13,8 @@ const footerLinks = [
 <footer class="mt-16 border-t border-[#cfd2ca] bg-[rgb(238_233_219_/_0.72)]" aria-label="Site footer">
   <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.4fr_0.8fr_0.8fr] lg:px-8">
     <section>
-      <a href={`${siteConfig.basePath}/`} class="font-display text-3xl font-bold leading-none text-[#212c33]">
+      <a href={`${siteConfig.basePath}/`} class="inline-flex items-center gap-3 font-display text-3xl font-bold leading-none text-[#212c33]">
+        <SiteMark class="h-10 w-10" />
         SciPalette
       </a>
       <p class="mt-4 max-w-xl text-[1rem] leading-7 text-[rgb(33_44_51_/_0.7)]">
