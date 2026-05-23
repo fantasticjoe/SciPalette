@@ -28,6 +28,7 @@ SciPalette 是一个专为科研可视化设计的静态配色方案库。它面
 - **用户提交配色方案**：配色库页面提供 GitHub Issue 投稿入口，并支持粘贴 Art2Pal 导出的 SciPalette contribution JSON。
 - **论文图灵感收集**：配色库页面提供 DOI、论文链接和 figure reference 的 GitHub Issue 入口，用于记录值得研究的论文图配色来源。
 - **本地配色推荐助手**：配色库页面提供本地运行的推荐助手，根据图类型、配色类别、颜色数量、背景、色盲安全和研究意图给出可解释推荐。
+- **配色方案对比视图**：配色库页面可并排比较两个色板的用途重叠、颜色数量、标签、灰度对比和色条。
 - **色盲友好标注**：在卡片、详情页和筛选器中标注可访问性信息。
 - **静态部署**：基于 Astro 静态生成，可部署到 GitHub Pages 等静态托管平台。
 - **响应式界面**：桌面、平板和手机均可浏览和复制配色。
@@ -92,6 +93,7 @@ scipalette/
 │   │   ├── PaperInspirationPanel.astro # DOI 与论文图灵感收集入口
 │   │   ├── PaletteBrowser.tsx       # 首页状态组合层
 │   │   ├── PaletteRecommendationPanel.tsx # 本地配色推荐面板
+│   │   ├── PaletteComparisonPanel.tsx # 配色方案对比面板
 │   │   ├── HomeHero.tsx             # 首页首屏
 │   │   ├── PaletteLibrarySection.tsx # 可筛选配色库区块
 │   │   ├── FeaturedPaletteSections.tsx # 首页推荐区块
@@ -117,6 +119,7 @@ scipalette/
 │   │   ├── palettes/                # 单个色板文件与聚合入口
 │   │   ├── art2pal/                 # Art2Pal 颜色空间、聚类、生成、导出逻辑
 │   │   ├── palette-recommendations.ts # 本地推荐打分与 preset
+│   │   ├── palette-comparison.ts    # 配色方案对比指标
 │   │   ├── palette-utils.ts         # 筛选、导出和相似推荐逻辑
 │   │   ├── color-vision.ts          # 色觉缺陷模拟矩阵与色板转换
 │   │   ├── grayscale-contrast.ts    # 灰度亮度和对比度检查
@@ -205,7 +208,7 @@ npm run build
 - [x] 用户提交配色方案
 - [x] DOI / 论文图灵感收集
 - [x] 本地配色推荐助手
-- [ ] 配色方案对比视图
+- [x] 配色方案对比视图
 
 ## 许可证
 

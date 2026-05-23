@@ -27,6 +27,7 @@ import {
   getPaletteRecommendations,
   recommendationPresets,
 } from "../src/lib/palette-recommendations";
+import { comparePalettes } from "../src/lib/palette-comparison";
 import { extractCandidateColors } from "../src/lib/art2pal/palette/extractCandidateColors";
 import {
   getResizeDimensions,
@@ -393,6 +394,25 @@ test("recommends palettes from local scientific intent signals", () => {
   assert.ok(heatmap[0].reasons.length >= 2);
 });
 
+test("compares palettes by overlap, use cases, and grayscale contrast", () => {
+  const first = palettes.find((palette) => palette.name === "Cell Atlas 12");
+  const second = palettes.find((palette) => palette.name === "Immunology Cell Types");
+
+  assert.ok(first);
+  assert.ok(second);
+
+  const comparison = comparePalettes(first, second);
+
+  assert.equal(comparison.left.name, "Cell Atlas 12");
+  assert.equal(comparison.right.name, "Immunology Cell Types");
+  assert.ok(comparison.sharedPlotTypes.includes("umap"));
+  assert.ok(comparison.colorCountDelta > 0);
+  assert.ok(comparison.leftOnlyColors.length > 0);
+  assert.ok(comparison.rightOnlyColors.length > 0);
+  assert.ok(comparison.grayscale.left.minimumRatio > 0);
+  assert.ok(comparison.summary.length >= 2);
+});
+
 test("uses custom-domain root paths for deployed assets and links", () => {
   const astroConfig = readFileSync("astro.config.ts", "utf8");
   const baseLayout = readFileSync("src/layouts/BaseLayout.astro", "utf8");
@@ -506,6 +526,7 @@ test("site separates homepage showcase from full palette browser route", () => {
   const contributionPanel = readFileSync("src/components/PaletteContributionPanel.astro", "utf8");
   const paperInspirationPanel = readFileSync("src/components/PaperInspirationPanel.astro", "utf8");
   const recommendationPanel = readFileSync("src/components/PaletteRecommendationPanel.tsx", "utf8");
+  const comparisonPanel = readFileSync("src/components/PaletteComparisonPanel.tsx", "utf8");
   const browser = readFileSync("src/components/PaletteBrowser.tsx", "utf8");
   const featured = readFileSync("src/components/FeaturedPaletteSections.tsx", "utf8");
   const site = readFileSync("src/lib/site.ts", "utf8");
@@ -521,7 +542,10 @@ test("site separates homepage showcase from full palette browser route", () => {
   assert.ok(palettesPage.includes("<PaperInspirationPanel"));
   assert.ok(browser.includes("<PaletteLibrarySection"));
   assert.ok(browser.includes("<PaletteRecommendationPanel"));
+  assert.ok(browser.includes("<PaletteComparisonPanel"));
   assert.ok(recommendationPanel.includes("getPaletteRecommendations"));
+  assert.ok(comparisonPanel.includes("Palette comparison"));
+  assert.ok(comparisonPanel.includes("comparePalettes"));
   assert.ok(!featured.includes("<PaletteGrid"));
   assert.ok(!featured.includes("CopyButton"));
   assert.ok(!featured.includes("generatePythonCode"));
@@ -550,6 +574,8 @@ test("site separates homepage showcase from full palette browser route", () => {
   assert.ok(paperInspiration.includes("citation"));
   assert.ok(readme.includes("- [x] DOI / 论文图灵感收集"));
   assert.ok(readmeEn.includes("- [x] DOI / paper figure inspiration collection"));
+  assert.ok(readme.includes("- [x] 配色方案对比视图"));
+  assert.ok(readmeEn.includes("- [x] Palette comparison view"));
   assert.ok(recommendationPanel.includes("Local palette recommendation"));
   assert.ok(recommendationPanel.includes("Runs locally"));
   assert.ok(recommendationPanel.includes("recommendationPresets"));

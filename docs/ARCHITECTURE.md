@@ -17,6 +17,7 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 - `src/components/PaletteShowcase.tsx` owns the home-page showcase composition.
 - `src/components/PaletteBrowser.tsx` owns full-library filter state and copy actions.
 - `src/components/PaletteRecommendationPanel.tsx` owns the browser-local recommendation controls and explanation UI.
+- `src/components/PaletteComparisonPanel.tsx` owns the browser-local palette comparison controls and summary UI.
 - `src/components/HomeHero.tsx` owns the home hero.
 - `src/components/PaletteLibrarySection.tsx` owns the filterable full palette library section.
 - `src/components/FeaturedPaletteSections.tsx` owns the curated home-page recommendation sections.
@@ -33,6 +34,7 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 - `src/lib/homepage.ts` owns home-page grouping helpers and derived counts.
 - `src/lib/filter-options.ts` owns filter dropdown labels and values.
 - `src/lib/palette-recommendations.ts` owns local recommendation scoring, intent presets, and explanation reasons. It must stay browser-local unless a backend is explicitly introduced later.
+- `src/lib/palette-comparison.ts` owns pairwise palette comparison metrics, shared use cases, color uniqueness, and grayscale comparison summaries.
 - `src/lib/palette-utils.ts` owns filtering, export snippets, and similarity logic.
 - `src/lib/color-vision.ts` owns color vision deficiency simulation modes, transformation matrices, and HEX palette conversion.
 - `src/lib/grayscale-contrast.ts` owns grayscale luminance conversion, pairwise grayscale contrast ratios, and report construction.
@@ -54,6 +56,7 @@ Use these boundaries when preparing a PR:
 - **Adobe ASE export:** edit `src/lib/adobe-ase.ts` for binary file construction and `src/components/CodeExport.tsx` for the download action.
 - **Filter labels or available filter values:** edit `src/lib/filter-options.ts`; edit `src/components/PaletteFilters.tsx` only for layout or interaction changes.
 - **Local palette recommendations:** edit `src/lib/palette-recommendations.ts` for scoring and presets, and `src/components/PaletteRecommendationPanel.tsx` for the browser UI. Keep recommendations local and explainable.
+- **Palette comparison view:** edit `src/lib/palette-comparison.ts` for pairwise metrics and `src/components/PaletteComparisonPanel.tsx` for the browser UI.
 - **Home-page hero or featured sections:** edit `src/components/PaletteShowcase.tsx`, `HomeHero`, or `FeaturedPaletteSections`; keep full-library filtering in `src/components/PaletteBrowser.tsx`.
 - **Home-page grouping rules:** edit `src/lib/homepage.ts`; keep rendering components focused on presentation.
 - **Palette detail page presentation:** edit the matching `PaletteDetail*` or `SimilarPalettesSection` component first; edit `src/pages/palettes/[id].astro` only when route data or section ordering changes.
