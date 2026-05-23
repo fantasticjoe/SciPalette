@@ -550,10 +550,13 @@ test("site has a shared footer and about page with palette philosophy", () => {
   assert.ok(aboutPage.includes("Method"));
   assert.ok(aboutPage.includes("Tool"));
   assert.ok(aboutPage.includes("Visual source"));
+  assert.ok(aboutPage.includes('<section class="py-14">\n      <div class="grid gap-8 lg:grid-cols-[0.62fr_1.38fr]'));
   assert.ok(aboutPage.includes("Logo system"));
   assert.ok(aboutPage.includes("A small mark for color as evidence"));
   assert.ok(aboutPage.includes("Four ordered vertical forms"));
-  assert.ok(aboutPage.includes('SiteMark class="h-48 w-48 sm:h-60 sm:w-60"'));
+  assert.ok(aboutPage.includes('lg:grid-cols-[0.72fr_1.28fr]'));
+  assert.ok(aboutPage.includes('SiteMark class="h-64 w-64 sm:h-72 sm:w-72 lg:h-80 lg:w-80"'));
+  assert.ok(aboutPage.includes('lg:text-right'));
   assert.ok(aboutPage.includes("Color is not a finish"));
   assert.ok(aboutPage.includes("palette choice is not cosmetic"));
   assert.ok(aboutPage.includes("default rainbows"));
