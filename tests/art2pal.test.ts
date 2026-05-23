@@ -650,6 +650,17 @@ test("research expansion contributes exactly fifty sourced palettes", () => {
   assert.deepEqual(duplicateReport.near, []);
 });
 
+test("palette catalog endpoint exposes a lightweight skill manifest", () => {
+  const catalogEndpoint = readFileSync("src/pages/palettes/catalog.json.ts", "utf8");
+
+  assert.ok(catalogEndpoint.includes("schemaVersion"));
+  assert.ok(catalogEndpoint.includes("palettes.map"));
+  assert.ok(catalogEndpoint.includes("colorblindScore"));
+  assert.ok(catalogEndpoint.includes("recommendedFor"));
+  assert.ok(!catalogEndpoint.includes("colorblindReport"));
+  assert.ok(!catalogEndpoint.includes("from \"fs\""));
+});
+
 test("uses custom-domain root paths for deployed assets and links", () => {
   const astroConfig = readFileSync("astro.config.ts", "utf8");
   const baseLayout = readFileSync("src/layouts/BaseLayout.astro", "utf8");
