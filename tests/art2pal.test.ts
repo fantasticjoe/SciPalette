@@ -12,6 +12,11 @@ import {
 } from "../src/lib/art2pal/color";
 import { formatPaletteExport, paletteExportFormats } from "../src/lib/art2pal/export";
 import { safeCopyText } from "../src/lib/art2pal/clipboard";
+import {
+  colorVisionModes,
+  simulateColorVisionDeficiency,
+  simulatePaletteColorVision,
+} from "../src/lib/color-vision";
 import { extractCandidateColors } from "../src/lib/art2pal/palette/extractCandidateColors";
 import {
   getResizeDimensions,
@@ -310,6 +315,24 @@ test("copy helper reports success and failure without throwing", async () => {
   assert.deepEqual(writes, ["#123456"]);
 });
 
+test("simulates color vision deficiencies for HEX palettes", () => {
+  assert.deepEqual(
+    colorVisionModes.map((mode) => mode.id),
+    ["normal", "protanopia", "deuteranopia", "tritanopia"]
+  );
+
+  assert.equal(simulateColorVisionDeficiency("#4F6D5F", "normal"), "#4f6d5f");
+  assert.equal(simulatePaletteColorVision(["#ff0000", "#00ff00"], "protanopia").length, 2);
+
+  const protanRed = hexToRgb(simulateColorVisionDeficiency("#ff0000", "protanopia"));
+  const originalRed = hexToRgb("#ff0000");
+
+  assert.ok(protanRed.r < originalRed.r);
+  assert.ok(protanRed.g > originalRed.g);
+  assert.ok(simulateColorVisionDeficiency("#abcdef", "deuteranopia").startsWith("#"));
+  assert.ok(simulateColorVisionDeficiency("#abcdef", "tritanopia").startsWith("#"));
+});
+
 test("uses custom-domain root paths for deployed assets and links", () => {
   const astroConfig = readFileSync("astro.config.ts", "utf8");
   const baseLayout = readFileSync("src/layouts/BaseLayout.astro", "utf8");
@@ -415,6 +438,7 @@ test("site separates homepage showcase from full palette browser route", () => {
   const homePage = readFileSync("src/pages/index.astro", "utf8");
   const palettesPage = readFileSync("src/pages/palettes/index.astro", "utf8");
   const detailPage = readFileSync("src/pages/palettes/[id].astro", "utf8");
+  const colorVisionPreview = readFileSync("src/components/ColorVisionPreview.tsx", "utf8");
   const browser = readFileSync("src/components/PaletteBrowser.tsx", "utf8");
   const featured = readFileSync("src/components/FeaturedPaletteSections.tsx", "utf8");
   const site = readFileSync("src/lib/site.ts", "utf8");
@@ -429,6 +453,12 @@ test("site separates homepage showcase from full palette browser route", () => {
   assert.ok(site.includes('href: "/palettes/"'));
   assert.ok(!site.includes('href: "/#palettes"'));
   assert.ok(detailPage.includes('href={`${siteConfig.basePath}/palettes/`}'));
+  assert.ok(detailPage.includes("<ColorVisionPreview"));
+  assert.ok(colorVisionPreview.includes("Color vision simulation"));
+  assert.ok(colorVisionPreview.includes("colorVisionModes.map"));
+  assert.ok(colorVisionModes.some((mode) => mode.label === "Protanopia"));
+  assert.ok(colorVisionModes.some((mode) => mode.label === "Deuteranopia"));
+  assert.ok(colorVisionModes.some((mode) => mode.label === "Tritanopia"));
 }
 );
 

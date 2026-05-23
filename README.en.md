@@ -19,6 +19,7 @@ Primary users include researchers, bioinformaticians, data scientists, and medic
 - **20+ curated palettes** across categorical, sequential, diverging, and heatmap families.
 - **Multi-dimensional filtering** by search query, category, plot type, color count, and colorblind-safe status.
 - **Scientific plot previews** for recommended use cases such as bar, line, scatter, UMAP, heatmap, and volcano plots.
+- **Color vision simulation** on palette detail pages with Original, Protanopia, Deuteranopia, and Tritanopia previews.
 - **Art2Pal Palette** extracts color style from PNG, JPEG, or WebP images locally in the browser and rebuilds it into categorical, sequential, diverging, and neutral scientific palettes.
 - **About and design philosophy** explaining SciPalette's color principles, Art2Pal's design philosophy, the site palette inspired by *Wheat Field with Cypresses*, and the Logo system shared by the browser tab, navigation, About page, and footer.
 - **One-click copying** for HEX values, plus quick Python and R copy actions on palette cards.
@@ -97,6 +98,7 @@ scipalette/
 │   │   ├── PaletteCard.tsx          # Palette card
 │   │   ├── ColorSwatch.tsx          # Color swatch display and copy
 │   │   ├── PlotPreview.tsx          # Scientific plot previews
+│   │   ├── ColorVisionPreview.tsx   # Color vision deficiency simulation preview
 │   │   ├── CodeExport.tsx           # Multi-format code export
 │   │   ├── CopyButton.tsx           # Copy button
 │   │   └── BadgeList.tsx            # Badge list
@@ -107,6 +109,7 @@ scipalette/
 │   │   ├── palettes/                # Individual palette files and aggregate entry
 │   │   ├── art2pal/                 # Art2Pal color-space, clustering, generation, and export logic
 │   │   ├── palette-utils.ts         # Filtering, export, and similarity helpers
+│   │   ├── color-vision.ts          # Color vision simulation matrices and palette conversion
 │   │   ├── types.ts                 # TypeScript types
 │   │   └── utils.ts                 # Shared utilities
 │   └── styles/
@@ -184,7 +187,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the contribution workflow.
 ## Roadmap
 
 - [x] Extract palettes from uploaded images
-- [ ] Color vision deficiency simulation
+- [x] Color vision deficiency simulation
 - [ ] Grayscale contrast checks
 - [ ] Adobe ASE export
 - [x] CSS variable export

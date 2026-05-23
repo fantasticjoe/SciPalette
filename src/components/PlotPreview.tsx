@@ -5,6 +5,7 @@ import type { Palette } from "../lib/types";
 interface PlotPreviewProps {
   palette: Palette;
   type: "bar" | "line" | "scatter" | "umap" | "heatmap" | "volcano";
+  colors?: string[];
 }
 
 type Point = {
@@ -53,8 +54,8 @@ function PlotFrame({ children, xLabel, yLabel, background = "#fbf9f2" }: { child
   );
 }
 
-export function PlotPreview({ palette, type }: PlotPreviewProps) {
-  const colors = palette.colors;
+export function PlotPreview({ palette, type, colors: previewColors }: PlotPreviewProps) {
+  const colors = previewColors ?? palette.colors;
 
   const barData = useMemo(() => colors.slice(0, 6).map((color, index) => ({ key: `G${index + 1}`, color, value: 0.35 + seededRandom(index * 17) * 0.58 })), [colors]);
   const lineSeries = useMemo(

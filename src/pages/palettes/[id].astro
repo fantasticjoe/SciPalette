@@ -8,6 +8,7 @@ import PaletteColorSection from "../../components/PaletteColorSection.astro";
 import PaletteDetailHeader from "../../components/PaletteDetailHeader.astro";
 import PaletteExportSection from "../../components/PaletteExportSection.astro";
 import PalettePreviewSection from "../../components/PalettePreviewSection.astro";
+import { ColorVisionPreview } from "../../components/ColorVisionPreview";
 import SimilarPalettesSection from "../../components/SimilarPalettesSection.astro";
 
 export function getStaticPaths() {
@@ -39,6 +40,7 @@ const similarPalettes = getSimilarPalettes(palette);
         <PaletteDetailHeader palette={palette} />
         <PaletteColorSection palette={palette} />
         <PalettePreviewSection palette={palette} />
+        <ColorVisionPreview palette={palette} client:visible />
         <PaletteExportSection palette={palette} />
         <SimilarPalettesSection palettes={similarPalettes} />
       </div>

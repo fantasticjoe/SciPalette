@@ -20,6 +20,7 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 - `src/components/PaletteDetailHeader.astro` owns palette metadata, tags, and accessibility labeling on detail pages.
 - `src/components/PaletteColorSection.astro` owns the detail-page color swatch grid.
 - `src/components/PalettePreviewSection.astro` owns detail-page scientific plot preview panels.
+- `src/components/ColorVisionPreview.tsx` owns detail-page color vision deficiency simulation controls, simulated swatches, and simulated scientific plot previews.
 - `src/components/PaletteExportSection.astro` owns the detail-page export panel shell.
 - `src/components/SimilarPalettesSection.astro` owns detail-page similar palette recommendations.
 - `src/components/*.tsx` owns interactive UI rendered by Astro client directives.
@@ -28,6 +29,7 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 - `src/lib/homepage.ts` owns home-page grouping helpers and derived counts.
 - `src/lib/filter-options.ts` owns filter dropdown labels and values.
 - `src/lib/palette-utils.ts` owns filtering, export snippets, and similarity logic.
+- `src/lib/color-vision.ts` owns color vision deficiency simulation modes, transformation matrices, and HEX palette conversion.
 - `src/lib/types.ts` owns shared TypeScript contracts.
 - `src/lib/site.ts` owns site-wide constants such as the deployment root path and navigation links.
 - `src/styles/global.css` owns global tokens, fonts, and base styles.
@@ -44,6 +46,7 @@ Use these boundaries when preparing a PR:
 - **Home-page hero or featured sections:** edit `src/components/PaletteShowcase.tsx`, `HomeHero`, or `FeaturedPaletteSections`; keep full-library filtering in `src/components/PaletteBrowser.tsx`.
 - **Home-page grouping rules:** edit `src/lib/homepage.ts`; keep rendering components focused on presentation.
 - **Palette detail page presentation:** edit the matching `PaletteDetail*` or `SimilarPalettesSection` component first; edit `src/pages/palettes/[id].astro` only when route data or section ordering changes.
+- **Color vision simulation:** edit `src/lib/color-vision.ts` for simulation math and labels, `src/components/ColorVisionPreview.tsx` for interaction, and `src/components/PlotPreview.tsx` only when simulated colors need to flow into chart previews.
 - **Global navigation or repository links:** edit `src/lib/site.ts` and, if needed, `src/components/SiteHeader.astro`.
 - **About page copy or site palette presentation:** edit `src/pages/about.astro`; keep shared footer changes in `src/components/SiteFooter.astro`.
 - **Site logo identity:** edit `public/favicon.svg` for the source mark and `src/components/SiteMark.astro` for reusable page placement. Keep navigation, footer, and About page usage pointed at the same SVG so the identity does not drift.
