@@ -29,6 +29,7 @@ import {
   recommendationPresets,
 } from "../src/lib/palette-recommendations";
 import { comparePalettes } from "../src/lib/palette-comparison";
+import { getPaletteSimilarityScore } from "../src/lib/palette-utils";
 import { extractCandidateColors } from "../src/lib/art2pal/palette/extractCandidateColors";
 import {
   getResizeDimensions,
@@ -44,6 +45,7 @@ import {
 } from "../src/lib/art2pal/palette/generatePalettes";
 import { kMeansOklab } from "../src/lib/art2pal/palette/kMeans";
 import type { CandidateColor, CandidateColorSet } from "../src/lib/art2pal/palette/types";
+import type { Palette } from "../src/lib/types";
 import { siteConfig } from "../src/lib/site";
 import { createPaletteId, paletteRouteKeys, palettes, paletteSources } from "../src/lib/palettes";
 
@@ -63,6 +65,27 @@ function candidateFromHex(hex: string, overrides: Partial<CandidateColor> = {}):
     contrastWithWhite: calculateContrastRatio(rgb),
     pool: "neutral",
     ...overrides,
+  };
+}
+
+function paletteFixture(overrides: Partial<Palette> & Pick<Palette, "name" | "colors">): Palette {
+  const { id: overrideId, name, colors, ...rest } = overrides;
+  const colorblindReport = evaluatePaletteColorblindAccessibility(colors);
+  const id = overrideId ?? name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+  return {
+    id,
+    name,
+    description: rest.description ?? "Test palette",
+    category: "sequential",
+    colors,
+    recommendedFor: ["heatmap"],
+    tags: ["sequential", "continuous"],
+    colorblindSafe: colorblindReport.safe,
+    colorblindScore: colorblindReport.score,
+    colorblindReport,
+    background: "white",
+    ...rest,
   };
 }
 
@@ -467,6 +490,60 @@ test("compares palettes by overlap, use cases, and grayscale contrast", () => {
   assert.ok(comparison.rightOnlyColors.length > 0);
   assert.ok(comparison.grayscale.left.minimumRatio > 0);
   assert.ok(comparison.summary.length >= 2);
+});
+
+test("scores similar palettes with both metadata fit and perceptual color similarity", () => {
+  const target = paletteFixture({
+    name: "Target Blue Green Sequential",
+    colors: ["#153a5b", "#2f6f73", "#8abf8a"],
+    tags: ["sequential", "continuous", "publication"],
+  });
+  const colorNeighbor = paletteFixture({
+    name: "Nearby Blue Green Sequential",
+    colors: ["#173b5e", "#317275", "#88bd87"],
+    tags: ["sequential", "continuous", "publication"],
+  });
+  const metadataNeighbor = paletteFixture({
+    name: "Distant Purple Sequential",
+    colors: ["#3a115f", "#8b1b8e", "#ef9a3a"],
+    tags: ["sequential", "continuous", "publication"],
+  });
+
+  const nearbyScore = getPaletteSimilarityScore(target, colorNeighbor);
+  const distantScore = getPaletteSimilarityScore(target, metadataNeighbor);
+
+  assert.ok(nearbyScore.color > distantScore.color);
+  assert.ok(nearbyScore.total > distantScore.total);
+});
+
+test("keeps similar palette scoring anchored to use-case metadata", () => {
+  const target = paletteFixture({
+    name: "Target Heatmap",
+    colors: ["#153a5b", "#2f6f73", "#8abf8a"],
+    category: "sequential",
+    recommendedFor: ["heatmap", "scatter"],
+    tags: ["sequential", "continuous", "publication"],
+  });
+  const sameUseDifferentColor = paletteFixture({
+    name: "Same Use Different Color",
+    colors: ["#4a164e", "#9a2f61", "#e6a34b"],
+    category: "sequential",
+    recommendedFor: ["heatmap", "scatter"],
+    tags: ["sequential", "continuous", "publication"],
+  });
+  const colorOnlyMatch = paletteFixture({
+    name: "Color Only Match",
+    colors: ["#153a5b", "#2f6f73", "#8abf8a"],
+    category: "categorical",
+    recommendedFor: ["bar"],
+    tags: ["clinical"],
+  });
+
+  const sameUseScore = getPaletteSimilarityScore(target, sameUseDifferentColor);
+  const colorOnlyScore = getPaletteSimilarityScore(target, colorOnlyMatch);
+
+  assert.ok(colorOnlyScore.color > sameUseScore.color);
+  assert.ok(sameUseScore.total > colorOnlyScore.total);
 });
 
 test("uses custom-domain root paths for deployed assets and links", () => {

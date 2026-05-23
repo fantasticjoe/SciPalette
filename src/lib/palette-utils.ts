@@ -1,5 +1,14 @@
 import { Palette, PaletteCategory, PlotType } from "./types";
 import { palettes } from "./palettes";
+import { hexToRgb as parseHexColor, oklabDistance, rgbToOklab } from "./art2pal/color";
+
+export interface PaletteSimilarityScore {
+  total: number;
+  metadata: number;
+  color: number;
+  sharedTags: number;
+  sharedPlotTypes: number;
+}
 
 export function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -124,21 +133,73 @@ export function getRandomPalette(): Palette {
   return palettes[Math.floor(Math.random() * palettes.length)];
 }
 
+export function getPaletteSimilarityScore(target: Palette, candidate: Palette): PaletteSimilarityScore {
+  const sharedTags = candidate.tags.filter(tag => target.tags.includes(tag)).length;
+  const sharedPlotTypes = candidate.recommendedFor.filter(plotType => target.recommendedFor.includes(plotType)).length;
+  const metadata =
+    (candidate.category === target.category ? 3 : 0) +
+    (candidate.colorblindSafe === target.colorblindSafe ? 1 : 0) +
+    sharedTags * 2 +
+    sharedPlotTypes * 2;
+  const color = getPaletteColorSimilarity(target.colors, candidate.colors);
+
+  return {
+    total: metadata + color * 5,
+    metadata,
+    color,
+    sharedTags,
+    sharedPlotTypes,
+  };
+}
+
 export function getSimilarPalettes(palette: Palette, limit: number = 4): Palette[] {
-  // Find palettes with same category or overlapping tags
   const similar = palettes
     .filter(p => p.id !== palette.id)
     .map(p => {
-      let score = 0;
-      if (p.category === palette.category) score += 3;
-      if (p.colorblindSafe === palette.colorblindSafe) score += 1;
-      const commonTags = p.tags.filter(tag => palette.tags.includes(tag)).length;
-      score += commonTags * 2;
+      const score = getPaletteSimilarityScore(palette, p);
       return { palette: p, score };
     })
-    .sort((a, b) => b.score - a.score)
+    .sort(
+      (a, b) =>
+        b.score.total - a.score.total ||
+        b.score.metadata - a.score.metadata ||
+        b.score.color - a.score.color ||
+        a.palette.name.localeCompare(b.palette.name)
+    )
     .slice(0, limit)
     .map(item => item.palette);
 
   return similar;
+}
+
+function getPaletteColorSimilarity(first: string[], second: string[]): number {
+  const firstLabs = first.map(hexToOklabOrNull).filter((color): color is NonNullable<typeof color> => color !== null);
+  const secondLabs = second.map(hexToOklabOrNull).filter((color): color is NonNullable<typeof color> => color !== null);
+
+  if (firstLabs.length === 0 || secondLabs.length === 0) {
+    return 0;
+  }
+
+  const distance = (averageNearestDistance(firstLabs, secondLabs) + averageNearestDistance(secondLabs, firstLabs)) / 2;
+  return Math.max(0, 1 - distance / 0.45);
+}
+
+function averageNearestDistance(
+  source: ReturnType<typeof rgbToOklab>[],
+  target: ReturnType<typeof rgbToOklab>[]
+): number {
+  const total = source.reduce((sum, color) => {
+    const nearest = Math.min(...target.map(candidate => oklabDistance(color, candidate)));
+    return sum + nearest;
+  }, 0);
+
+  return total / source.length;
+}
+
+function hexToOklabOrNull(hex: string): ReturnType<typeof rgbToOklab> | null {
+  try {
+    return rgbToOklab(parseHexColor(hex));
+  } catch {
+    return null;
+  }
 }
