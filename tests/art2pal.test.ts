@@ -628,6 +628,28 @@ test("curated palettes do not contain blocking duplicate color systems", () => {
   assert.deepEqual(report.orderInsensitive, []);
 });
 
+test("research expansion contributes exactly fifty sourced palettes", () => {
+  const expansion = palettes.filter((palette) => palette.source?.includes("Original SciPalette research expansion"));
+  const expansionFiles = readdirSync("src/lib/palettes").filter((file) => {
+    if (!file.endsWith(".ts") || file === "index.ts") return false;
+    const source = readFileSync(`src/lib/palettes/${file}`, "utf8");
+    return source.includes("Original SciPalette research expansion");
+  });
+
+  assert.equal(expansion.length, 50);
+  assert.equal(expansionFiles.length, 50);
+  assert.ok(expansion.every((palette) => palette.source));
+  assert.ok(expansion.some((palette) => palette.category === "categorical"));
+  assert.ok(expansion.some((palette) => palette.category === "sequential"));
+  assert.ok(expansion.some((palette) => palette.category === "diverging"));
+  assert.ok(expansion.some((palette) => palette.category === "heatmap"));
+
+  const duplicateReport = findPaletteDuplicates(expansion, { nearDuplicateDistance: 0.025 });
+  assert.deepEqual(duplicateReport.exact, []);
+  assert.deepEqual(duplicateReport.orderInsensitive, []);
+  assert.deepEqual(duplicateReport.near, []);
+});
+
 test("uses custom-domain root paths for deployed assets and links", () => {
   const astroConfig = readFileSync("astro.config.ts", "utf8");
   const baseLayout = readFileSync("src/layouts/BaseLayout.astro", "utf8");

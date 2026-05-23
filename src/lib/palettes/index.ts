@@ -20,6 +20,56 @@ import heatmapYellowRed from "./heatmap-yellow-red";
 import singleCellCluster20 from "./single-cell-cluster-20";
 import tCellStates from "./t-cell-states";
 import tumorMicroenvironment from "./tumor-microenvironment";
+import assayBatches10 from "./assay-batches-10";
+import atlasBright10 from "./atlas-bright-10";
+import atlasMuted12 from "./atlas-muted-12";
+import cellLineage16 from "./cell-lineage-16";
+import clinicalClear6 from "./clinical-clear-6";
+import cohortClear8 from "./cohort-clear-8";
+import ecologySpecies12 from "./ecology-species-12";
+import editorialCategorical8 from "./editorial-categorical-8";
+import immuneStates15 from "./immune-states-15";
+import metabolomicsClasses9 from "./metabolomics-classes-9";
+import methodComparison8 from "./method-comparison-8";
+import microbiomeGroups12 from "./microbiome-groups-12";
+import neuroClusters10 from "./neuro-clusters-10";
+import paperQualitative7 from "./paper-qualitative-7";
+import proteinFamily9 from "./protein-family-9";
+import spatialRegions11 from "./spatial-regions-11";
+import tissuePanel14 from "./tissue-panel-14";
+import trialSignal8 from "./trial-signal-8";
+import blueExpression7 from "./blue-expression-7";
+import greenModuleScore7 from "./green-module-score-7";
+import densityTeal8 from "./density-teal-8";
+import pseudotimeAmber8 from "./pseudotime-amber-8";
+import moduleRose7 from "./module-rose-7";
+import probabilityIndigo7 from "./probability-indigo-7";
+import microscopyViolet8 from "./microscopy-violet-8";
+import topographyMoss8 from "./topography-moss-8";
+import oceanDepthCyan8 from "./ocean-depth-cyan-8";
+import assayIntensityRed7 from "./assay-intensity-red-7";
+import softPlasma8 from "./soft-plasma-8";
+import cellViabilityLime7 from "./cell-viability-lime-7";
+import uncertaintyGrayBlue7 from "./uncertainty-gray-blue-7";
+import histologySienna7 from "./histology-sienna-7";
+import flowCytometryBluegreen8 from "./flow-cytometry-bluegreen-8";
+import logfcBlueRose9 from "./logfc-blue-rose-9";
+import correlationTealBrown9 from "./correlation-teal-brown-9";
+import zscorePurpleGold9 from "./zscore-purple-gold-9";
+import effectSizeNavyOrange9 from "./effect-size-navy-orange-9";
+import residualGreenMagenta9 from "./residual-green-magenta-9";
+import biasSlateSand9 from "./bias-slate-sand-9";
+import responseCyanCrimson9 from "./response-cyan-crimson-9";
+import enrichmentBlueAmber9 from "./enrichment-blue-amber-9";
+import morphologyVioletGreen9 from "./morphology-violet-green-9";
+import terrainDiverging9 from "./terrain-diverging-9";
+import isotopeBlueCopper9 from "./isotope-blue-copper-9";
+import pcaAxisIndigoVermillion9 from "./pca-axis-indigo-vermillion-9";
+import expressionPurpleGoldHeatmap from "./expression-purple-gold-heatmap";
+import methylationTealRoseHeatmap from "./methylation-teal-rose-heatmap";
+import pathologyBlueSiennaHeatmap from "./pathology-blue-sienna-heatmap";
+import spatialDensityHeatmap from "./spatial-density-heatmap";
+import proteinAbundanceHeatmap from "./protein-abundance-heatmap";
 
 const paletteEntries = [
   ["nature-muted-8", natureMuted8],
@@ -42,6 +92,56 @@ const paletteEntries = [
   ["single-cell-cluster-20", singleCellCluster20],
   ["t-cell-states", tCellStates],
   ["tumor-microenvironment", tumorMicroenvironment],
+  ["assay-batches-10", assayBatches10],
+  ["atlas-bright-10", atlasBright10],
+  ["atlas-muted-12", atlasMuted12],
+  ["cell-lineage-16", cellLineage16],
+  ["clinical-clear-6", clinicalClear6],
+  ["cohort-clear-8", cohortClear8],
+  ["ecology-species-12", ecologySpecies12],
+  ["editorial-categorical-8", editorialCategorical8],
+  ["immune-states-15", immuneStates15],
+  ["metabolomics-classes-9", metabolomicsClasses9],
+  ["method-comparison-8", methodComparison8],
+  ["microbiome-groups-12", microbiomeGroups12],
+  ["neuro-clusters-10", neuroClusters10],
+  ["paper-qualitative-7", paperQualitative7],
+  ["protein-family-9", proteinFamily9],
+  ["spatial-regions-11", spatialRegions11],
+  ["tissue-panel-14", tissuePanel14],
+  ["trial-signal-8", trialSignal8],
+  ["blue-expression-7", blueExpression7],
+  ["green-module-score-7", greenModuleScore7],
+  ["density-teal-8", densityTeal8],
+  ["pseudotime-amber-8", pseudotimeAmber8],
+  ["module-rose-7", moduleRose7],
+  ["probability-indigo-7", probabilityIndigo7],
+  ["microscopy-violet-8", microscopyViolet8],
+  ["topography-moss-8", topographyMoss8],
+  ["ocean-depth-cyan-8", oceanDepthCyan8],
+  ["assay-intensity-red-7", assayIntensityRed7],
+  ["soft-plasma-8", softPlasma8],
+  ["cell-viability-lime-7", cellViabilityLime7],
+  ["uncertainty-gray-blue-7", uncertaintyGrayBlue7],
+  ["histology-sienna-7", histologySienna7],
+  ["flow-cytometry-bluegreen-8", flowCytometryBluegreen8],
+  ["logfc-blue-rose-9", logfcBlueRose9],
+  ["correlation-teal-brown-9", correlationTealBrown9],
+  ["zscore-purple-gold-9", zscorePurpleGold9],
+  ["effect-size-navy-orange-9", effectSizeNavyOrange9],
+  ["residual-green-magenta-9", residualGreenMagenta9],
+  ["bias-slate-sand-9", biasSlateSand9],
+  ["response-cyan-crimson-9", responseCyanCrimson9],
+  ["enrichment-blue-amber-9", enrichmentBlueAmber9],
+  ["morphology-violet-green-9", morphologyVioletGreen9],
+  ["terrain-diverging-9", terrainDiverging9],
+  ["isotope-blue-copper-9", isotopeBlueCopper9],
+  ["pca-axis-indigo-vermillion-9", pcaAxisIndigoVermillion9],
+  ["expression-purple-gold-heatmap", expressionPurpleGoldHeatmap],
+  ["methylation-teal-rose-heatmap", methylationTealRoseHeatmap],
+  ["pathology-blue-sienna-heatmap", pathologyBlueSiennaHeatmap],
+  ["spatial-density-heatmap", spatialDensityHeatmap],
+  ["protein-abundance-heatmap", proteinAbundanceHeatmap],
 ] as const satisfies ReadonlyArray<readonly [string, PaletteSource]>;
 
 export const paletteRouteKeys = paletteEntries.map(([key]) => key);
