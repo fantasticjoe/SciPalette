@@ -7,7 +7,6 @@ const palette = {
   colors: ["#440154", "#482878", "#3E4A89", "#31688E", "#26828E", "#1F9E89", "#35B779", "#6DCD59", "#B4DE2C", "#FDE724"],
   recommendedFor: ["heatmap", "scatter"],
   tags: ["sequential", "perceptually-uniform", "continuous"],
-  colorblindSafe: true,
   background: "white",
   source: "Inspired by matplotlib viridis"
 } satisfies PaletteSource;

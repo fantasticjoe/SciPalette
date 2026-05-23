@@ -1,4 +1,5 @@
 import type { Palette, PaletteCategory, PaletteSource } from "../types";
+import { evaluatePaletteColorblindAccessibility } from "../color-vision";
 import natureMuted8 from "./nature-muted-8";
 import cellAtlas12 from "./cell-atlas-12";
 import immunologyCellTypes from "./immunology-cell-types";
@@ -68,9 +69,14 @@ export function createPaletteId(routeKey: string): string {
 }
 
 function materializePalette(routeKey: string, source: PaletteSource): Palette {
+  const colorblindReport = evaluatePaletteColorblindAccessibility(source.colors);
+
   return {
     id: createPaletteId(routeKey),
     ...source,
+    colorblindSafe: colorblindReport.safe,
+    colorblindScore: colorblindReport.score,
+    colorblindReport,
   };
 }
 

@@ -58,9 +58,9 @@ CI 会在 PR 和 `main` 推送时运行。`main` 推送还会触发 GitHub Pages
    - `colors`：合法 HEX 颜色数组，建议至少 3 个颜色。
    - `recommendedFor`：推荐图类型，可选 `bar`、`line`、`scatter`、`umap`、`heatmap`、`volcano`、`boxplot`。
    - `tags`：用于搜索和相似推荐的标签。
-   - `colorblindSafe`：是否色盲友好。请勿凭感觉填写，建议使用 Coblis 等工具验证后再标注 `true`。
    - `background`：推荐背景，可选 `white`、`light`、`dark`。
    - `source`：可选，说明灵感来源、论文、工具或理论依据。
+   - 不要填写 `colorblindSafe`。SciPalette 会在注册时用代码自动计算 colorblind score，并根据阈值生成 `colorblindSafe` 与分类报告。
 3. 运行自检命令，确认本地构建通过。
 
 示例：
@@ -73,7 +73,6 @@ CI 会在 PR 和 `main` 推送时运行。`main` 推送还会触发 GitHub Pages
   colors: ["#440154", "#3B528B", "#21908C", "#5DC863", "#FDE725"],
   recommendedFor: ["heatmap", "scatter"],
   tags: ["sequential", "perceptually-uniform", "continuous"],
-  colorblindSafe: true,
   background: "white",
   source: "Inspired by matplotlib viridis"
 }
@@ -165,9 +164,9 @@ If you are submitting code directly:
    - `colors`: valid HEX color array, with at least 3 colors recommended.
    - `recommendedFor`: suggested plot types, chosen from `bar`, `line`, `scatter`, `umap`, `heatmap`, `volcano`, and `boxplot`.
    - `tags`: search and similarity tags.
-   - `colorblindSafe`: verify with a tool such as Coblis before setting `true`.
    - `background`: recommended background, one of `white`, `light`, or `dark`.
    - `source`: optional note about inspiration, papers, tools, or theory.
+   - Do not include `colorblindSafe`. SciPalette automatically calculates a colorblind score during registration, then derives `colorblindSafe` and the classification report from thresholds.
 3. Run the checks above to confirm the build passes.
 
 Example:
@@ -180,7 +179,6 @@ Example:
   colors: ["#440154", "#3B528B", "#21908C", "#5DC863", "#FDE725"],
   recommendedFor: ["heatmap", "scatter"],
   tags: ["sequential", "perceptually-uniform", "continuous"],
-  colorblindSafe: true,
   background: "white",
   source: "Inspired by matplotlib viridis"
 }

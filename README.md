@@ -17,7 +17,7 @@ SciPalette 是一个专为科研可视化设计的静态配色方案库。它面
 ## 当前功能
 
 - **20+ 精选配色方案**：覆盖 categorical、sequential、diverging、heatmap 四类科研配色。
-- **多维筛选**：支持按关键词、类别、图类型、颜色数量、色盲友好性筛选。
+- **多维筛选**：支持按关键词、类别、图类型、颜色数量、自动计算的色盲友好性筛选。
 - **科研图预览**：详情页按推荐场景展示 bar、line、scatter、UMAP、heatmap、volcano 等预览。
 - **色盲模拟预览**：详情页可切换 Original、Protanopia、Deuteranopia、Tritanopia，检查色板在常见色觉缺陷场景下的可区分度。
 - **灰度对比度检查**：详情页计算色板转为灰度后的最小对比度，帮助判断打印或低饱和环境下是否仍可区分。
@@ -28,9 +28,9 @@ SciPalette 是一个专为科研可视化设计的静态配色方案库。它面
 - **独立页面职责**：配色库、推荐、对比、Art2Pal、贡献和 About 分开成专注页面，导航和页脚提供直接入口。
 - **用户提交配色方案**：Contribute 页面提供 GitHub Issue 投稿入口，并支持粘贴 Art2Pal 导出的 SciPalette contribution JSON。
 - **论文图灵感收集**：Contribute 页面提供 DOI、论文链接和 figure reference 的 GitHub Issue 入口，用于记录值得研究的论文图配色来源。
-- **本地配色推荐助手**：Recommend 页面提供本地运行的推荐助手，根据图类型、配色类别、颜色数量、背景、色盲安全和研究意图给出可解释推荐。
+- **本地配色推荐助手**：Recommend 页面提供本地运行的推荐助手，根据图类型、配色类别、颜色数量、背景、自动色盲友好分数和研究意图给出可解释推荐。
 - **配色方案对比视图**：Compare 页面可并排比较两个色板的用途重叠、颜色数量、标签、灰度对比和色条。
-- **色盲友好标注**：在卡片、详情页和筛选器中标注可访问性信息。
+- **色盲友好分数**：使用色觉缺陷模拟、OKLab 距离和高风险色相组合惩罚自动计算 `colorblindScore`，并按阈值归类为 safe、caution 或 unsafe。
 - **静态部署**：基于 Astro 静态生成，可部署到 GitHub Pages 等静态托管平台。
 - **响应式界面**：桌面、平板和手机均可浏览和复制配色。
 
@@ -159,7 +159,6 @@ scipalette/
   colors: ["#4E79A7", "#F28E2B", "#E15759"],
   recommendedFor: ["bar", "scatter"],
   tags: ["publication", "multi-group"],
-  colorblindSafe: true,
   background: "white",
   source: "可选的来源说明"
 }
@@ -186,11 +185,20 @@ type PaletteSource = {
   colors: string[];
   recommendedFor: PlotType[];
   tags: string[];
-  colorblindSafe: boolean;
   background: "white" | "light" | "dark";
   source?: string;
 };
 ```
+
+注册后生成的 `Palette` 会自动包含：
+
+```ts
+colorblindSafe: boolean;
+colorblindScore: number;
+colorblindReport: ColorblindAccessibilityReport;
+```
+
+贡献者不需要、也不应该在源文件或 contribution JSON 中手写 `colorblindSafe`；SciPalette 会在注册时统一计算色盲友好分数和分类。
 
 添加后运行：
 
@@ -206,6 +214,7 @@ npm run build
 
 - [x] 上传图片提取配色方案
 - [x] 色盲模拟预览
+- [x] 自动色盲友好评分
 - [x] 灰度对比度检查
 - [x] 导出 Adobe ASE 文件
 - [x] 导出 CSS 变量

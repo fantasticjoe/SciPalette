@@ -15,6 +15,6 @@
 - [ ] `npm run typecheck` 通过
 - [ ] `npm run build` 通过
 - [ ] （界面相关）已检查桌面和移动端显示
-- [ ] （配色相关）`colorblindSafe` 已用工具验证
+- [ ] （配色相关）已让本地测试自动计算色盲友好分数
 - [ ] 已阅读 [CONTRIBUTING.md](../CONTRIBUTING.md)
 - [ ] 已按需参考 [docs/ARCHITECTURE.md](../docs/ARCHITECTURE.md)

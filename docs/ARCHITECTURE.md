@@ -32,14 +32,14 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 - `src/components/PaletteExportSection.astro` owns the detail-page export panel shell.
 - `src/components/SimilarPalettesSection.astro` owns detail-page similar palette recommendations.
 - `src/components/*.tsx` owns interactive UI rendered by Astro client directives.
-- `src/lib/palettes/` is the palette data source. Each file owns one id-free `PaletteSource`, and `src/lib/palettes/index.ts` owns stable route-key registration, short id generation, aggregated exports, and lookup helpers.
+- `src/lib/palettes/` is the palette data source. Each file owns one id-free `PaletteSource`, and `src/lib/palettes/index.ts` owns stable route-key registration, short id generation, automatic colorblind accessibility score derivation, aggregated exports, and lookup helpers.
 - `src/lib/art2pal/` owns browser-local image processing, color-space conversion, OKLab K-means clustering, scientific palette generation, mock preview data, and export formatting for the Art2Pal Palette tool.
 - `src/lib/homepage.ts` owns home-page grouping helpers and derived counts.
 - `src/lib/filter-options.ts` owns filter dropdown labels and values.
 - `src/lib/palette-recommendations.ts` owns local recommendation scoring, intent presets, and explanation reasons. It must stay browser-local unless a backend is explicitly introduced later.
 - `src/lib/palette-comparison.ts` owns pairwise palette comparison metrics, shared use cases, color uniqueness, and grayscale comparison summaries.
 - `src/lib/palette-utils.ts` owns filtering, export snippets, and similarity logic.
-- `src/lib/color-vision.ts` owns color vision deficiency simulation modes, transformation matrices, and HEX palette conversion.
+- `src/lib/color-vision.ts` owns color vision deficiency simulation modes, transformation matrices, HEX palette conversion, and the automatic colorblind accessibility score/classification heuristic used to derive `colorblindSafe`.
 - `src/lib/grayscale-contrast.ts` owns grayscale luminance conversion, pairwise grayscale contrast ratios, and report construction.
 - `src/lib/adobe-ase.ts` owns Adobe ASE binary construction and palette filename generation.
 - `src/lib/types.ts` owns shared TypeScript contracts.
@@ -51,10 +51,10 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 
 Use these boundaries when preparing a PR:
 
-- **New or updated palette:** edit an id-free `src/lib/palettes/<palette-name>.ts` source file and register its import plus stable route key in `src/lib/palettes/index.ts`; only touch UI if the data model must change.
+- **New or updated palette:** edit an id-free `src/lib/palettes/<palette-name>.ts` source file and register its import plus stable route key in `src/lib/palettes/index.ts`; do not add manual `colorblindSafe`, because registration derives the score and classification.
 - **User-submitted palette workflow:** edit `.github/ISSUE_TEMPLATE/palette_request.yml`, `src/pages/contribute/index.astro`, `src/components/PaletteContributionPanel.astro`, and contribution docs. Keep submissions on GitHub Issues or PRs unless a backend is explicitly introduced later.
 - **Paper figure inspiration workflow:** edit `.github/ISSUE_TEMPLATE/paper_inspiration.yml`, `src/pages/contribute/index.astro`, `src/components/PaperInspirationPanel.astro`, and contribution docs. Keep DOI and figure references as links and citation notes unless rights are explicit.
-- **New palette field:** update `src/lib/types.ts`, the affected `src/lib/palettes/<palette-name>.ts` files, `src/lib/palettes/index.ts`, affected components, and README examples together.
+- **New palette field:** update `src/lib/types.ts`, the affected registration/materialization code in `src/lib/palettes/index.ts`, affected components, and README examples together. Only update individual palette source files when the source metadata itself changes.
 - **Filtering or export behavior:** edit `src/lib/palette-utils.ts` first; keep component changes limited to wiring or labels.
 - **Adobe ASE export:** edit `src/lib/adobe-ase.ts` for binary file construction and `src/components/CodeExport.tsx` for the download action.
 - **Filter labels or available filter values:** edit `src/lib/filter-options.ts`; edit `src/components/PaletteFilters.tsx` only for layout or interaction changes.
@@ -63,7 +63,7 @@ Use these boundaries when preparing a PR:
 - **Home-page hero or featured sections:** edit `src/components/PaletteShowcase.tsx`, `HomeHero`, or `FeaturedPaletteSections`; keep full-library filtering in `src/components/PaletteBrowser.tsx`.
 - **Home-page grouping rules:** edit `src/lib/homepage.ts`; keep rendering components focused on presentation.
 - **Palette detail page presentation:** edit the matching `PaletteDetail*` or `SimilarPalettesSection` component first; edit `src/pages/palettes/[id].astro` only when route data or section ordering changes.
-- **Color vision simulation:** edit `src/lib/color-vision.ts` for simulation math and labels, `src/components/ColorVisionPreview.tsx` for interaction, and `src/components/PlotPreview.tsx` only when simulated colors need to flow into chart previews.
+- **Color vision simulation and scoring:** edit `src/lib/color-vision.ts` for simulation math, labels, score thresholds, high-risk pair penalties, and automatic classification; edit `src/components/ColorVisionPreview.tsx` for interaction, and `src/components/PlotPreview.tsx` only when simulated colors need to flow into chart previews.
 - **Grayscale contrast checks:** edit `src/lib/grayscale-contrast.ts` for grayscale math and thresholds, and `src/components/GrayscaleContrastPanel.tsx` for the detail-page report UI.
 - **Global navigation or repository links:** edit `src/lib/site.ts` and, if needed, `src/components/SiteHeader.astro`.
 - **About page copy or site palette presentation:** edit `src/pages/about.astro`; keep shared footer changes in `src/components/SiteFooter.astro`.

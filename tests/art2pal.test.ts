@@ -14,6 +14,7 @@ import { formatPaletteExport, paletteExportFormats } from "../src/lib/art2pal/ex
 import { safeCopyText } from "../src/lib/art2pal/clipboard";
 import {
   colorVisionModes,
+  evaluatePaletteColorblindAccessibility,
   simulateColorVisionDeficiency,
   simulatePaletteColorVision,
 } from "../src/lib/color-vision";
@@ -296,6 +297,7 @@ test("formats palette exports for common scientific workflows", () => {
   assert.equal(contribution.name, "Your Palette Name");
   assert.equal(Object.hasOwn(contribution, "id"), false);
   assert.equal(Object.hasOwn(contribution, "uid"), false);
+  assert.equal(Object.hasOwn(contribution, "colorblindSafe"), false);
   assert.equal(contribution.category, "categorical");
   assert.deepEqual(contribution.colors, colors);
   assert.deepEqual(contribution.recommendedFor, ["umap", "scatter"]);
@@ -342,6 +344,32 @@ test("simulates color vision deficiencies for HEX palettes", () => {
   assert.ok(protanRed.g > originalRed.g);
   assert.ok(simulateColorVisionDeficiency("#abcdef", "deuteranopia").startsWith("#"));
   assert.ok(simulateColorVisionDeficiency("#abcdef", "tritanopia").startsWith("#"));
+});
+
+test("calculates colorblind accessibility scores and automatic safe classifications", () => {
+  const okabeItoReport = evaluatePaletteColorblindAccessibility([
+    "#E69F00",
+    "#56B4E9",
+    "#009E73",
+    "#F0E442",
+    "#0072B2",
+    "#D55E00",
+    "#CC79A7",
+    "#000000",
+  ]);
+  const highRiskReport = evaluatePaletteColorblindAccessibility(["#FF0000", "#00FF00", "#0000FF", "#FFFF00"]);
+
+  assert.equal(okabeItoReport.safe, true);
+  assert.equal(okabeItoReport.level, "safe");
+  assert.ok(okabeItoReport.score >= okabeItoReport.thresholds.safeScore);
+  assert.ok(okabeItoReport.minimumDistance >= okabeItoReport.thresholds.safeMinimumDistance);
+  assert.ok(okabeItoReport.modes.every((mode) => mode.pairCount > 0));
+  assert.equal(okabeItoReport.failingPairs.length, 0);
+
+  assert.equal(highRiskReport.safe, false);
+  assert.ok(["caution", "unsafe"].includes(highRiskReport.level));
+  assert.ok(highRiskReport.score < highRiskReport.thresholds.safeScore);
+  assert.ok(highRiskReport.failingPairs.length > 0);
 });
 
 test("checks grayscale contrast for scientific palette separability", () => {
@@ -449,16 +477,44 @@ test("curated palette source files keep ids implicit and generated ids stable", 
   for (const file of paletteFiles) {
     const source = readFileSync(`src/lib/palettes/${file}`, "utf8");
     assert.ok(!source.includes("id:"), `${file} should not define an explicit id`);
+    assert.ok(!source.includes("colorblindSafe:"), `${file} should not define manual colorblind safety`);
     assert.ok(source.includes("satisfies PaletteSource"), `${file} should satisfy PaletteSource`);
   }
 
   for (const palette of palettes) {
     assert.match(palette.id, /^sp-[0-9a-z]{12}$/);
     assert.ok(palette.id.length <= 15);
+    assert.equal(typeof palette.colorblindScore, "number");
+    assert.ok(palette.colorblindScore >= 0 && palette.colorblindScore <= 100);
+    assert.equal(palette.colorblindSafe, palette.colorblindReport.safe);
+    assert.equal(palette.colorblindScore, palette.colorblindReport.score);
   }
 
   assert.equal(palettes[0].id, createPaletteId(paletteRouteKeys[0]));
   assert.notEqual(createPaletteId(paletteRouteKeys[0]), createPaletteId(paletteRouteKeys[1]));
+});
+
+test("palette submissions do not ask contributors to self-certify colorblind safety", () => {
+  const issueTemplate = readFileSync(".github/ISSUE_TEMPLATE/palette_request.yml", "utf8");
+  const pullRequestTemplate = readFileSync(".github/PULL_REQUEST_TEMPLATE.md", "utf8");
+  const contributionPanel = readFileSync("src/components/PaletteContributionPanel.astro", "utf8");
+  const contributing = readFileSync("CONTRIBUTING.md", "utf8");
+  const readme = readFileSync("README.md", "utf8");
+  const readmeEn = readFileSync("README.en.md", "utf8");
+  const architecture = readFileSync("docs/ARCHITECTURE.md", "utf8");
+
+  assert.ok(!issueTemplate.includes("Colorblind-safe?"));
+  assert.ok(!issueTemplate.includes("是否色盲友好"));
+  assert.ok(issueTemplate.includes("色盲友好备注 / Colorblind accessibility notes"));
+  assert.ok(issueTemplate.includes("automatically calculate"));
+  assert.ok(!pullRequestTemplate.includes("`colorblindSafe`"));
+  assert.ok(!contributionPanel.includes('"colorblindSafe"'));
+  assert.ok(contributionPanel.includes("automatically calculates colorblind accessibility"));
+  assert.ok(!contributing.includes("colorblindSafe: true"));
+  assert.ok(contributing.includes("colorblind score"));
+  assert.ok(readme.includes("colorblindScore"));
+  assert.ok(readmeEn.includes("colorblindScore"));
+  assert.ok(architecture.includes("automatic colorblind accessibility score"));
 });
 
 test("workflow actions stay on current Node-backed releases", () => {

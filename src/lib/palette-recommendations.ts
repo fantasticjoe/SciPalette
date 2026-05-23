@@ -83,7 +83,9 @@ const intentKeywordWeights: Array<{ keywords: string[]; tags: string[]; plots: P
 ];
 
 export function getPaletteRecommendations(input: PaletteRecommendationInput, limit: number = 4): PaletteRecommendation[] {
-  return palettes
+  const candidates = input.colorblindOnly ? palettes.filter((palette) => palette.colorblindSafe) : palettes;
+
+  return candidates
     .map((palette) => scorePalette(palette, input))
     .filter((result) => result.score > 0)
     .sort((a, b) => b.score - a.score || a.palette.name.localeCompare(b.palette.name))
@@ -106,7 +108,7 @@ function scorePalette(palette: Palette, input: PaletteRecommendationInput): Pale
 
   if (input.colorblindOnly && palette.colorblindSafe) {
     score += 18;
-    reasons.push("Marked colorblind-safe");
+    reasons.push(`Colorblind score ${palette.colorblindScore}/100`);
   } else if (input.colorblindOnly) {
     score -= 12;
   }

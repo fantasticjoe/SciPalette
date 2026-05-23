@@ -7,7 +7,6 @@ const palette = {
   colors: ["#9ECAE1", "#4292C6", "#08519C", "#54278F", "#6A51A3", "#807DBA"],
   recommendedFor: ["bar", "umap", "scatter"],
   tags: ["immunology", "T-cells", "differentiation"],
-  colorblindSafe: true,
   background: "white"
 } satisfies PaletteSource;
 

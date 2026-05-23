@@ -20,7 +20,7 @@ const { palette } = Astro.props;
     {palette.colorblindSafe && (
       <span class="inline-flex shrink-0 items-center gap-1.5 border border-[rgb(79_109_95_/_0.26)] bg-[rgb(122_158_141_/_0.16)] px-3 py-1.5 text-sm font-bold text-[#2f453d]">
         <Check class="w-4 h-4" />
-        Colorblind Safe
+        Colorblind {palette.colorblindReport.level} · {palette.colorblindScore}/100
       </span>
     )}
   </div>

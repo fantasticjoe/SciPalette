@@ -7,7 +7,6 @@ const palette = {
   colors: ["#0D0887", "#46039F", "#7201A8", "#9C179E", "#BD3786", "#D8576B", "#ED7953", "#FB9F3A", "#FDCA26", "#F0F921"],
   recommendedFor: ["heatmap", "scatter"],
   tags: ["sequential", "vibrant", "high-contrast"],
-  colorblindSafe: true,
   background: "white",
   source: "Inspired by matplotlib plasma"
 } satisfies PaletteSource;

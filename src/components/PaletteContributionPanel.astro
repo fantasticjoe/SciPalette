@@ -10,7 +10,6 @@ const contributionExample = `{
   "colors": ["#123456", "#abcdef", "#e07a5f"],
   "recommendedFor": ["umap", "scatter"],
   "tags": ["publication", "categorical"],
-  "colorblindSafe": false,
   "background": "white",
   "source": "Optional source note"
 }`;
@@ -44,7 +43,7 @@ const contributionExample = `{
     <div class="sp-panel-muted p-5">
       <p class="text-xs font-bold uppercase tracking-[0.14em] text-[#4f6d5f]">SciPalette contribution JSON</p>
       <p class="mt-2 text-sm leading-6 text-[rgb(33_44_51_/_0.66)]">
-        Art2Pal can export this shape directly. The source should not include an id; SciPalette creates stable route ids during registration.
+        Art2Pal can export this shape directly. The source should not include an id; SciPalette creates stable route ids and automatically calculates colorblind accessibility during registration.
       </p>
       <pre class="mt-4 overflow-x-auto border border-[#dadcd6] bg-[rgb(248_245_236_/_0.78)] p-4 font-mono text-xs leading-5 text-[#212c33]">{contributionExample}</pre>
     </div>

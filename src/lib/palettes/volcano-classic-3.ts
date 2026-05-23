@@ -7,7 +7,6 @@ const palette = {
   colors: ["#999999", "#E64B35", "#4DBBD5"],
   recommendedFor: ["volcano", "scatter"],
   tags: ["volcano-plot", "differential-expression", "genomics"],
-  colorblindSafe: true,
   background: "white"
 } satisfies PaletteSource;
 

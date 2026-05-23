@@ -58,7 +58,6 @@ function formatSciPaletteContributionJson(colors: string[], context?: PaletteExp
       colors,
       recommendedFor: defaults.recommendedFor,
       tags: defaults.tags,
-      colorblindSafe: false,
       background: "white",
       source: "Generated locally with Art2Pal",
     },

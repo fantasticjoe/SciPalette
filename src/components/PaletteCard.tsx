@@ -35,9 +35,9 @@ export default function PaletteCard({ palette, className }: PaletteCardProps) {
               {palette.name}
             </h3>
             {palette.colorblindSafe && (
-              <span className="sp-chip shrink-0 px-2 py-0.5 text-xs">
+              <span className="sp-chip shrink-0 px-2 py-0.5 text-xs" title={`Colorblind score: ${palette.colorblindScore}/100`}>
                 <CheckCircle2 className="h-3.5 w-3.5" />
-                Safe
+                {palette.colorblindReport.level} {palette.colorblindScore}
               </span>
             )}
           </div>

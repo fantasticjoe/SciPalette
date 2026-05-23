@@ -48,17 +48,14 @@ body:
           "colors": ["#123456", "#abcdef", "#e07a5f"]
         }
       render: json
-  - type: dropdown
-    id: colorblind
+  - type: textarea
+    id: colorblind_notes
     attributes:
-      label: 是否色盲友好 / Colorblind-safe?
-      description: 如果不确定，请选择未验证。/ Choose not verified if you are unsure.
-      options:
-        - "是 / Yes"
-        - "否 / No"
-        - "未验证 / Not verified"
-    validations:
-      required: true
+      label: 色盲友好备注 / Colorblind accessibility notes
+      description: 不需要自行判断 true/false；SciPalette will automatically calculate a colorblind accessibility score and classification.
+      placeholder: |
+        中文：如果你已经用工具检查过，可以写下观察结果。
+        English: Optional notes from any external accessibility checks.
   - type: textarea
     id: description
     attributes:

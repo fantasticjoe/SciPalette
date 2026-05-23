@@ -17,7 +17,7 @@ Primary users include researchers, bioinformaticians, data scientists, and medic
 ## Features
 
 - **20+ curated palettes** across categorical, sequential, diverging, and heatmap families.
-- **Multi-dimensional filtering** by search query, category, plot type, color count, and colorblind-safe status.
+- **Multi-dimensional filtering** by search query, category, plot type, color count, and automatically calculated colorblind-safe status.
 - **Scientific plot previews** for recommended use cases such as bar, line, scatter, UMAP, heatmap, and volcano plots.
 - **Color vision simulation** on palette detail pages with Original, Protanopia, Deuteranopia, and Tritanopia previews.
 - **Grayscale contrast checks** on palette detail pages to estimate whether colors remain separable in print or low-saturation viewing conditions.
@@ -28,9 +28,9 @@ Primary users include researchers, bioinformaticians, data scientists, and medic
 - **Focused pages** for the palette library, recommendation assistant, comparison view, Art2Pal, contribution workflow, and About content, with direct navigation and footer links.
 - **User-submitted palettes** through a GitHub Issue entry point on the Contribute page, with support for Art2Pal's SciPalette contribution JSON.
 - **Paper figure inspiration collection** through the Contribute page for DOI, paper URL, figure reference, and citation notes worth studying for future palette design.
-- **Local palette recommendation assistant** on the Recommend page that scores palettes by plot type, palette family, color count, background, colorblind-safety, and research intent.
+- **Local palette recommendation assistant** on the Recommend page that scores palettes by plot type, palette family, color count, background, automatic colorblind score, and research intent.
 - **Palette comparison view** on the Compare page for comparing two palettes by use-case overlap, color count, tags, grayscale contrast, and swatches.
-- **Accessibility labeling** for colorblind-safe palettes.
+- **Colorblind accessibility scoring** calculates `colorblindScore` from color-vision simulation, OKLab separability, and high-risk hue-pair penalties, then classifies palettes as safe, caution, or unsafe.
 - **Static deployment** through Astro, suitable for GitHub Pages and other static hosts.
 - **Responsive UI** for desktop, tablet, and mobile browsing.
 
@@ -159,7 +159,6 @@ To add or update a palette, edit `src/lib/palettes/<palette-name>.ts` and regist
   colors: ["#4E79A7", "#F28E2B", "#E15759"],
   recommendedFor: ["bar", "scatter"],
   tags: ["publication", "multi-group"],
-  colorblindSafe: true,
   background: "white",
   source: "Optional source note"
 }
@@ -186,11 +185,20 @@ type PaletteSource = {
   colors: string[];
   recommendedFor: PlotType[];
   tags: string[];
-  colorblindSafe: boolean;
   background: "white" | "light" | "dark";
   source?: string;
 };
 ```
+
+After registration, the materialized `Palette` automatically includes:
+
+```ts
+colorblindSafe: boolean;
+colorblindScore: number;
+colorblindReport: ColorblindAccessibilityReport;
+```
+
+Contributors should not write `colorblindSafe` in source files or contribution JSON. SciPalette calculates the colorblind accessibility score and classification during registration.
 
 After adding a palette, run:
 
@@ -206,6 +214,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the contribution workflow.
 
 - [x] Extract palettes from uploaded images
 - [x] Color vision deficiency simulation
+- [x] Automatic colorblind accessibility scoring
 - [x] Grayscale contrast checks
 - [x] Adobe ASE export
 - [x] CSS variable export

@@ -7,7 +7,6 @@ const palette = {
   colors: ["#4E79A7", "#F28E2B", "#E15759", "#76B7B2", "#59A14F", "#EDC948", "#B07AA1", "#FF9DA7"],
   recommendedFor: ["bar", "line", "scatter", "boxplot"],
   tags: ["publication", "professional", "multi-group"],
-  colorblindSafe: true,
   background: "white",
   source: "Inspired by scientific visualization best practices"
 } satisfies PaletteSource;
