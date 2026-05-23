@@ -9,11 +9,14 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 - `src/components/SiteHeader.astro` owns the global navigation.
 - `src/components/SiteFooter.astro` owns the shared closing band and footer navigation.
 - `src/components/SiteMark.astro` owns the shared SVG logo mark used by the favicon, navigation, About page, and footer.
-- `src/components/PaletteContributionPanel.astro` owns the user-submitted palette entry point on the palette library route. It links to the GitHub issue template and documents the SciPalette contribution JSON shape without adding backend storage.
-- `src/components/PaperInspirationPanel.astro` owns the DOI and paper figure inspiration entry point on the palette library route. It links to a GitHub issue template for references, citation notes, and rights boundaries without storing paper figures.
+- `src/components/PaletteContributionPanel.astro` owns the user-submitted palette entry point rendered from the contribution route. It links to the GitHub issue template and documents the SciPalette contribution JSON shape without adding backend storage.
+- `src/components/PaperInspirationPanel.astro` owns the DOI and paper figure inspiration entry point rendered from the contribution route. It links to a GitHub issue template for references, citation notes, and rights boundaries without storing paper figures.
 - `src/pages/about.astro` owns the About narrative, design philosophy, site-palette presentation, and large Logo system explanation.
 - `src/pages/art2pal/index.astro` owns the Art2Pal Palette route and hydrates the browser-only React tool.
-- `src/pages/palettes/index.astro` owns the searchable full palette browser route and hydrates `PaletteBrowser`.
+- `src/pages/palettes/index.astro` owns the searchable full palette browser route and hydrates `PaletteBrowser`; keep recommendation, comparison, and contribution workflows out of this route.
+- `src/pages/recommend/index.astro` owns the local palette recommendation assistant route and hydrates `PaletteRecommendationPanel`.
+- `src/pages/compare/index.astro` owns the palette comparison route and hydrates `PaletteComparisonPanel`.
+- `src/pages/contribute/index.astro` owns the contribution route and renders `PaletteContributionPanel` plus `PaperInspirationPanel`.
 - `src/components/PaletteShowcase.tsx` owns the home-page showcase composition.
 - `src/components/PaletteBrowser.tsx` owns full-library filter state and copy actions.
 - `src/components/PaletteRecommendationPanel.tsx` owns the browser-local recommendation controls and explanation UI.
@@ -49,14 +52,14 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 Use these boundaries when preparing a PR:
 
 - **New or updated palette:** edit an id-free `src/lib/palettes/<palette-name>.ts` source file and register its import plus stable route key in `src/lib/palettes/index.ts`; only touch UI if the data model must change.
-- **User-submitted palette workflow:** edit `.github/ISSUE_TEMPLATE/palette_request.yml`, `src/components/PaletteContributionPanel.astro`, and contribution docs. Keep submissions on GitHub Issues or PRs unless a backend is explicitly introduced later.
-- **Paper figure inspiration workflow:** edit `.github/ISSUE_TEMPLATE/paper_inspiration.yml`, `src/components/PaperInspirationPanel.astro`, and contribution docs. Keep DOI and figure references as links and citation notes unless rights are explicit.
+- **User-submitted palette workflow:** edit `.github/ISSUE_TEMPLATE/palette_request.yml`, `src/pages/contribute/index.astro`, `src/components/PaletteContributionPanel.astro`, and contribution docs. Keep submissions on GitHub Issues or PRs unless a backend is explicitly introduced later.
+- **Paper figure inspiration workflow:** edit `.github/ISSUE_TEMPLATE/paper_inspiration.yml`, `src/pages/contribute/index.astro`, `src/components/PaperInspirationPanel.astro`, and contribution docs. Keep DOI and figure references as links and citation notes unless rights are explicit.
 - **New palette field:** update `src/lib/types.ts`, the affected `src/lib/palettes/<palette-name>.ts` files, `src/lib/palettes/index.ts`, affected components, and README examples together.
 - **Filtering or export behavior:** edit `src/lib/palette-utils.ts` first; keep component changes limited to wiring or labels.
 - **Adobe ASE export:** edit `src/lib/adobe-ase.ts` for binary file construction and `src/components/CodeExport.tsx` for the download action.
 - **Filter labels or available filter values:** edit `src/lib/filter-options.ts`; edit `src/components/PaletteFilters.tsx` only for layout or interaction changes.
-- **Local palette recommendations:** edit `src/lib/palette-recommendations.ts` for scoring and presets, and `src/components/PaletteRecommendationPanel.tsx` for the browser UI. Keep recommendations local and explainable.
-- **Palette comparison view:** edit `src/lib/palette-comparison.ts` for pairwise metrics and `src/components/PaletteComparisonPanel.tsx` for the browser UI.
+- **Local palette recommendations:** edit `src/lib/palette-recommendations.ts` for scoring and presets, `src/pages/recommend/index.astro` for route-level framing, and `src/components/PaletteRecommendationPanel.tsx` for the browser UI. Keep recommendations local and explainable.
+- **Palette comparison view:** edit `src/lib/palette-comparison.ts` for pairwise metrics, `src/pages/compare/index.astro` for route-level framing, and `src/components/PaletteComparisonPanel.tsx` for the browser UI.
 - **Home-page hero or featured sections:** edit `src/components/PaletteShowcase.tsx`, `HomeHero`, or `FeaturedPaletteSections`; keep full-library filtering in `src/components/PaletteBrowser.tsx`.
 - **Home-page grouping rules:** edit `src/lib/homepage.ts`; keep rendering components focused on presentation.
 - **Palette detail page presentation:** edit the matching `PaletteDetail*` or `SimilarPalettesSection` component first; edit `src/pages/palettes/[id].astro` only when route data or section ordering changes.
@@ -92,6 +95,9 @@ For UI changes, also preview the site locally and check:
 
 - Home page at `/`
 - Full palette browser at `/palettes/`
+- Recommendation assistant at `/recommend/`
+- Palette comparison at `/compare/`
+- Contribution workflow at `/contribute/`
 - A palette detail page under `/palettes/<short-stable-id>/`
 - About page at `/about/`
 - A narrow mobile viewport around 390 px wide

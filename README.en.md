@@ -25,10 +25,11 @@ Primary users include researchers, bioinformaticians, data scientists, and medic
 - **About and design philosophy** explaining SciPalette's color principles, Art2Pal's design philosophy, the site palette inspired by *Wheat Field with Cypresses*, and the Logo system shared by the browser tab, navigation, About page, and footer.
 - **One-click copying** for HEX values, plus quick Python and R copy actions on palette cards.
 - **Code and file export** for HEX, Python/matplotlib, R/ggplot2, Scanpy, Seurat, GraphPad Prism, and downloadable Adobe ASE files.
-- **User-submitted palettes** through a GitHub Issue entry point on the palette library page, with support for Art2Pal's SciPalette contribution JSON.
-- **Paper figure inspiration collection** through a GitHub Issue entry point for DOI, paper URL, figure reference, and citation notes worth studying for future palette design.
-- **Local palette recommendation assistant** that scores palettes by plot type, palette family, color count, background, colorblind-safety, and research intent.
-- **Palette comparison view** for comparing two palettes by use-case overlap, color count, tags, grayscale contrast, and swatches.
+- **Focused pages** for the palette library, recommendation assistant, comparison view, Art2Pal, contribution workflow, and About content, with direct navigation and footer links.
+- **User-submitted palettes** through a GitHub Issue entry point on the Contribute page, with support for Art2Pal's SciPalette contribution JSON.
+- **Paper figure inspiration collection** through the Contribute page for DOI, paper URL, figure reference, and citation notes worth studying for future palette design.
+- **Local palette recommendation assistant** on the Recommend page that scores palettes by plot type, palette family, color count, background, colorblind-safety, and research intent.
+- **Palette comparison view** on the Compare page for comparing two palettes by use-case overlap, color count, tags, grayscale contrast, and swatches.
 - **Accessibility labeling** for colorblind-safe palettes.
 - **Static deployment** through Astro, suitable for GitHub Pages and other static hosts.
 - **Responsive UI** for desktop, tablet, and mobile browsing.
@@ -81,8 +82,11 @@ scipalette/
 │   │   ├── index.astro              # Home page and browser entry
 │   │   ├── about.astro              # About page, design philosophy, site palette, and Logo system
 │   │   ├── art2pal/index.astro      # Art2Pal Palette local image-to-palette tool
-│   │   ├── palettes/index.astro     # Full palette browser page
-│   │   └── palettes/[id].astro      # Static palette detail pages
+│   │   ├── palettes/index.astro     # Full palette browser page for search, filters, and browsing only
+│   │   ├── palettes/[id].astro      # Static palette detail pages
+│   │   ├── recommend/index.astro    # Local palette recommendation assistant
+│   │   ├── compare/index.astro      # Palette comparison page
+│   │   └── contribute/index.astro   # Palette submission and paper inspiration entry points
 │   ├── layouts/
 │   │   └── BaseLayout.astro         # HTML shell and SEO meta
 │   ├── components/
@@ -91,7 +95,7 @@ scipalette/
 │   │   ├── SiteMark.astro           # Shared site logo sourced from favicon.svg
 │   │   ├── PaletteContributionPanel.astro # User-submitted palette entry point
 │   │   ├── PaperInspirationPanel.astro # DOI and paper figure inspiration entry point
-│   │   ├── PaletteBrowser.tsx       # Home-page state composition
+│   │   ├── PaletteBrowser.tsx       # Full browser-page state composition
 │   │   ├── PaletteRecommendationPanel.tsx # Local palette recommendation panel
 │   │   ├── PaletteComparisonPanel.tsx # Palette comparison panel
 │   │   ├── HomeHero.tsx             # Home hero

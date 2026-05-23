@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PaletteContributionPanel from "../../components/PaletteContributionPanel.astro";
+import PaperInspirationPanel from "../../components/PaperInspirationPanel.astro";
+---
+
+<BaseLayout
+  title="Contribute - SciPalette"
+  description="Submit palette ideas or paper figure inspiration to SciPalette through GitHub Issues without adding accounts, databases, or uploaded image storage."
+>
+  <main>
+    <section class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#4f6d5f]">Contribute</p>
+        <h1 class="font-display mt-3 text-5xl font-bold leading-tight text-[#212c33] sm:text-6xl">
+          Send palette sources and figure references into the library workflow.
+        </h1>
+        <p class="mt-4 text-[1.08rem] leading-8 text-[rgb(33_44_51_/_0.72)]">
+          Use GitHub Issues for curated palette suggestions, Art2Pal contribution JSON, DOI links, and paper figure references. The site remains a static front-end resource.
+        </p>
+      </div>
+    </section>
+
+    <PaletteContributionPanel />
+    <PaperInspirationPanel />
+  </main>
+</BaseLayout>

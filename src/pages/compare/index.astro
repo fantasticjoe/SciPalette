@@ -1,0 +1,13 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { PaletteComparisonPanel } from "../../components/PaletteComparisonPanel";
+---
+
+<BaseLayout
+  title="Palette Comparison - SciPalette"
+  description="Compare two SciPalette color palettes by use cases, color count, shared tags, grayscale contrast, and swatches before choosing one for a figure."
+>
+  <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <PaletteComparisonPanel client:load />
+  </main>
+</BaseLayout>

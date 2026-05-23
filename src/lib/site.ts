@@ -3,9 +3,10 @@ export const siteConfig = {
   repositoryUrl: "https://github.com/fantasticjoe/SciPalette",
   navigation: [
     { id: "palettes", label: "Palettes", href: "/palettes/" },
+    { id: "recommend", label: "Recommend", href: "/recommend/" },
+    { id: "compare", label: "Compare", href: "/compare/" },
     { id: "art2pal", label: "Art2Pal", href: "/art2pal/" },
+    { id: "contribute", label: "Contribute", href: "/contribute/" },
     { id: "about", label: "About", href: "/about/" },
-    { id: "accessible", label: "Accessible", href: "/palettes/?accessibility=colorblind-safe", hideOnMobile: true },
-    { id: "github", label: "GitHub", href: "https://github.com/fantasticjoe/SciPalette", hideOnMobile: true },
   ],
 } as const;

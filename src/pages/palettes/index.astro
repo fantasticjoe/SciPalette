@@ -1,8 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PaletteBrowser from "../../components/PaletteBrowser";
-import PaletteContributionPanel from "../../components/PaletteContributionPanel.astro";
-import PaperInspirationPanel from "../../components/PaperInspirationPanel.astro";
 ---
 
 <BaseLayout
@@ -10,6 +8,4 @@ import PaperInspirationPanel from "../../components/PaperInspirationPanel.astro"
   description="Search, filter, preview, and export all SciPalette color palettes for publication-ready scientific figures."
 >
   <PaletteBrowser client:load />
-  <PaletteContributionPanel />
-  <PaperInspirationPanel />
 </BaseLayout>

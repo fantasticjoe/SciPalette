@@ -520,6 +520,9 @@ test("palette detail plot previews are rebuilt with D3 scales and shapes", () =>
 test("site separates homepage showcase from full palette browser route", () => {
   const homePage = readFileSync("src/pages/index.astro", "utf8");
   const palettesPage = readFileSync("src/pages/palettes/index.astro", "utf8");
+  const recommendPage = readFileSync("src/pages/recommend/index.astro", "utf8");
+  const comparePage = readFileSync("src/pages/compare/index.astro", "utf8");
+  const contributePage = readFileSync("src/pages/contribute/index.astro", "utf8");
   const detailPage = readFileSync("src/pages/palettes/[id].astro", "utf8");
   const colorVisionPreview = readFileSync("src/components/ColorVisionPreview.tsx", "utf8");
   const grayscaleContrastPanel = readFileSync("src/components/GrayscaleContrastPanel.tsx", "utf8");
@@ -534,15 +537,22 @@ test("site separates homepage showcase from full palette browser route", () => {
   const paperInspiration = readFileSync(".github/ISSUE_TEMPLATE/paper_inspiration.yml", "utf8");
   const readme = readFileSync("README.md", "utf8");
   const readmeEn = readFileSync("README.en.md", "utf8");
+  const architecture = readFileSync("docs/ARCHITECTURE.md", "utf8");
 
   assert.ok(homePage.includes("<PaletteShowcase"));
   assert.ok(!homePage.includes("<PaletteBrowser"));
   assert.ok(palettesPage.includes("<PaletteBrowser"));
-  assert.ok(palettesPage.includes("<PaletteContributionPanel"));
-  assert.ok(palettesPage.includes("<PaperInspirationPanel"));
+  assert.ok(!palettesPage.includes("<PaletteContributionPanel"));
+  assert.ok(!palettesPage.includes("<PaperInspirationPanel"));
+  assert.ok(!palettesPage.includes("<PaletteRecommendationPanel"));
+  assert.ok(!palettesPage.includes("<PaletteComparisonPanel"));
   assert.ok(browser.includes("<PaletteLibrarySection"));
-  assert.ok(browser.includes("<PaletteRecommendationPanel"));
-  assert.ok(browser.includes("<PaletteComparisonPanel"));
+  assert.ok(!browser.includes("<PaletteRecommendationPanel"));
+  assert.ok(!browser.includes("<PaletteComparisonPanel"));
+  assert.ok(recommendPage.includes("<PaletteRecommendationPanel client:load"));
+  assert.ok(comparePage.includes("<PaletteComparisonPanel client:load"));
+  assert.ok(contributePage.includes("<PaletteContributionPanel"));
+  assert.ok(contributePage.includes("<PaperInspirationPanel"));
   assert.ok(recommendationPanel.includes("getPaletteRecommendations"));
   assert.ok(comparisonPanel.includes("Palette comparison"));
   assert.ok(comparisonPanel.includes("comparePalettes"));
@@ -550,6 +560,9 @@ test("site separates homepage showcase from full palette browser route", () => {
   assert.ok(!featured.includes("CopyButton"));
   assert.ok(!featured.includes("generatePythonCode"));
   assert.ok(site.includes('href: "/palettes/"'));
+  assert.ok(site.includes('href: "/recommend/"'));
+  assert.ok(site.includes('href: "/compare/"'));
+  assert.ok(site.includes('href: "/contribute/"'));
   assert.ok(!site.includes('href: "/#palettes"'));
   assert.ok(detailPage.includes('href={`${siteConfig.basePath}/palettes/`}'));
   assert.ok(detailPage.includes("<ColorVisionPreview"));
@@ -576,6 +589,15 @@ test("site separates homepage showcase from full palette browser route", () => {
   assert.ok(readmeEn.includes("- [x] DOI / paper figure inspiration collection"));
   assert.ok(readme.includes("- [x] 配色方案对比视图"));
   assert.ok(readmeEn.includes("- [x] Palette comparison view"));
+  assert.ok(readme.includes("recommend/index.astro"));
+  assert.ok(readme.includes("compare/index.astro"));
+  assert.ok(readme.includes("contribute/index.astro"));
+  assert.ok(readmeEn.includes("recommend/index.astro"));
+  assert.ok(readmeEn.includes("compare/index.astro"));
+  assert.ok(readmeEn.includes("contribute/index.astro"));
+  assert.ok(architecture.includes("src/pages/recommend/index.astro"));
+  assert.ok(architecture.includes("src/pages/compare/index.astro"));
+  assert.ok(architecture.includes("src/pages/contribute/index.astro"));
   assert.ok(recommendationPanel.includes("Local palette recommendation"));
   assert.ok(recommendationPanel.includes("Runs locally"));
   assert.ok(recommendationPanel.includes("recommendationPresets"));
@@ -591,6 +613,9 @@ test("site header has an adaptive mobile navigation menu", () => {
   assert.ok(header.includes("hidden items-center"));
   assert.ok(header.includes("md:flex"));
   assert.ok(header.includes("Mobile navigation"));
+  assert.ok(header.includes('<header class="relative z-50'));
+  assert.ok(header.includes("z-[60]"));
+  assert.ok(!header.includes('<header class="sp-lift'));
   assert.ok(header.includes('import SiteMark from "./SiteMark.astro"'));
   assert.ok(header.includes("<SiteMark"));
 });

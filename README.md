@@ -25,10 +25,11 @@ SciPalette 是一个专为科研可视化设计的静态配色方案库。它面
 - **About 与设计哲学**：About 页面说明 SciPalette 的配色原则、Art2Pal 的设计哲学、来自《麦田与柏树》的站点视觉系统，以及统一应用在标签栏、导航栏、About 页面和页脚的 Logo system。
 - **一键复制**：可复制 HEX 列表，也可从卡片直接复制 Python 或 R 代码。
 - **代码与文件导出**：支持 HEX、Python/matplotlib、R/ggplot2、Scanpy、Seurat、GraphPad Prism，并可下载 Adobe ASE 文件。
-- **用户提交配色方案**：配色库页面提供 GitHub Issue 投稿入口，并支持粘贴 Art2Pal 导出的 SciPalette contribution JSON。
-- **论文图灵感收集**：配色库页面提供 DOI、论文链接和 figure reference 的 GitHub Issue 入口，用于记录值得研究的论文图配色来源。
-- **本地配色推荐助手**：配色库页面提供本地运行的推荐助手，根据图类型、配色类别、颜色数量、背景、色盲安全和研究意图给出可解释推荐。
-- **配色方案对比视图**：配色库页面可并排比较两个色板的用途重叠、颜色数量、标签、灰度对比和色条。
+- **独立页面职责**：配色库、推荐、对比、Art2Pal、贡献和 About 分开成专注页面，导航和页脚提供直接入口。
+- **用户提交配色方案**：Contribute 页面提供 GitHub Issue 投稿入口，并支持粘贴 Art2Pal 导出的 SciPalette contribution JSON。
+- **论文图灵感收集**：Contribute 页面提供 DOI、论文链接和 figure reference 的 GitHub Issue 入口，用于记录值得研究的论文图配色来源。
+- **本地配色推荐助手**：Recommend 页面提供本地运行的推荐助手，根据图类型、配色类别、颜色数量、背景、色盲安全和研究意图给出可解释推荐。
+- **配色方案对比视图**：Compare 页面可并排比较两个色板的用途重叠、颜色数量、标签、灰度对比和色条。
 - **色盲友好标注**：在卡片、详情页和筛选器中标注可访问性信息。
 - **静态部署**：基于 Astro 静态生成，可部署到 GitHub Pages 等静态托管平台。
 - **响应式界面**：桌面、平板和手机均可浏览和复制配色。
@@ -81,8 +82,11 @@ scipalette/
 │   │   ├── index.astro              # 首页与浏览入口
 │   │   ├── about.astro              # About、设计哲学、站点配色与 Logo system
 │   │   ├── art2pal/index.astro      # Art2Pal Palette 本地图片取色工具
-│   │   ├── palettes/index.astro     # 完整配色浏览页
-│   │   └── palettes/[id].astro      # 配色详情页，静态生成
+│   │   ├── palettes/index.astro     # 完整配色浏览页，仅负责搜索、筛选与浏览
+│   │   ├── palettes/[id].astro      # 配色详情页，静态生成
+│   │   ├── recommend/index.astro    # 本地配色推荐助手
+│   │   ├── compare/index.astro      # 配色方案对比页
+│   │   └── contribute/index.astro   # 配色投稿与论文图灵感入口
 │   ├── layouts/
 │   │   └── BaseLayout.astro         # HTML 外壳与 SEO meta
 │   ├── components/
@@ -91,7 +95,7 @@ scipalette/
 │   │   ├── SiteMark.astro           # 复用同一 favicon.svg 的站点 Logo
 │   │   ├── PaletteContributionPanel.astro # 用户提交配色方案入口
 │   │   ├── PaperInspirationPanel.astro # DOI 与论文图灵感收集入口
-│   │   ├── PaletteBrowser.tsx       # 首页状态组合层
+│   │   ├── PaletteBrowser.tsx       # 完整配色浏览页状态组合层
 │   │   ├── PaletteRecommendationPanel.tsx # 本地配色推荐面板
 │   │   ├── PaletteComparisonPanel.tsx # 配色方案对比面板
 │   │   ├── HomeHero.tsx             # 首页首屏
