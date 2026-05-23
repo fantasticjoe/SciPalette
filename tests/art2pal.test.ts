@@ -29,6 +29,12 @@ import {
   recommendationPresets,
 } from "../src/lib/palette-recommendations";
 import { comparePalettes } from "../src/lib/palette-comparison";
+import {
+  createPaletteFingerprint,
+  findPaletteDuplicates,
+  getPaletteColorDistance,
+  normalizePaletteColor,
+} from "../src/lib/palette-deduplication";
 import { getPaletteSimilarityScore } from "../src/lib/palette-utils";
 import { extractCandidateColors } from "../src/lib/art2pal/palette/extractCandidateColors";
 import {
@@ -544,6 +550,82 @@ test("keeps similar palette scoring anchored to use-case metadata", () => {
 
   assert.ok(colorOnlyScore.color > sameUseScore.color);
   assert.ok(sameUseScore.total > colorOnlyScore.total);
+});
+
+test("normalizes palette colors and creates order-aware fingerprints", () => {
+  assert.equal(normalizePaletteColor(" abc "), "#aabbcc");
+  assert.equal(normalizePaletteColor("#ABCDEF"), "#abcdef");
+
+  const ordered = createPaletteFingerprint(["#ABCDEF", "#123456"], { ignoreOrder: false });
+  const reordered = createPaletteFingerprint(["#123456", "#abcdef"], { ignoreOrder: false });
+  const unordered = createPaletteFingerprint(["#ABCDEF", "#123456"], { ignoreOrder: true });
+  const unorderedReversed = createPaletteFingerprint(["#123456", "#abcdef"], { ignoreOrder: true });
+
+  assert.equal(ordered, "#abcdef|#123456");
+  assert.notEqual(ordered, reordered);
+  assert.equal(unordered, unorderedReversed);
+});
+
+test("detects exact, order-insensitive, and near-duplicate palettes", () => {
+  const base = paletteFixture({
+    id: "base",
+    name: "Base",
+    colors: ["#153a5b", "#2f6f73", "#8abf8a"],
+  });
+  const exact = paletteFixture({
+    id: "exact",
+    name: "Exact",
+    colors: ["#153A5B", "#2F6F73", "#8ABF8A"],
+  });
+  const secondExact = paletteFixture({
+    id: "second-exact",
+    name: "Second Exact",
+    colors: ["#153a5b", "#2f6f73", "#8abf8a"],
+  });
+  const reordered = paletteFixture({
+    id: "reordered",
+    name: "Reordered",
+    colors: ["#8abf8a", "#153a5b", "#2f6f73"],
+  });
+  const near = paletteFixture({
+    id: "near",
+    name: "Near",
+    colors: ["#163b5c", "#317174", "#89be89"],
+  });
+  const distant = paletteFixture({
+    id: "distant",
+    name: "Distant",
+    colors: ["#5a174e", "#b84b4c", "#f2c35c"],
+  });
+
+  const report = findPaletteDuplicates([base, exact, secondExact, reordered, near, distant], {
+    nearDuplicateDistance: 0.035,
+  });
+
+  assert.deepEqual(
+    report.exact.map((pair) => pair.ids),
+    [
+      ["base", "exact"],
+      ["base", "second-exact"],
+    ]
+  );
+  assert.deepEqual(
+    report.orderInsensitive.map((pair) => pair.ids),
+    [["base", "reordered"]]
+  );
+  assert.deepEqual(
+    report.near.map((pair) => pair.ids),
+    [["base", "near"]]
+  );
+  assert.ok(getPaletteColorDistance(base.colors, near.colors) < 0.035);
+  assert.ok(getPaletteColorDistance(base.colors, distant.colors) > 0.035);
+});
+
+test("curated palettes do not contain blocking duplicate color systems", () => {
+  const report = findPaletteDuplicates(palettes);
+
+  assert.deepEqual(report.exact, []);
+  assert.deepEqual(report.orderInsensitive, []);
 });
 
 test("uses custom-domain root paths for deployed assets and links", () => {
