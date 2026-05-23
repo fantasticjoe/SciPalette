@@ -1,6 +1,7 @@
 import { PaletteFilters } from "./PaletteFilters";
 import PaletteGrid from "./PaletteGrid";
 import type { Palette, PaletteCategory, PlotType } from "../lib/types";
+import { Library } from "lucide-react";
 
 interface PaletteLibrarySectionProps {
   className?: string;
@@ -55,7 +56,10 @@ export function PaletteLibrarySection({
 
         <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">palette library</p>
+            <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">
+              <Library className="h-3.5 w-3.5" aria-hidden="true" />
+              palette library
+            </p>
             <h2 className="font-display mt-1 text-4xl font-bold tracking-[-0.02em] text-[#212c33]">
               {filteredPalettes.length} match{filteredPalettes.length === 1 ? "" : "es"} ready to export
             </h2>

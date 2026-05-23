@@ -1,5 +1,12 @@
 ---
+import { ExternalLink, Palette, ShieldCheck } from "lucide-react";
 import { siteConfig } from "../lib/site";
+
+const navIcons = {
+  palettes: Palette,
+  accessible: ShieldCheck,
+  github: ExternalLink,
+} as const;
 ---
 
 <header class="sp-lift border-b border-[#dadcd6] bg-[rgb(248_245_236_/_0.94)]">
@@ -8,17 +15,21 @@ import { siteConfig } from "../lib/site";
       SciPalette
     </a>
     <div class="flex items-center gap-1 text-sm font-semibold text-[rgb(33_44_51_/_0.68)]">
-      {siteConfig.navigation.map((item) => (
-        <a
-          href={item.href}
-          class:list={[
-            "px-3 py-2 transition-colors hover:bg-[rgb(122_158_141_/_0.1)] hover:text-[#212c33]",
-            item.hideOnMobile && "hidden sm:inline-flex",
-          ]}
-        >
-          {item.label}
-        </a>
-      ))}
+      {siteConfig.navigation.map((item) => {
+        const Icon = navIcons[item.id];
+        return (
+          <a
+            href={item.href}
+            class:list={[
+              "items-center gap-1.5 px-3 py-2 transition-colors hover:bg-[rgb(122_158_141_/_0.1)] hover:text-[#212c33]",
+              item.hideOnMobile ? "hidden sm:inline-flex" : "inline-flex",
+            ]}
+          >
+            <Icon class="h-3.5 w-3.5" aria-hidden="true" />
+            {item.label}
+          </a>
+        );
+      })}
     </div>
   </nav>
 </header>

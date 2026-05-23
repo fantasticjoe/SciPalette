@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Palette } from "../lib/types";
+import { Code2 } from "lucide-react";
 import {
   generatePythonCode,
   generateRCode,
@@ -52,7 +53,10 @@ export function CodeExport({ palette }: CodeExportProps) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="font-display text-2xl font-bold tracking-[-0.02em] text-[#212c33]">Export Code</h3>
+        <h3 className="font-display inline-flex items-center gap-2 text-2xl font-bold tracking-[-0.02em] text-[#212c33]">
+          <Code2 className="h-5 w-5 text-[#4f6d5f]" aria-hidden="true" />
+          Export Code
+        </h3>
         <CopyButton text={code} />
       </div>
 

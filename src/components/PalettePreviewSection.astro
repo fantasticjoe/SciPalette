@@ -1,4 +1,5 @@
 ---
+import { ChartNoAxesCombined } from "lucide-react";
 import { PlotPreview } from "./PlotPreview";
 import type { Palette, PlotType } from "../lib/types";
 
@@ -22,7 +23,10 @@ const visiblePreviews = previewTypes.filter(({ type }) => palette.recommendedFor
 
 {visiblePreviews.length > 0 && (
   <section class="sp-reveal sp-reveal-delay-1">
-    <h2 class="font-display mb-4 text-4xl font-bold tracking-[-0.02em] text-[#212c33]">Preview in scientific plots</h2>
+    <h2 class="font-display mb-4 inline-flex items-center gap-2 text-4xl font-bold tracking-[-0.02em] text-[#212c33]">
+      <ChartNoAxesCombined class="h-6 w-6 text-[#4f6d5f]" aria-hidden="true" />
+      Preview in scientific plots
+    </h2>
     <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
       {visiblePreviews.map(({ type, label }) => (
         <div class="sp-panel sp-lift border-[#dadcd6] bg-[rgb(251_249_242_/_0.7)] p-5">

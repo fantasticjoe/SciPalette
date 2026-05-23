@@ -1,5 +1,6 @@
 ---
 import { ColorSwatch } from "./ColorSwatch";
+import { SwatchBook } from "lucide-react";
 import type { Palette } from "../lib/types";
 
 interface Props {
@@ -10,7 +11,10 @@ const { palette } = Astro.props;
 ---
 
 <section class="sp-reveal sp-reveal-delay-1">
-  <h2 class="font-display mb-4 text-4xl font-bold tracking-[-0.02em] text-[#212c33]">Colors</h2>
+  <h2 class="font-display mb-4 inline-flex items-center gap-2 text-4xl font-bold tracking-[-0.02em] text-[#212c33]">
+    <SwatchBook class="h-6 w-6 text-[#4f6d5f]" aria-hidden="true" />
+    Colors
+  </h2>
   <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
     {palette.colors.map((color) => (
       <ColorSwatch color={color} showDetails client:visible />
