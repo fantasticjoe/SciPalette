@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Palette } from "../lib/types";
-import { Code2 } from "lucide-react";
+import { Code2, Download } from "lucide-react";
 import {
   generatePythonCode,
   generateRCode,
@@ -9,6 +9,7 @@ import {
   generateGraphPadCode,
   generateHexList,
 } from "../lib/palette-utils";
+import { createAdobeAseBuffer, createAdobeAseFilename } from "../lib/adobe-ase";
 import { CopyButton } from "./CopyButton";
 
 interface CodeExportProps {
@@ -50,14 +51,34 @@ export function CodeExport({ palette }: CodeExportProps) {
 
   const code = getCode();
 
+  const handleDownloadAse = () => {
+    const buffer = createAdobeAseBuffer(palette.colors, palette.name);
+    const blob = new Blob([buffer], { type: "application/octet-stream" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = createAdobeAseFilename(palette.name);
+    document.body.append(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h3 className="font-display inline-flex items-center gap-2 text-2xl font-bold tracking-[-0.02em] text-[#212c33]">
           <Code2 className="h-5 w-5 text-[#4f6d5f]" aria-hidden="true" />
           Export Code
         </h3>
-        <CopyButton text={code} />
+        <div className="flex flex-wrap gap-2">
+          <button type="button" onClick={handleDownloadAse} className="sp-button-secondary px-3 py-2 text-sm">
+            <Download className="h-4 w-4" aria-hidden="true" />
+            Download ASE
+          </button>
+          <CopyButton text={code} />
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-2 border-b border-[#dadcd6]">

@@ -32,6 +32,7 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 - `src/lib/palette-utils.ts` owns filtering, export snippets, and similarity logic.
 - `src/lib/color-vision.ts` owns color vision deficiency simulation modes, transformation matrices, and HEX palette conversion.
 - `src/lib/grayscale-contrast.ts` owns grayscale luminance conversion, pairwise grayscale contrast ratios, and report construction.
+- `src/lib/adobe-ase.ts` owns Adobe ASE binary construction and palette filename generation.
 - `src/lib/types.ts` owns shared TypeScript contracts.
 - `src/lib/site.ts` owns site-wide constants such as the deployment root path and navigation links.
 - `src/styles/global.css` owns global tokens, fonts, and base styles.
@@ -44,6 +45,7 @@ Use these boundaries when preparing a PR:
 - **New or updated palette:** edit an id-free `src/lib/palettes/<palette-name>.ts` source file and register its import plus stable route key in `src/lib/palettes/index.ts`; only touch UI if the data model must change.
 - **New palette field:** update `src/lib/types.ts`, the affected `src/lib/palettes/<palette-name>.ts` files, `src/lib/palettes/index.ts`, affected components, and README examples together.
 - **Filtering or export behavior:** edit `src/lib/palette-utils.ts` first; keep component changes limited to wiring or labels.
+- **Adobe ASE export:** edit `src/lib/adobe-ase.ts` for binary file construction and `src/components/CodeExport.tsx` for the download action.
 - **Filter labels or available filter values:** edit `src/lib/filter-options.ts`; edit `src/components/PaletteFilters.tsx` only for layout or interaction changes.
 - **Home-page hero or featured sections:** edit `src/components/PaletteShowcase.tsx`, `HomeHero`, or `FeaturedPaletteSections`; keep full-library filtering in `src/components/PaletteBrowser.tsx`.
 - **Home-page grouping rules:** edit `src/lib/homepage.ts`; keep rendering components focused on presentation.

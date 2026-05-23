@@ -24,7 +24,7 @@ SciPalette 是一个专为科研可视化设计的静态配色方案库。它面
 - **Art2Pal Palette**：浏览器本地从 PNG、JPEG 或 WebP 图片中提取色彩风格，并重组为 categorical、sequential、diverging、neutral 科研配色。
 - **About 与设计哲学**：About 页面说明 SciPalette 的配色原则、Art2Pal 的设计哲学、来自《麦田与柏树》的站点视觉系统，以及统一应用在标签栏、导航栏、About 页面和页脚的 Logo system。
 - **一键复制**：可复制 HEX 列表，也可从卡片直接复制 Python 或 R 代码。
-- **代码导出**：支持 HEX、Python/matplotlib、R/ggplot2、Scanpy、Seurat、GraphPad Prism。
+- **代码与文件导出**：支持 HEX、Python/matplotlib、R/ggplot2、Scanpy、Seurat、GraphPad Prism，并可下载 Adobe ASE 文件。
 - **色盲友好标注**：在卡片、详情页和筛选器中标注可访问性信息。
 - **静态部署**：基于 Astro 静态生成，可部署到 GitHub Pages 等静态托管平台。
 - **响应式界面**：桌面、平板和手机均可浏览和复制配色。
@@ -113,6 +113,7 @@ scipalette/
 │   │   ├── palette-utils.ts         # 筛选、导出和相似推荐逻辑
 │   │   ├── color-vision.ts          # 色觉缺陷模拟矩阵与色板转换
 │   │   ├── grayscale-contrast.ts    # 灰度亮度和对比度检查
+│   │   ├── adobe-ase.ts             # Adobe ASE 二进制导出
 │   │   ├── types.ts                 # TypeScript 类型定义
 │   │   └── utils.ts                 # 通用工具
 │   └── styles/
@@ -192,7 +193,7 @@ npm run build
 - [x] 上传图片提取配色方案
 - [x] 色盲模拟预览
 - [x] 灰度对比度检查
-- [ ] 导出 Adobe ASE 文件
+- [x] 导出 Adobe ASE 文件
 - [x] 导出 CSS 变量
 - [ ] 用户提交配色方案
 - [ ] DOI / 论文图灵感收集

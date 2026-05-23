@@ -22,6 +22,7 @@ import {
   getGrayscaleContrastReport,
   rgbToGrayscaleLuminance,
 } from "../src/lib/grayscale-contrast";
+import { createAdobeAseBuffer, createAdobeAseFilename } from "../src/lib/adobe-ase";
 import { extractCandidateColors } from "../src/lib/art2pal/palette/extractCandidateColors";
 import {
   getResizeDimensions,
@@ -352,6 +353,18 @@ test("checks grayscale contrast for scientific palette separability", () => {
   assert.ok(report.minimumRatio < 2);
 });
 
+test("creates Adobe ASE files for palette exchange", () => {
+  const buffer = createAdobeAseBuffer(["#123456", "#abcdef"], "My Palette");
+  const bytes = new Uint8Array(buffer);
+  const signature = String.fromCharCode(...bytes.slice(0, 4));
+  const blockCount = new DataView(buffer).getUint32(8, false);
+
+  assert.equal(signature, "ASEF");
+  assert.equal(blockCount, 4);
+  assert.ok(bytes.length > 80);
+  assert.equal(createAdobeAseFilename("My Palette / Test"), "my-palette-test.ase");
+});
+
 test("uses custom-domain root paths for deployed assets and links", () => {
   const astroConfig = readFileSync("astro.config.ts", "utf8");
   const baseLayout = readFileSync("src/layouts/BaseLayout.astro", "utf8");
@@ -442,6 +455,7 @@ test("Art2Pal shows palettes before all scientific previews", () => {
 
 test("palette detail plot previews are rebuilt with D3 scales and shapes", () => {
   const plotPreview = readFileSync("src/components/PlotPreview.tsx", "utf8");
+  const codeExport = readFileSync("src/components/CodeExport.tsx", "utf8");
   const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
 
   assert.ok(packageJson.dependencies.d3);
@@ -451,6 +465,8 @@ test("palette detail plot previews are rebuilt with D3 scales and shapes", () =>
   assert.ok(plotPreview.includes("d3.scaleBand"));
   assert.ok(plotPreview.includes("d3.line"));
   assert.ok(plotPreview.includes("d3.area"));
+  assert.ok(codeExport.includes("Download ASE"));
+  assert.ok(codeExport.includes("createAdobeAseBuffer"));
 });
 
 test("site separates homepage showcase from full palette browser route", () => {
