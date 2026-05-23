@@ -63,7 +63,7 @@ npm run build
 
 For UI changes, also preview the site locally and check:
 
-- Home page at `/SciPalette/`
-- A palette detail page under `/SciPalette/palettes/<id>/`
+- Home page at `/`
+- A palette detail page under `/palettes/<id>/`
 - A narrow mobile viewport around 390 px wide
 - Anchor links for `#palettes` and `#accessible`

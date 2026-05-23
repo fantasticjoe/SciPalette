@@ -52,7 +52,7 @@ npm install
 npm run dev
 ```
 
-默认开发服务器地址由 Astro 输出，通常是 http://localhost:4321/SciPalette/。
+默认开发服务器地址由 Astro 输出，通常是 http://localhost:4321/。
 
 ### 构建与预览
 
@@ -62,7 +62,7 @@ npm run build
 npm run preview
 ```
 
-`npm run build` 会生成 `dist/` 静态站点。项目在 `astro.config.ts` 中配置了 `base: "/SciPalette"`，用于匹配 GitHub Pages 仓库路径。
+`npm run build` 会生成 `dist/` 静态站点。线上站点从自定义域名根路径提供服务，因此静态资源和页面链接都使用根路径。
 
 ## 项目结构
 

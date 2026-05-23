@@ -52,7 +52,7 @@ npm install
 npm run dev
 ```
 
-Astro prints the development URL in the terminal, usually http://localhost:4321/SciPalette/.
+Astro prints the development URL in the terminal, usually http://localhost:4321/.
 
 ### Build and Preview
 
@@ -62,7 +62,7 @@ npm run build
 npm run preview
 ```
 
-`npm run build` writes the static site to `dist/`. The project uses `base: "/SciPalette"` in `astro.config.ts` so generated links work under the GitHub Pages repository path.
+`npm run build` writes the static site to `dist/`. The live site is served from the custom-domain root, so asset and page links use root-relative paths.
 
 ## Project Structure
 

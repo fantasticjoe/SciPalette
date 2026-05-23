@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import {
   calculateContrastRatio,
   hexToRgb,
@@ -25,6 +26,7 @@ import {
 } from "../src/lib/art2pal/palette/generatePalettes";
 import { kMeansOklab } from "../src/lib/art2pal/palette/kMeans";
 import type { CandidateColor, CandidateColorSet } from "../src/lib/art2pal/palette/types";
+import { siteConfig } from "../src/lib/site";
 
 function candidateFromHex(hex: string, overrides: Partial<CandidateColor> = {}): CandidateColor {
   const rgb = hexToRgb(hex);
@@ -220,4 +222,15 @@ test("formats palette exports for common scientific workflows", () => {
   assert.equal(formatPaletteExport(colors, "python"), 'palette = ["#123456", "#abcdef", "#e07a5f"]');
   assert.match(formatPaletteExport(colors, "r"), /scale_color_manual\(values = c\("#123456", "#abcdef", "#e07a5f"\)\)/);
   assert.match(formatPaletteExport(colors, "r"), /scale_fill_manual\(values = c\("#123456", "#abcdef", "#e07a5f"\)\)/);
+});
+
+test("uses custom-domain root paths for deployed assets and links", () => {
+  const astroConfig = readFileSync("astro.config.ts", "utf8");
+  const baseLayout = readFileSync("src/layouts/BaseLayout.astro", "utf8");
+  const paletteCard = readFileSync("src/components/PaletteCard.tsx", "utf8");
+
+  assert.equal(siteConfig.basePath, "");
+  assert.ok(!astroConfig.includes('base: "/SciPalette"'));
+  assert.ok(!baseLayout.includes("/SciPalette/"));
+  assert.ok(!paletteCard.includes("/SciPalette/"));
 });

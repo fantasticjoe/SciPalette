@@ -56,7 +56,7 @@ export default function PaletteCard({ palette, className }: PaletteCardProps) {
 
         <div className="mt-auto flex items-center gap-2 pt-5">
           <a
-            href={`/SciPalette/palettes/${palette.id}`}
+            href={`/palettes/${palette.id}`}
             className="sp-button-primary px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[rgb(79_109_95_/_0.34)] focus:ring-offset-2"
           >
             <Eye className="h-4 w-4" />
