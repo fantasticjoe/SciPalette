@@ -33,6 +33,7 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 - `src/components/SimilarPalettesSection.astro` owns detail-page similar palette recommendations.
 - `src/components/*.tsx` owns interactive UI rendered by Astro client directives.
 - `src/lib/palettes/` is the palette data source. Each file owns one id-free `PaletteSource`, and `src/lib/palettes/index.ts` owns stable route-key registration, short id generation, automatic colorblind accessibility score derivation, aggregated exports, and lookup helpers.
+- `src/pages/palettes/catalog.json.ts` owns the lightweight palette catalog for external tools and Codex skills. It must expose only the fields needed for recommendation and plotting, and it must be generated from the registered palettes without filesystem scanning or cloning assumptions.
 - `src/lib/art2pal/` owns browser-local image processing, color-space conversion, OKLab K-means clustering, scientific palette generation, mock preview data, and export formatting for the Art2Pal Palette tool.
 - `src/lib/homepage.ts` owns home-page grouping helpers and derived counts.
 - `src/lib/filter-options.ts` owns filter dropdown labels and values.
@@ -52,6 +53,7 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 Use these boundaries when preparing a PR:
 
 - **New or updated palette:** edit an id-free `src/lib/palettes/<palette-name>.ts` source file and register its import plus stable route key in `src/lib/palettes/index.ts`; do not add manual `colorblindSafe`, because registration derives the score and classification.
+- **External palette recommendation skill:** consume `/palettes/catalog.json` or the bundled skill snapshot. Do not require cloning, sparse-checking, importing, or scanning the full repository; the repository can grow to thousands of palette files while the skill reads only the compact published catalog.
 - **User-submitted palette workflow:** edit `.github/ISSUE_TEMPLATE/palette_request.yml`, `src/pages/contribute/index.astro`, `src/components/PaletteContributionPanel.astro`, and contribution docs. Keep submissions on GitHub Issues or PRs unless a backend is explicitly introduced later.
 - **Paper figure inspiration workflow:** edit `.github/ISSUE_TEMPLATE/paper_inspiration.yml`, `src/pages/contribute/index.astro`, `src/components/PaperInspirationPanel.astro`, and contribution docs. Keep DOI and figure references as links and citation notes unless rights are explicit.
 - **New palette field:** update `src/lib/types.ts`, the affected registration/materialization code in `src/lib/palettes/index.ts`, affected components, and README examples together. Only update individual palette source files when the source metadata itself changes.

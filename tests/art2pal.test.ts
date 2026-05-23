@@ -628,7 +628,7 @@ test("curated palettes do not contain blocking duplicate color systems", () => {
   assert.deepEqual(report.orderInsensitive, []);
 });
 
-test("research expansion contributes exactly fifty sourced palettes", () => {
+test("research expansion keeps sourced palettes distinct", () => {
   const expansion = palettes.filter((palette) => palette.source?.includes("Original SciPalette research expansion"));
   const expansionFiles = readdirSync("src/lib/palettes").filter((file) => {
     if (!file.endsWith(".ts") || file === "index.ts") return false;
@@ -636,15 +636,15 @@ test("research expansion contributes exactly fifty sourced palettes", () => {
     return source.includes("Original SciPalette research expansion");
   });
 
-  assert.equal(expansion.length, 50);
-  assert.equal(expansionFiles.length, 50);
+  assert.ok(expansion.length >= 30);
+  assert.equal(expansionFiles.length, expansion.length);
   assert.ok(expansion.every((palette) => palette.source));
   assert.ok(expansion.some((palette) => palette.category === "categorical"));
   assert.ok(expansion.some((palette) => palette.category === "sequential"));
   assert.ok(expansion.some((palette) => palette.category === "diverging"));
   assert.ok(expansion.some((palette) => palette.category === "heatmap"));
 
-  const duplicateReport = findPaletteDuplicates(expansion, { nearDuplicateDistance: 0.025 });
+  const duplicateReport = findPaletteDuplicates(expansion, { nearDuplicateDistance: 0.035 });
   assert.deepEqual(duplicateReport.exact, []);
   assert.deepEqual(duplicateReport.orderInsensitive, []);
   assert.deepEqual(duplicateReport.near, []);
@@ -659,6 +659,8 @@ test("palette catalog endpoint exposes a lightweight skill manifest", () => {
   assert.ok(catalogEndpoint.includes("recommendedFor"));
   assert.ok(!catalogEndpoint.includes("colorblindReport"));
   assert.ok(!catalogEndpoint.includes("from \"fs\""));
+  assert.ok(!catalogEndpoint.includes("readdir"));
+  assert.ok(!catalogEndpoint.includes("readFile"));
 });
 
 test("uses custom-domain root paths for deployed assets and links", () => {

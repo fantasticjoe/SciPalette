@@ -73,6 +73,12 @@ npm run preview
 
 `npm run build` writes the static site to `dist/`. The live site is served from the custom-domain root, so asset and page links use root-relative paths.
 
+### Lightweight Palette Catalog
+
+The built site exposes `/palettes/catalog.json` as a compact catalog for external scripts, Codex skills, and plotting tools. It includes only recommendation fields such as `id`, name, category, HEX colors, use cases, tags, colorblind score, background, and detail-page URL. It does not include page components, source files, or the full color-vision report.
+
+Even if the repository grows to hundreds or thousands of palette files, external recommendation tools should not clone or scan the full repository. They should read the live catalog first and fall back to a bundled catalog snapshot when offline.
+
 ## Project Structure
 
 ```text

@@ -9,6 +9,7 @@ The expansion follows these design rules:
 - Diverging palettes use balanced endpoints and a neutral center for signed values.
 - Heatmap palettes avoid rainbow ordering and preserve midrange readability.
 - New palettes are checked for exact duplicates, order-insensitive duplicates, and near-duplicates in OKLab space.
+- The research expansion is curated for distinct palette systems, not a target count. If a candidate repeats an existing hue scaffold, it should be revised or removed instead of kept as filler.
 
 Reference families used as design guidance:
 
@@ -19,3 +20,5 @@ Reference families used as design guidance:
 - Scientific colour map guidance from Fabio Crameri and Colorcet for perceptual uniformity and color-vision robustness.
 
 The source labels in palette files intentionally say `Original SciPalette research expansion` to distinguish these palettes from direct ports of external libraries.
+
+External recommendation tools should use the published `/palettes/catalog.json` manifest or a bundled snapshot of that manifest. They should not clone or scan the full SciPalette repository just to choose a palette; a future catalog can contain hundreds or thousands of source files while the skill runtime still reads one compact JSON document.

@@ -4,7 +4,7 @@ const palette = {
   name: "Editorial Categorical 8",
   description: "Restrained categorical palette for polished multipanel figures and explanatory graphics.",
   category: "categorical",
-  colors: ["#385f6d", "#a96f3f", "#6f7f56", "#665a7f", "#b08f52", "#4f7672", "#9a5f6d", "#7f6f4f"],
+  colors: ["#2e4057", "#d05c3f", "#3f7d69", "#935f8a", "#c9a43a", "#556fa3", "#8a7a3f", "#9f5a54"],
   recommendedFor: ["bar", "line", "scatter"],
   tags: ["categorical", "editorial", "muted", "publication"],
   background: "white",
