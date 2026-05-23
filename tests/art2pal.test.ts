@@ -475,13 +475,16 @@ test("site separates homepage showcase from full palette browser route", () => {
   const detailPage = readFileSync("src/pages/palettes/[id].astro", "utf8");
   const colorVisionPreview = readFileSync("src/components/ColorVisionPreview.tsx", "utf8");
   const grayscaleContrastPanel = readFileSync("src/components/GrayscaleContrastPanel.tsx", "utf8");
+  const contributionPanel = readFileSync("src/components/PaletteContributionPanel.astro", "utf8");
   const browser = readFileSync("src/components/PaletteBrowser.tsx", "utf8");
   const featured = readFileSync("src/components/FeaturedPaletteSections.tsx", "utf8");
   const site = readFileSync("src/lib/site.ts", "utf8");
+  const paletteRequest = readFileSync(".github/ISSUE_TEMPLATE/palette_request.yml", "utf8");
 
   assert.ok(homePage.includes("<PaletteShowcase"));
   assert.ok(!homePage.includes("<PaletteBrowser"));
   assert.ok(palettesPage.includes("<PaletteBrowser"));
+  assert.ok(palettesPage.includes("<PaletteContributionPanel"));
   assert.ok(browser.includes("<PaletteLibrarySection"));
   assert.ok(!featured.includes("<PaletteGrid"));
   assert.ok(!featured.includes("CopyButton"));
@@ -498,6 +501,10 @@ test("site separates homepage showcase from full palette browser route", () => {
   assert.ok(detailPage.includes("<GrayscaleContrastPanel"));
   assert.ok(grayscaleContrastPanel.includes("Grayscale contrast check"));
   assert.ok(grayscaleContrastPanel.includes("Minimum grayscale ratio"));
+  assert.ok(contributionPanel.includes("Submit a palette"));
+  assert.ok(contributionPanel.includes("palette_request.yml"));
+  assert.ok(contributionPanel.includes("SciPalette contribution JSON"));
+  assert.ok(paletteRequest.includes("SciPalette contribution JSON"));
 }
 );
 

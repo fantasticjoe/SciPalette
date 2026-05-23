@@ -9,6 +9,7 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 - `src/components/SiteHeader.astro` owns the global navigation.
 - `src/components/SiteFooter.astro` owns the shared closing band and footer navigation.
 - `src/components/SiteMark.astro` owns the shared SVG logo mark used by the favicon, navigation, About page, and footer.
+- `src/components/PaletteContributionPanel.astro` owns the user-submitted palette entry point on the palette library route. It links to the GitHub issue template and documents the SciPalette contribution JSON shape without adding backend storage.
 - `src/pages/about.astro` owns the About narrative, design philosophy, site-palette presentation, and large Logo system explanation.
 - `src/pages/art2pal/index.astro` owns the Art2Pal Palette route and hydrates the browser-only React tool.
 - `src/pages/palettes/index.astro` owns the searchable full palette browser route and hydrates `PaletteBrowser`.
@@ -43,6 +44,7 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 Use these boundaries when preparing a PR:
 
 - **New or updated palette:** edit an id-free `src/lib/palettes/<palette-name>.ts` source file and register its import plus stable route key in `src/lib/palettes/index.ts`; only touch UI if the data model must change.
+- **User-submitted palette workflow:** edit `.github/ISSUE_TEMPLATE/palette_request.yml`, `src/components/PaletteContributionPanel.astro`, and contribution docs. Keep submissions on GitHub Issues or PRs unless a backend is explicitly introduced later.
 - **New palette field:** update `src/lib/types.ts`, the affected `src/lib/palettes/<palette-name>.ts` files, `src/lib/palettes/index.ts`, affected components, and README examples together.
 - **Filtering or export behavior:** edit `src/lib/palette-utils.ts` first; keep component changes limited to wiring or labels.
 - **Adobe ASE export:** edit `src/lib/adobe-ase.ts` for binary file construction and `src/components/CodeExport.tsx` for the download action.

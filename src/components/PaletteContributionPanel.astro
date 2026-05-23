@@ -1,0 +1,52 @@
+---
+import { ClipboardList, ExternalLink, GitPullRequestArrow } from "lucide-react";
+import { siteConfig } from "../lib/site";
+
+const issueUrl = `${siteConfig.repositoryUrl}/issues/new?template=palette_request.yml`;
+const contributionExample = `{
+  "name": "Your Palette Name",
+  "description": "Describe where this palette works best.",
+  "category": "categorical",
+  "colors": ["#123456", "#abcdef", "#e07a5f"],
+  "recommendedFor": ["umap", "scatter"],
+  "tags": ["publication", "categorical"],
+  "colorblindSafe": false,
+  "background": "white",
+  "source": "Optional source note"
+}`;
+---
+
+<section class="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8" aria-labelledby="palette-contribution-title">
+  <div class="grid gap-8 border-y border-[#dadcd6] py-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+    <div>
+      <p class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">
+        <GitPullRequestArrow class="h-3.5 w-3.5" aria-hidden="true" />
+        palette contribution
+      </p>
+      <h2 id="palette-contribution-title" class="font-display mt-3 text-4xl font-bold leading-tight tracking-[-0.02em] text-[#212c33]">
+        Submit a palette for review.
+      </h2>
+      <p class="mt-4 max-w-2xl text-[1.04rem] leading-7 text-[rgb(33_44_51_/_0.72)]">
+        SciPalette accepts user-submitted palettes through GitHub Issues and pull requests. Use the issue form for quick suggestions, or paste a SciPalette contribution JSON block when you already have the palette metadata ready.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href={issueUrl} class="sp-button-primary px-5 py-3 text-sm">
+          <ClipboardList class="h-4 w-4" aria-hidden="true" />
+          Open palette request
+          <ExternalLink class="h-3.5 w-3.5" aria-hidden="true" />
+        </a>
+        <a href="/CONTRIBUTING.md" class="sp-button-secondary px-5 py-3 text-sm">
+          Contribution guide
+        </a>
+      </div>
+    </div>
+
+    <div class="sp-panel-muted p-5">
+      <p class="text-xs font-bold uppercase tracking-[0.14em] text-[#4f6d5f]">SciPalette contribution JSON</p>
+      <p class="mt-2 text-sm leading-6 text-[rgb(33_44_51_/_0.66)]">
+        Art2Pal can export this shape directly. The source should not include an id; SciPalette creates stable route ids during registration.
+      </p>
+      <pre class="mt-4 overflow-x-auto border border-[#dadcd6] bg-[rgb(248_245_236_/_0.78)] p-4 font-mono text-xs leading-5 text-[#212c33]">{contributionExample}</pre>
+    </div>
+  </div>
+</section>

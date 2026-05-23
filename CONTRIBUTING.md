@@ -46,6 +46,10 @@ CI 会在 PR 和 `main` 推送时运行。`main` 推送还会触发 GitHub Pages
 
 这是最常见的贡献方式。
 
+如果你不想直接开 Pull Request，可以先从配色库页面点击 **Open palette request**，通过 GitHub Issue 提交建议；如果你使用 Art2Pal 生成了配色，可以直接粘贴 **SciPalette contribution JSON**。维护者会把通过审核的建议整理成正式的 `src/lib/palettes/<palette-name>.ts` 文件。
+
+如果你直接提交代码：
+
 1. 新增或修改 `src/lib/palettes/<palette-name>.ts`，并在 `src/lib/palettes/index.ts` 中注册导入和稳定 route key；不要在源文件或贡献 JSON 中手写 `id`。
 2. 字段要求：
    - `name`：配色方案名称。
@@ -142,6 +146,10 @@ CI runs on pull requests and pushes to `main`. Pushes to `main` also trigger Git
 ### Contributing a Palette
 
 This is the most common contribution type.
+
+If you do not want to open a Pull Request directly, use **Open palette request** on the palette library page to submit a GitHub Issue. If you generated a palette with Art2Pal, paste the **SciPalette contribution JSON** into the issue form. Maintainers can turn accepted suggestions into formal `src/lib/palettes/<palette-name>.ts` files.
+
+If you are submitting code directly:
 
 1. Add or update `src/lib/palettes/<palette-name>.ts`, then register its import and stable route key in `src/lib/palettes/index.ts`; do not hand-write an `id` in source files or contribution JSON.
 2. Field requirements:

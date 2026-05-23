@@ -25,6 +25,7 @@ Primary users include researchers, bioinformaticians, data scientists, and medic
 - **About and design philosophy** explaining SciPalette's color principles, Art2Pal's design philosophy, the site palette inspired by *Wheat Field with Cypresses*, and the Logo system shared by the browser tab, navigation, About page, and footer.
 - **One-click copying** for HEX values, plus quick Python and R copy actions on palette cards.
 - **Code and file export** for HEX, Python/matplotlib, R/ggplot2, Scanpy, Seurat, GraphPad Prism, and downloadable Adobe ASE files.
+- **User-submitted palettes** through a GitHub Issue entry point on the palette library page, with support for Art2Pal's SciPalette contribution JSON.
 - **Accessibility labeling** for colorblind-safe palettes.
 - **Static deployment** through Astro, suitable for GitHub Pages and other static hosts.
 - **Responsive UI** for desktop, tablet, and mobile browsing.
@@ -85,6 +86,7 @@ scipalette/
 │   │   ├── SiteHeader.astro         # Global navigation
 │   │   ├── SiteFooter.astro         # Shared site footer
 │   │   ├── SiteMark.astro           # Shared site logo sourced from favicon.svg
+│   │   ├── PaletteContributionPanel.astro # User-submitted palette entry point
 │   │   ├── PaletteBrowser.tsx       # Home-page state composition
 │   │   ├── HomeHero.tsx             # Home hero
 │   │   ├── PaletteLibrarySection.tsx # Filterable palette library section
@@ -195,7 +197,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the contribution workflow.
 - [x] Grayscale contrast checks
 - [x] Adobe ASE export
 - [x] CSS variable export
-- [ ] User-submitted palettes
+- [x] User-submitted palettes
 - [ ] DOI / paper figure inspiration collection
 - [ ] AI-assisted palette recommendations
 - [ ] Palette comparison view

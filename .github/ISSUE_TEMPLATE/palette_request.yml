@@ -23,9 +23,15 @@ body:
     id: colors
     attributes:
       label: 颜色值 / Colors
-      description: HEX 颜色，建议至少 3 个。请按数组或逗号分隔列表提供。
+      description: HEX 颜色，建议至少 3 个。请按数组、逗号分隔列表，或 Art2Pal 导出的 SciPalette contribution JSON 提供。
     validations:
       required: true
+  - type: textarea
+    id: contribution_json
+    attributes:
+      label: SciPalette contribution JSON（可选 / Optional）
+      description: 如果你从 Art2Pal 复制了 SciPalette contribution JSON，可以直接粘贴到这里。不要手写 id。
+      render: json
   - type: dropdown
     id: colorblind
     attributes:
