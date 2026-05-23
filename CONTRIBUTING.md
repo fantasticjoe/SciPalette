@@ -18,25 +18,26 @@ npm install
 npm run dev
 ```
 
-Astro 会在终端输出本地开发地址，通常是 http://localhost:4321/SciPalette/。
+Astro 会在终端输出本地开发地址，通常是 http://localhost:4321/。
 
 ### 提交前自检
 
 在提交 Pull Request 前，请确保以下命令通过：
 
 ```bash
+npm run test
 npm run typecheck
 npm run build
 ```
 
-当前项目没有配置单独的 `lint` 脚本；CI 会运行类型检查和生产构建。
+当前项目没有配置单独的 `lint` 脚本；CI 会运行测试、类型检查和生产构建。
 
 ### Pull Request 流程
 
 1. 从 `main` 创建聚焦分支，例如 `feat/new-palette`、`fix/filter-reset` 或 `docs/readme-update`。
 2. 按 [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) 的改动边界修改最小必要文件。
 3. 对界面改动，请检查桌面宽度和约 390px 的移动端宽度；保持导航简洁、控件稳定、圆角克制。
-4. 运行 `npm run typecheck` 和 `npm run build`。
+4. 运行 `npm run test`、`npm run typecheck` 和 `npm run build`。
 5. 打开 PR，并填写 `.github/PULL_REQUEST_TEMPLATE.md` 中的自检清单。
 
 CI 会在 PR 和 `main` 推送时运行。`main` 推送还会触发 GitHub Pages 部署。
@@ -84,7 +85,7 @@ CI 会在 PR 和 `main` 推送时运行。`main` 推送还会触发 GitHub Pages
 - React 交互组件在 `src/components/`。
 - 配色数据和导出逻辑在 `src/lib/`。
 - 全局样式和设计变量在 `src/styles/global.css`。
-- 项目使用 Astro 静态输出，并在 `astro.config.ts` 配置了 `base: "/SciPalette"`；新增站内链接时要保留这个部署路径。
+- 项目使用 Astro 静态输出；线上站点从自定义域名根路径提供服务，新增站内链接应使用根路径。
 - 更详细的改动边界请参阅 [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)。
 
 ### 提交规范
@@ -114,25 +115,26 @@ npm install
 npm run dev
 ```
 
-Astro prints the local development URL in the terminal, usually http://localhost:4321/SciPalette/.
+Astro prints the local development URL in the terminal, usually http://localhost:4321/.
 
 ### Pre-submission Checks
 
 Before opening a Pull Request, make sure the following commands pass:
 
 ```bash
+npm run test
 npm run typecheck
 npm run build
 ```
 
-The project does not currently define a separate `lint` script; CI runs type checking and the production build.
+The project does not currently define a separate `lint` script; CI runs tests, type checking, and the production build.
 
 ### Pull Request Flow
 
 1. Create a focused branch from `main`, such as `feat/new-palette`, `fix/filter-reset`, or `docs/readme-update`.
 2. Keep edits scoped to the ownership boundaries in [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
 3. For UI changes, check desktop and a mobile width around 390px; keep navigation simple, controls stable, and corner radius restrained.
-4. Run `npm run typecheck` and `npm run build`.
+4. Run `npm run test`, `npm run typecheck`, and `npm run build`.
 5. Open a PR and complete the checklist in `.github/PULL_REQUEST_TEMPLATE.md`.
 
 CI runs on pull requests and pushes to `main`. Pushes to `main` also trigger GitHub Pages deployment.
@@ -180,7 +182,7 @@ Example:
 - Interactive React components live in `src/components/`.
 - Palette data and export helpers live in `src/lib/`.
 - Global styles and design variables live in `src/styles/global.css`.
-- The project uses Astro static output with `base: "/SciPalette"` in `astro.config.ts`; preserve that deployment path when adding internal links.
+- The project uses Astro static output. The live site is served from the custom-domain root, so new internal links should use root-relative paths.
 - For more detailed contribution boundaries, see [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
 
 ### Commit Conventions

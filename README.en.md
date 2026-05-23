@@ -57,6 +57,7 @@ Astro prints the development URL in the terminal, usually http://localhost:4321/
 ### Build and Preview
 
 ```bash
+npm run test
 npm run typecheck
 npm run build
 npm run preview
@@ -169,6 +170,7 @@ type Palette = {
 After adding a palette, run:
 
 ```bash
+npm run test
 npm run typecheck
 npm run build
 ```
@@ -177,11 +179,11 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the contribution workflow.
 
 ## Roadmap
 
-- [ ] Extract palettes from uploaded images
+- [x] Extract palettes from uploaded images
 - [ ] Color vision deficiency simulation
 - [ ] Grayscale contrast checks
 - [ ] Adobe ASE export
-- [ ] CSS variable export
+- [x] CSS variable export
 - [ ] User-submitted palettes
 - [ ] DOI / paper figure inspiration collection
 - [ ] AI-assisted palette recommendations

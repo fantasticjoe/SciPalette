@@ -16,9 +16,15 @@ export type ImageProcessingOptions = {
 };
 
 const SUPPORTED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
+const SUPPORTED_IMAGE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "webp"]);
 
 export function isSupportedImage(file: File): boolean {
-  return SUPPORTED_IMAGE_TYPES.has(file.type);
+  if (SUPPORTED_IMAGE_TYPES.has(file.type)) {
+    return true;
+  }
+
+  const extension = file.name?.split(".").pop()?.toLowerCase();
+  return Boolean(extension && SUPPORTED_IMAGE_EXTENSIONS.has(extension));
 }
 
 export function getResizeDimensions(width: number, height: number, maxDimension = 512): { width: number; height: number; wasResized: boolean } {

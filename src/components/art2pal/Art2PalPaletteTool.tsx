@@ -4,6 +4,7 @@ import type { CandidateColorSet, GeneratedPalette } from "../../lib/art2pal/pale
 import { generateArt2PalPalettes, generateCategoricalPalette } from "../../lib/art2pal/palette";
 import { isSupportedImage, loadImageToCanvas, type ImageProcessingResult } from "../../lib/art2pal/image";
 import type { PaletteExportFormat } from "../../lib/art2pal/export";
+import { safeCopyText } from "../../lib/art2pal/clipboard";
 import { ImageUploader } from "./ImageUploader";
 import { PaletteSection } from "./PaletteSection";
 import { ParameterPanel } from "./ParameterPanel";
@@ -62,14 +63,17 @@ export default function Art2PalPaletteTool() {
   const [seed, setSeed] = useState(11);
   const [previewType, setPreviewType] = useState<PreviewType>("umap");
   const [formats, setFormats] = useState(INITIAL_FORMATS);
-  const [copiedLabel, setCopiedLabel] = useState<string | undefined>();
+  const [copyStatus, setCopyStatus] = useState<{ message: string; ok: boolean } | undefined>();
 
   const paletteList = useMemo(() => (palettes ? [palettes.categorical, palettes.sequential, palettes.diverging, palettes.neutral] : []), [palettes]);
 
   const copyText = async (value: string, label = "Copied") => {
-    await navigator.clipboard.writeText(value);
-    setCopiedLabel(label);
-    window.setTimeout(() => setCopiedLabel(undefined), 1800);
+    const copied = await safeCopyText(value);
+    setCopyStatus({
+      message: copied ? label : "Copy failed. Select and copy from the export box.",
+      ok: copied,
+    });
+    window.setTimeout(() => setCopyStatus(undefined), 2200);
   };
 
   const calculatePalettes = (pixels: ImageProcessingResult["pixels"], nextCount = categoricalCount, nextSeed = seed) => {
@@ -198,10 +202,17 @@ export default function Art2PalPaletteTool() {
             </div>
           </section>
 
-          {copiedLabel && (
-            <div className="sp-panel border-[rgb(79_109_95_/_0.28)] bg-[rgb(122_158_141_/_0.12)] p-4 text-sm font-bold text-[#2f453d]">
-              <Check className="mr-2 inline h-4 w-4" aria-hidden="true" />
-              {copiedLabel}
+          {copyStatus && (
+            <div
+              className={`sp-panel p-4 text-sm font-bold ${
+                copyStatus.ok
+                  ? "border-[rgb(79_109_95_/_0.28)] bg-[rgb(122_158_141_/_0.12)] text-[#2f453d]"
+                  : "border-[rgb(153_87_64_/_0.28)] bg-[rgb(176_91_71_/_0.1)] text-[#7a3d2e]"
+              }`}
+              role="status"
+            >
+              {copyStatus.ok ? <Check className="mr-2 inline h-4 w-4" aria-hidden="true" /> : <AlertTriangle className="mr-2 inline h-4 w-4" aria-hidden="true" />}
+              {copyStatus.message}
             </div>
           )}
         </aside>

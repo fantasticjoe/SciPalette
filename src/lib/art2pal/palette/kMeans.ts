@@ -100,13 +100,17 @@ export function kMeansOklab(pixels: RgbColor[], options: KMeansOptions = {}): KM
     .map((center, index) => {
       const count = assignments.filter((assignment) => assignment === index).length;
       const rgb = oklabToRgb(center);
+      const lch = rgbToOklch(rgb);
       return {
         center,
-        lch: rgbToOklch(rgb),
+        lch,
         rgb,
         hex: rgbToHex(rgb),
         count,
         weight: count / pixels.length,
+        lightness: lch.L,
+        chroma: lch.C,
+        hue: lch.h,
       };
     })
     .filter((cluster) => cluster.count > 0)

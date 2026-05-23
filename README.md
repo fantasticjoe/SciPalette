@@ -57,6 +57,7 @@ npm run dev
 ### 构建与预览
 
 ```bash
+npm run test
 npm run typecheck
 npm run build
 npm run preview
@@ -169,6 +170,7 @@ type Palette = {
 添加后运行：
 
 ```bash
+npm run test
 npm run typecheck
 npm run build
 ```
@@ -177,11 +179,11 @@ npm run build
 
 ## 路线图
 
-- [ ] 上传图片提取配色方案
+- [x] 上传图片提取配色方案
 - [ ] 色盲模拟预览
 - [ ] 灰度对比度检查
 - [ ] 导出 Adobe ASE 文件
-- [ ] 导出 CSS 变量
+- [x] 导出 CSS 变量
 - [ ] 用户提交配色方案
 - [ ] DOI / 论文图灵感收集
 - [ ] AI 辅助配色推荐

@@ -1,4 +1,4 @@
-import { calculateContrastRatio, rgbToOklch, type RgbColor } from "../color";
+import { calculateContrastRatio, type RgbColor } from "../color";
 import { kMeansOklab } from "./kMeans";
 import type { CandidateColor, CandidateColorSet } from "./types";
 
@@ -23,7 +23,6 @@ function classifyCandidate(lightness: number, chroma: number, contrast: number):
 export function extractCandidateColors(pixels: RgbColor[], options: ExtractOptions = {}): CandidateColorSet {
   const clusters = kMeansOklab(pixels, { k: options.k ?? 32, maxIterations: 40, seed: options.seed ?? 42 });
   const all = clusters.map<CandidateColor>((cluster) => {
-    const lch = rgbToOklch(cluster.rgb);
     const contrast = calculateContrastRatio(cluster.rgb);
     return {
       center: cluster.center,
@@ -31,11 +30,11 @@ export function extractCandidateColors(pixels: RgbColor[], options: ExtractOptio
       hex: cluster.hex,
       count: cluster.count,
       weight: cluster.weight,
-      lightness: lch.L,
-      chroma: lch.C,
-      hue: lch.h,
+      lightness: cluster.lightness,
+      chroma: cluster.chroma,
+      hue: cluster.hue,
       contrastWithWhite: contrast,
-      pool: classifyCandidate(lch.L, lch.C, contrast),
+      pool: classifyCandidate(cluster.lightness, cluster.chroma, contrast),
     };
   });
 

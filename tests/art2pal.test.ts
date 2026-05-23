@@ -11,6 +11,7 @@ import {
   rgbToOklch,
 } from "../src/lib/art2pal/color";
 import { formatPaletteExport } from "../src/lib/art2pal/export";
+import { safeCopyText } from "../src/lib/art2pal/clipboard";
 import { extractCandidateColors } from "../src/lib/art2pal/palette/extractCandidateColors";
 import {
   getResizeDimensions,
@@ -86,6 +87,9 @@ test("clusters sampled pixels in OKLab space and records cluster weights", () =>
   assert.equal(clusters.length, 3);
   assert.equal(clusters.reduce((sum, cluster) => sum + cluster.count, 0), pixels.length);
   assert.ok(clusters.every((cluster) => cluster.hex.startsWith("#")));
+  assert.ok(clusters.every((cluster) => cluster.lightness === cluster.lch.L));
+  assert.ok(clusters.every((cluster) => cluster.chroma === cluster.lch.C));
+  assert.ok(clusters.every((cluster) => cluster.hue === cluster.lch.h));
   assert.ok(clusters[0].weight >= clusters[1].weight);
 });
 
@@ -112,6 +116,8 @@ test("prepares browser-local images with the requested format and sampling limit
   assert.equal(isSupportedImage({ type: "image/png" } as File), true);
   assert.equal(isSupportedImage({ type: "image/jpeg" } as File), true);
   assert.equal(isSupportedImage({ type: "image/webp" } as File), true);
+  assert.equal(isSupportedImage({ type: "", name: "painting.JPG" } as File), true);
+  assert.equal(isSupportedImage({ type: "", name: "canvas.webp" } as File), true);
   assert.equal(isSupportedImage({ type: "image/gif" } as File), false);
   assert.equal(isSupportedImage({ type: "image/bmp" } as File), false);
 
@@ -178,6 +184,25 @@ test("generates monotonic sequential and neutral-centered diverging palettes", (
   assert.ok(rgbToOklch(hexToRgb(diverging[3])).C < 0.04);
 });
 
+test("falls back for diverging palettes when source hues are too similar", () => {
+  const candidates: CandidateColorSet = {
+    all: [
+      candidateFromHex("#b45b47", { weight: 0.5, pool: "main" }),
+      candidateFromHex("#a8644a", { weight: 0.3, pool: "main" }),
+      candidateFromHex("#965e49", { weight: 0.2, pool: "main" }),
+    ],
+    main: [],
+    neutral: [],
+    rejected: [],
+  };
+
+  candidates.main = candidates.all;
+
+  const diverging = generateDivergingPalette(candidates, { count: 7 });
+
+  assert.deepEqual(diverging, ["#315b8c", "#6f90b8", "#bac8d5", "#f3f1ea", "#d9b7a2", "#b87657", "#8f3c2f"]);
+});
+
 test("generates neutral palettes as background, surface, grid, axis, and text roles", () => {
   const darkNeutral = candidateFromHex("#996955");
   const candidates: CandidateColorSet = {
@@ -224,13 +249,53 @@ test("formats palette exports for common scientific workflows", () => {
   assert.match(formatPaletteExport(colors, "r"), /scale_fill_manual\(values = c\("#123456", "#abcdef", "#e07a5f"\)\)/);
 });
 
+test("copy helper reports success and failure without throwing", async () => {
+  const writes: string[] = [];
+  const success = await safeCopyText("#123456", {
+    clipboard: {
+      writeText: async (value: string) => {
+        writes.push(value);
+      },
+    },
+  });
+  const failure = await safeCopyText("#abcdef", {
+    clipboard: {
+      writeText: async () => {
+        throw new Error("denied");
+      },
+    },
+  });
+
+  assert.equal(success, true);
+  assert.equal(failure, false);
+  assert.deepEqual(writes, ["#123456"]);
+});
+
 test("uses custom-domain root paths for deployed assets and links", () => {
   const astroConfig = readFileSync("astro.config.ts", "utf8");
   const baseLayout = readFileSync("src/layouts/BaseLayout.astro", "utf8");
   const paletteCard = readFileSync("src/components/PaletteCard.tsx", "utf8");
+  const contributing = readFileSync("CONTRIBUTING.md", "utf8");
+  const architecture = readFileSync("docs/ARCHITECTURE.md", "utf8");
 
   assert.equal(siteConfig.basePath, "");
   assert.ok(!astroConfig.includes('base: "/SciPalette"'));
   assert.ok(!baseLayout.includes("/SciPalette/"));
   assert.ok(!paletteCard.includes("/SciPalette/"));
+  assert.ok(!contributing.includes("http://localhost:4321/SciPalette/"));
+  assert.ok(!contributing.includes('base: "/SciPalette"'));
+  assert.ok(!architecture.includes("GitHub Pages base path"));
+});
+
+test("workflow actions stay on current Node-backed releases", () => {
+  const ci = readFileSync(".github/workflows/ci.yml", "utf8");
+  const deploy = readFileSync(".github/workflows/deploy.yml", "utf8");
+  const release = readFileSync(".github/workflows/release.yml", "utf8");
+  const workflows = `${ci}\n${deploy}\n${release}`;
+
+  assert.ok(!workflows.includes("actions/checkout@v4"));
+  assert.ok(!workflows.includes("actions/setup-node@v4"));
+  assert.ok(!workflows.includes("actions/configure-pages@v4"));
+  assert.ok(!workflows.includes("actions/upload-pages-artifact@v3"));
+  assert.ok(!workflows.includes("actions/deploy-pages@v4"));
 });

@@ -24,7 +24,7 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 - `src/lib/filter-options.ts` owns filter dropdown labels and values.
 - `src/lib/palette-utils.ts` owns filtering, export snippets, and similarity logic.
 - `src/lib/types.ts` owns shared TypeScript contracts.
-- `src/lib/site.ts` owns site-wide constants such as the GitHub Pages base path and navigation links.
+- `src/lib/site.ts` owns site-wide constants such as the deployment root path and navigation links.
 - `src/styles/global.css` owns global tokens, fonts, and base styles.
 
 ## Contribution Boundaries
@@ -57,6 +57,7 @@ Use these boundaries when preparing a PR:
 Before opening a PR, run:
 
 ```bash
+npm run test
 npm run typecheck
 npm run build
 ```

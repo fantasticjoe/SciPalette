@@ -45,4 +45,7 @@ export type KMeansCluster = {
   hex: string;
   count: number;
   weight: number;
+  lightness: number;
+  chroma: number;
+  hue: number;
 };

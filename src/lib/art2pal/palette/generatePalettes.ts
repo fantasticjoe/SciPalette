@@ -17,6 +17,7 @@ const FALLBACK_CATEGORICAL = ["#4e79a7", "#f28e2b", "#59a14f", "#e15759", "#76b7
 const FALLBACK_SEQUENTIAL = ["#f3f6ef", "#d6e6d5", "#aacda9", "#75ad7e", "#418a5e", "#206543"];
 const FALLBACK_DIVERGING = ["#315b8c", "#6f90b8", "#bac8d5", "#f3f1ea", "#d9b7a2", "#b87657", "#8f3c2f"];
 const FALLBACK_NEUTRAL = ["#fbf9f2", "#e9e4d8", "#c9c6ba", "#6f746c", "#252d31"];
+const MIN_DIVERGING_HUE_DISTANCE = 80;
 
 type CountOption = {
   count?: number;
@@ -136,7 +137,12 @@ function pickDivergingEnds(candidates: CandidateColorSet): [CandidateColor, Cand
     for (let j = i + 1; j < pool.length; j += 1) {
       const first = pool[i];
       const second = pool[j];
-      const hue = hueDistance(first.hue, second.hue) / 180;
+      const hueDistanceDegrees = hueDistance(first.hue, second.hue);
+      if (hueDistanceDegrees < MIN_DIVERGING_HUE_DISTANCE) {
+        continue;
+      }
+
+      const hue = hueDistanceDegrees / 180;
       const balance = 1 - clamp(Math.abs(first.chroma - second.chroma) / 0.18 + Math.abs(first.lightness - second.lightness) / 0.4, 0, 1);
       const score = 0.55 * hue + 0.25 * balance + 0.2 * Math.sqrt(first.weight + second.weight);
       if (score > bestScore) {
@@ -165,7 +171,7 @@ function interpolateOklch(first: OklchColor, second: OklchColor, t: number): Okl
 export function generateDivergingPalette(candidates: CandidateColorSet, options: CountOption = {}): string[] {
   const count = options.count ?? 7;
   const ends = pickDivergingEnds(candidates);
-  if (!ends || count < 5) {
+  if (!ends || hueDistance(ends[0].hue, ends[1].hue) < MIN_DIVERGING_HUE_DISTANCE || count < 5) {
     return FALLBACK_DIVERGING.slice(0, count);
   }
 
