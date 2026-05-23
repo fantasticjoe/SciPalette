@@ -3,6 +3,7 @@ import { palettes } from "../lib/palettes";
 import { filterPalettes, getRandomPalette } from "../lib/palette-utils";
 import type { PaletteCategory, PlotType } from "../lib/types";
 import { PaletteLibrarySection } from "./PaletteLibrarySection";
+import { PaletteRecommendationPanel } from "./PaletteRecommendationPanel";
 
 export default function PaletteBrowser() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -63,6 +64,9 @@ export default function PaletteBrowser() {
         copiedPaletteName={copiedPaletteName}
         onCopyRandomPalette={handleRandomPalette}
       />
+      <div className="mx-auto max-w-7xl px-4 pb-8 sm:px-6 lg:px-8">
+        <PaletteRecommendationPanel />
+      </div>
     </>
   );
 }

@@ -27,6 +27,7 @@ Primary users include researchers, bioinformaticians, data scientists, and medic
 - **Code and file export** for HEX, Python/matplotlib, R/ggplot2, Scanpy, Seurat, GraphPad Prism, and downloadable Adobe ASE files.
 - **User-submitted palettes** through a GitHub Issue entry point on the palette library page, with support for Art2Pal's SciPalette contribution JSON.
 - **Paper figure inspiration collection** through a GitHub Issue entry point for DOI, paper URL, figure reference, and citation notes worth studying for future palette design.
+- **Local palette recommendation assistant** that scores palettes by plot type, palette family, color count, background, colorblind-safety, and research intent.
 - **Accessibility labeling** for colorblind-safe palettes.
 - **Static deployment** through Astro, suitable for GitHub Pages and other static hosts.
 - **Responsive UI** for desktop, tablet, and mobile browsing.
@@ -90,6 +91,7 @@ scipalette/
 │   │   ├── PaletteContributionPanel.astro # User-submitted palette entry point
 │   │   ├── PaperInspirationPanel.astro # DOI and paper figure inspiration entry point
 │   │   ├── PaletteBrowser.tsx       # Home-page state composition
+│   │   ├── PaletteRecommendationPanel.tsx # Local palette recommendation panel
 │   │   ├── HomeHero.tsx             # Home hero
 │   │   ├── PaletteLibrarySection.tsx # Filterable palette library section
 │   │   ├── FeaturedPaletteSections.tsx # Featured home sections
@@ -114,6 +116,7 @@ scipalette/
 │   │   ├── filter-options.ts        # Filter option configuration
 │   │   ├── palettes/                # Individual palette files and aggregate entry
 │   │   ├── art2pal/                 # Art2Pal color-space, clustering, generation, and export logic
+│   │   ├── palette-recommendations.ts # Local recommendation scoring and presets
 │   │   ├── palette-utils.ts         # Filtering, export, and similarity helpers
 │   │   ├── color-vision.ts          # Color vision simulation matrices and palette conversion
 │   │   ├── grayscale-contrast.ts    # Grayscale luminance and contrast checks
@@ -201,7 +204,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the contribution workflow.
 - [x] CSS variable export
 - [x] User-submitted palettes
 - [x] DOI / paper figure inspiration collection
-- [ ] AI-assisted palette recommendations
+- [x] Local palette recommendation assistant
 - [ ] Palette comparison view
 
 ## Contributing

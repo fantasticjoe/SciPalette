@@ -23,6 +23,10 @@ import {
   rgbToGrayscaleLuminance,
 } from "../src/lib/grayscale-contrast";
 import { createAdobeAseBuffer, createAdobeAseFilename } from "../src/lib/adobe-ase";
+import {
+  getPaletteRecommendations,
+  recommendationPresets,
+} from "../src/lib/palette-recommendations";
 import { extractCandidateColors } from "../src/lib/art2pal/palette/extractCandidateColors";
 import {
   getResizeDimensions,
@@ -365,6 +369,30 @@ test("creates Adobe ASE files for palette exchange", () => {
   assert.equal(createAdobeAseFilename("My Palette / Test"), "my-palette-test.ase");
 });
 
+test("recommends palettes from local scientific intent signals", () => {
+  const umap = getPaletteRecommendations({
+    plotType: "umap",
+    category: "categorical",
+    colorCount: "9-12",
+    colorblindOnly: true,
+    background: "white",
+    intent: "single-cell cluster annotation",
+  });
+
+  assert.ok(umap.length >= 3);
+  assert.equal(umap[0].palette.category, "categorical");
+  assert.ok(umap[0].palette.recommendedFor.includes("umap"));
+  assert.ok(umap[0].palette.colorblindSafe);
+  assert.ok(umap[0].reasons.some((reason) => reason.includes("UMAP")));
+  assert.ok(umap[0].score > umap[umap.length - 1].score);
+
+  const heatmap = getPaletteRecommendations(recommendationPresets.expressionHeatmap);
+
+  assert.ok(heatmap[0].palette.recommendedFor.includes("heatmap"));
+  assert.ok(["sequential", "heatmap", "diverging"].includes(heatmap[0].palette.category));
+  assert.ok(heatmap[0].reasons.length >= 2);
+});
+
 test("uses custom-domain root paths for deployed assets and links", () => {
   const astroConfig = readFileSync("astro.config.ts", "utf8");
   const baseLayout = readFileSync("src/layouts/BaseLayout.astro", "utf8");
@@ -477,6 +505,7 @@ test("site separates homepage showcase from full palette browser route", () => {
   const grayscaleContrastPanel = readFileSync("src/components/GrayscaleContrastPanel.tsx", "utf8");
   const contributionPanel = readFileSync("src/components/PaletteContributionPanel.astro", "utf8");
   const paperInspirationPanel = readFileSync("src/components/PaperInspirationPanel.astro", "utf8");
+  const recommendationPanel = readFileSync("src/components/PaletteRecommendationPanel.tsx", "utf8");
   const browser = readFileSync("src/components/PaletteBrowser.tsx", "utf8");
   const featured = readFileSync("src/components/FeaturedPaletteSections.tsx", "utf8");
   const site = readFileSync("src/lib/site.ts", "utf8");
@@ -491,6 +520,8 @@ test("site separates homepage showcase from full palette browser route", () => {
   assert.ok(palettesPage.includes("<PaletteContributionPanel"));
   assert.ok(palettesPage.includes("<PaperInspirationPanel"));
   assert.ok(browser.includes("<PaletteLibrarySection"));
+  assert.ok(browser.includes("<PaletteRecommendationPanel"));
+  assert.ok(recommendationPanel.includes("getPaletteRecommendations"));
   assert.ok(!featured.includes("<PaletteGrid"));
   assert.ok(!featured.includes("CopyButton"));
   assert.ok(!featured.includes("generatePythonCode"));
@@ -519,6 +550,9 @@ test("site separates homepage showcase from full palette browser route", () => {
   assert.ok(paperInspiration.includes("citation"));
   assert.ok(readme.includes("- [x] DOI / 论文图灵感收集"));
   assert.ok(readmeEn.includes("- [x] DOI / paper figure inspiration collection"));
+  assert.ok(recommendationPanel.includes("Local palette recommendation"));
+  assert.ok(recommendationPanel.includes("Runs locally"));
+  assert.ok(recommendationPanel.includes("recommendationPresets"));
 }
 );
 
