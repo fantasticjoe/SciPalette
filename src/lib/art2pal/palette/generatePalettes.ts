@@ -50,6 +50,18 @@ function chromaScore(chroma: number): number {
   return 1 - clamp(Math.abs(chroma - target) / 0.12, 0, 1);
 }
 
+function deriveCategoricalColor(candidate: CandidateColor, variantIndex: number): string {
+  const direction = variantIndex % 2 === 0 ? 1 : -1;
+  const step = Math.floor(variantIndex / 2) + 1;
+  const lch: OklchColor = {
+    L: clamp(candidate.lightness + direction * step * 0.075, 0.38, 0.86),
+    C: clamp(candidate.chroma * (direction > 0 ? 0.82 : 1.08), 0.045, 0.18),
+    h: candidate.hue,
+  };
+
+  return rgbToHex(oklchToRgb(lch));
+}
+
 function hashPaletteSignature(kind: GeneratedPaletteKind, colors: string[]): string {
   const signature = `${kind}:${colors.map((color) => color.toLowerCase()).join(",")}`;
   let first = 0x811c9dc5;
@@ -124,7 +136,32 @@ export function generateCategoricalPalette(candidates: CandidateColorSet, option
     return selectedColors.slice(0, count);
   }
 
-  return [...selectedColors, ...FALLBACK_CATEGORICAL.filter((color) => !selectedColors.includes(color))].slice(0, count);
+  const selectedSet = new Set(selectedColors);
+  const relaxedSource = [...source]
+    .filter((candidate) => !selectedSet.has(candidate.hex))
+    .sort((a, b) => candidateBaseScore(b) - candidateBaseScore(a));
+  const relaxedColors = relaxedSource.map((candidate) => candidate.hex);
+  const sourceColors = [...selectedColors, ...relaxedColors];
+
+  if (sourceColors.length >= count) {
+    return sourceColors.slice(0, count);
+  }
+
+  const derivedColors: string[] = [];
+  let variantIndex = 0;
+
+  while (sourceColors.length + derivedColors.length < count && variantIndex < source.length * 6) {
+    const candidate = source[variantIndex % source.length];
+    const color = deriveCategoricalColor(candidate, variantIndex);
+    if (!sourceColors.includes(color) && !derivedColors.includes(color)) {
+      derivedColors.push(color);
+    }
+    variantIndex += 1;
+  }
+
+  const generatedColors = [...sourceColors, ...derivedColors];
+
+  return generatedColors.length > 0 ? generatedColors.slice(0, count) : FALLBACK_CATEGORICAL.slice(0, count);
 }
 
 function pickMainHue(candidates: CandidateColorSet): CandidateColor | null {

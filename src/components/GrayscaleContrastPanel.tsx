@@ -13,6 +13,19 @@ function formatRatio(value: number): string {
   return `${value.toFixed(2)}:1`;
 }
 
+function ColorLabel({ color }: { color: string }) {
+  return (
+    <span className="inline-flex min-w-0 items-center gap-2">
+      <span
+        className="h-3.5 w-3.5 shrink-0 border border-[rgb(33_44_51_/_0.18)]"
+        style={{ backgroundColor: color }}
+        aria-hidden="true"
+      />
+      <span className="font-mono text-xs text-[#212c33]">{color}</span>
+    </span>
+  );
+}
+
 export function GrayscaleContrastPanel({ palette }: GrayscaleContrastPanelProps) {
   const report = getGrayscaleContrastReport(palette.colors);
   const shownPairs = report.failingPairs.slice(0, 4);
@@ -58,14 +71,7 @@ export function GrayscaleContrastPanel({ palette }: GrayscaleContrastPanelProps)
               const luminance = rgbToGrayscaleLuminance(color);
               return (
                 <div key={color} className="grid grid-cols-[7.5rem_1fr_4.5rem] items-center gap-3 text-sm font-semibold text-[rgb(33_44_51_/_0.68)]">
-                  <span className="flex min-w-0 items-center gap-2">
-                    <span
-                      className="h-3.5 w-3.5 shrink-0 border border-[rgb(33_44_51_/_0.18)]"
-                      style={{ backgroundColor: color }}
-                      aria-hidden="true"
-                    />
-                    <span className="font-mono text-xs text-[#212c33]">{color}</span>
-                  </span>
+                  <ColorLabel color={color} />
                   <div className="h-4 border border-[#dadcd6]" style={{ background: `rgb(${luminance} ${luminance} ${luminance})` }} />
                   <span className="text-right font-mono text-xs">{luminance}</span>
                 </div>
@@ -79,7 +85,11 @@ export function GrayscaleContrastPanel({ palette }: GrayscaleContrastPanelProps)
               <div className="mt-3 grid gap-2">
                 {shownPairs.map((pair) => (
                   <div key={`${pair.first}-${pair.second}`} className="flex flex-wrap items-center justify-between gap-3 text-sm font-semibold text-[rgb(33_44_51_/_0.72)]">
-                    <span className="font-mono text-xs text-[#212c33]">{pair.first} / {pair.second}</span>
+                    <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                      <ColorLabel color={pair.first} />
+                      <span className="text-[rgb(33_44_51_/_0.45)]">/</span>
+                      <ColorLabel color={pair.second} />
+                    </span>
                     <span>{formatRatio(pair.ratio)}</span>
                   </div>
                 ))}

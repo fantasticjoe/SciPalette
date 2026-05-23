@@ -181,6 +181,34 @@ test("generates categorical palettes from representative but distinct source col
   assert.ok(palette.every((color) => /^#[0-9a-f]{6}$/i.test(color)));
 });
 
+test("does not pad generated categorical palettes with unrelated fallback colors", () => {
+  const candidates: CandidateColorSet = {
+    all: [
+      candidateFromHex("#5c7b24", { weight: 0.2, pool: "main" }),
+      candidateFromHex("#86c5f0", { weight: 0.18, pool: "main" }),
+      candidateFromHex("#264b19", { weight: 0.16, pool: "main" }),
+      candidateFromHex("#516e8b", { weight: 0.14, pool: "main" }),
+      candidateFromHex("#a0bd3e", { weight: 0.12, pool: "main" }),
+      candidateFromHex("#3b5e52", { weight: 0.1, pool: "main" }),
+      candidateFromHex("#8b9866", { weight: 0.06, pool: "main" }),
+      candidateFromHex("#c2d66b", { weight: 0.04, pool: "main" }),
+    ],
+    main: [],
+    neutral: [],
+    rejected: [],
+  };
+  candidates.main = candidates.all;
+
+  const palette = generateCategoricalPalette(candidates, { count: 12, seed: 5 });
+  const sourceColors = new Set(candidates.all.map((candidate) => candidate.hex));
+  const fallbackColors = new Set(["#4e79a7", "#f28e2b", "#59a14f", "#e15759", "#76b7b2", "#edc948", "#b07aa1", "#9c755f"]);
+
+  assert.equal(palette.length, 12);
+  assert.ok([...sourceColors].every((color) => palette.includes(color)), "source image candidates should be preserved before deriving extras");
+  assert.ok(palette.every((color) => !fallbackColors.has(color)), "generated categorical colors must not be padded with unrelated fallback colors");
+  assert.equal(new Set(palette).size, palette.length);
+});
+
 test("generates monotonic sequential and neutral-centered diverging palettes", () => {
   const candidates = extractCandidateColors(
     [
@@ -555,6 +583,17 @@ test("Art2Pal shows palettes before all scientific previews", () => {
   assert.ok(preview.includes("<BarPreview palettes={palettes} />"));
   assert.ok(paletteSection.includes("whitespace-nowrap"));
   assert.ok(paletteCard.includes("whitespace-nowrap"));
+});
+
+test("Art2Pal categorical count changes automatically recalculate palettes from the image", () => {
+  const tool = readFileSync("src/components/art2pal/Art2PalPaletteTool.tsx", "utf8");
+  const handlerStart = tool.indexOf("const handleCategoricalCountChange");
+  const handlerEnd = tool.indexOf("const regenerate", handlerStart);
+  const handler = tool.slice(handlerStart, handlerEnd);
+
+  assert.ok(handler.includes("calculatePalettes(image.pixels, nextCount"));
+  assert.ok(!handler.includes("generateCategoricalPalette(palettes.candidates"));
+  assert.ok(!handler.includes("setPalettes({"));
 });
 
 test("palette detail plot previews are rebuilt with D3 scales and shapes", () => {

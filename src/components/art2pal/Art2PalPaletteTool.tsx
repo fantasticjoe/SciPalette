@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { AlertTriangle, Check, FlaskConical, Sparkles } from "lucide-react";
 import type { CandidateColorSet, GeneratedPalette } from "../../lib/art2pal/palette";
-import { createGeneratedPaletteId, generateArt2PalPalettes, generateCategoricalPalette } from "../../lib/art2pal/palette";
+import { generateArt2PalPalettes } from "../../lib/art2pal/palette";
 import { isSupportedImage, loadImageToCanvas, type ImageProcessingResult } from "../../lib/art2pal/image";
 import type { PaletteExportFormat } from "../../lib/art2pal/export";
 import { safeCopyText } from "../../lib/art2pal/clipboard";
@@ -119,16 +119,8 @@ export default function Art2PalPaletteTool() {
 
   const handleCategoricalCountChange = (nextCount: number) => {
     setCategoricalCount(nextCount);
-    if (palettes) {
-      const colors = generateCategoricalPalette(palettes.candidates, { count: nextCount, seed });
-      setPalettes({
-        ...palettes,
-        categorical: {
-          ...palettes.categorical,
-          id: createGeneratedPaletteId("categorical", colors),
-          colors,
-        },
-      });
+    if (image) {
+      calculatePalettes(image.pixels, nextCount, seed);
     }
   };
 
