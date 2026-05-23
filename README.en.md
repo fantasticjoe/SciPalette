@@ -19,6 +19,7 @@ Primary users include researchers, bioinformaticians, data scientists, and medic
 - **20+ curated palettes** across categorical, sequential, diverging, and heatmap families.
 - **Multi-dimensional filtering** by search query, category, plot type, color count, and colorblind-safe status.
 - **Scientific plot previews** for recommended use cases such as bar, line, scatter, UMAP, heatmap, and volcano plots.
+- **Art2Pal Palette** extracts color style from PNG, JPEG, or WebP images locally in the browser and rebuilds it into categorical, sequential, diverging, and neutral scientific palettes.
 - **One-click copying** for HEX values, plus quick Python and R copy actions on palette cards.
 - **Code export** for HEX, Python/matplotlib, R/ggplot2, Scanpy, Seurat, and GraphPad Prism.
 - **Accessibility labeling** for colorblind-safe palettes.
@@ -70,6 +71,7 @@ scipalette/
 ├── src/
 │   ├── pages/
 │   │   ├── index.astro              # Home page and browser entry
+│   │   ├── art2pal/index.astro      # Art2Pal Palette local image-to-palette tool
 │   │   └── palettes/[id].astro      # Static palette detail pages
 │   ├── layouts/
 │   │   └── BaseLayout.astro         # HTML shell and SEO meta
@@ -97,6 +99,7 @@ scipalette/
 │   │   ├── homepage.ts              # Home-page derived data and grouping logic
 │   │   ├── filter-options.ts        # Filter option configuration
 │   │   ├── palettes/                # Individual palette files and aggregate entry
+│   │   ├── art2pal/                 # Art2Pal color-space, clustering, generation, and export logic
 │   │   ├── palette-utils.ts         # Filtering, export, and similarity helpers
 │   │   ├── types.ts                 # TypeScript types
 │   │   └── utils.ts                 # Shared utilities
@@ -115,6 +118,8 @@ scipalette/
 For contribution boundaries and architecture notes, see [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
 
 ## Adding a Palette
+
+Curated palettes are split one file per palette so the library can scale to hundreds or thousands of palettes without one oversized data file.
 
 To add or update a palette, edit `src/lib/palettes/<palette-id>.ts` and register it in `src/lib/palettes/index.ts`:
 

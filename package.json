@@ -27,6 +27,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "test": "tsc -p tsconfig.test.json && node --test .tmp/art2pal-tests/tests/*.test.js",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

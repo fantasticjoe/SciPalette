@@ -1,0 +1,11 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Art2PalPaletteTool from "../../components/art2pal/Art2PalPaletteTool";
+---
+
+<BaseLayout
+  title="Art2Pal Palette - Convert Artwork Into Scientific Palettes"
+  description="A local browser tool that extracts artwork colors and rebuilds them into scientific palettes for categorical, sequential, diverging, and neutral figures."
+>
+  <Art2PalPaletteTool client:load />
+</BaseLayout>

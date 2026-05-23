@@ -7,6 +7,7 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 - `src/pages/` owns routes and static generation.
 - `src/layouts/BaseLayout.astro` owns the document shell, SEO defaults, and shared page chrome.
 - `src/components/SiteHeader.astro` owns the global navigation.
+- `src/pages/art2pal/index.astro` owns the Art2Pal Palette route and hydrates the browser-only React tool.
 - `src/components/PaletteBrowser.tsx` owns home-page state and composes the home sections.
 - `src/components/HomeHero.tsx` owns the home hero and random palette copy action surface.
 - `src/components/PaletteLibrarySection.tsx` owns the filterable palette library section.
@@ -18,6 +19,7 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 - `src/components/SimilarPalettesSection.astro` owns detail-page similar palette recommendations.
 - `src/components/*.tsx` owns interactive UI rendered by Astro client directives.
 - `src/lib/palettes/` is the palette data source. Each file owns one palette, and `src/lib/palettes/index.ts` owns the aggregated export plus lookup helpers.
+- `src/lib/art2pal/` owns browser-local image processing, color-space conversion, OKLab K-means clustering, scientific palette generation, mock preview data, and export formatting for the Art2Pal Palette tool.
 - `src/lib/homepage.ts` owns home-page grouping helpers and derived counts.
 - `src/lib/filter-options.ts` owns filter dropdown labels and values.
 - `src/lib/palette-utils.ts` owns filtering, export snippets, and similarity logic.
@@ -37,6 +39,7 @@ Use these boundaries when preparing a PR:
 - **Home-page grouping rules:** edit `src/lib/homepage.ts`; keep rendering components focused on presentation.
 - **Palette detail page presentation:** edit the matching `PaletteDetail*` or `SimilarPalettesSection` component first; edit `src/pages/palettes/[id].astro` only when route data or section ordering changes.
 - **Global navigation or repository links:** edit `src/lib/site.ts` and, if needed, `src/components/SiteHeader.astro`.
+- **Art2Pal Palette tool:** keep route wiring in `src/pages/art2pal/index.astro`, UI in `src/components/art2pal/`, and algorithm/export logic in `src/lib/art2pal/`. Do not add a backend, account system, database, or server upload path for user images.
 - **Shared page chrome:** edit `src/layouts/BaseLayout.astro`; avoid adding page-specific content there.
 - **Visual polish:** prefer the smallest component that owns the surface. Use the shared `sp-panel`, `sp-panel-muted`, `sp-button-*`, `sp-chip`, and `sp-control` classes from `src/styles/global.css` before adding new repeated border, radius, or control styles.
 - **Docs-only changes:** update both `README.md` and `README.en.md` when user-facing behavior or commands change.

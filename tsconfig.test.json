@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": false,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noEmit": false,
+    "outDir": ".tmp/art2pal-tests",
+    "rootDir": ".",
+    "types": ["node"]
+  },
+  "include": ["src/lib/art2pal/**/*.ts", "tests/**/*.test.ts"],
+  "exclude": ["node_modules", "dist", ".tmp"]
+}

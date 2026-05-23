@@ -19,6 +19,7 @@ SciPalette 是一个专为科研可视化设计的静态配色方案库。它面
 - **20+ 精选配色方案**：覆盖 categorical、sequential、diverging、heatmap 四类科研配色。
 - **多维筛选**：支持按关键词、类别、图类型、颜色数量、色盲友好性筛选。
 - **科研图预览**：详情页按推荐场景展示 bar、line、scatter、UMAP、heatmap、volcano 等预览。
+- **Art2Pal Palette**：浏览器本地从 PNG、JPEG 或 WebP 图片中提取色彩风格，并重组为 categorical、sequential、diverging、neutral 科研配色。
 - **一键复制**：可复制 HEX 列表，也可从卡片直接复制 Python 或 R 代码。
 - **代码导出**：支持 HEX、Python/matplotlib、R/ggplot2、Scanpy、Seurat、GraphPad Prism。
 - **色盲友好标注**：在卡片、详情页和筛选器中标注可访问性信息。
@@ -70,6 +71,7 @@ scipalette/
 ├── src/
 │   ├── pages/
 │   │   ├── index.astro              # 首页与浏览入口
+│   │   ├── art2pal/index.astro      # Art2Pal Palette 本地图片取色工具
 │   │   └── palettes/[id].astro      # 配色详情页，静态生成
 │   ├── layouts/
 │   │   └── BaseLayout.astro         # HTML 外壳与 SEO meta
@@ -97,6 +99,7 @@ scipalette/
 │   │   ├── homepage.ts              # 首页派生数据与分组逻辑
 │   │   ├── filter-options.ts        # 筛选选项配置
 │   │   ├── palettes/                # 单个色板文件与聚合入口
+│   │   ├── art2pal/                 # Art2Pal 颜色空间、聚类、生成、导出逻辑
 │   │   ├── palette-utils.ts         # 筛选、导出和相似推荐逻辑
 │   │   ├── types.ts                 # TypeScript 类型定义
 │   │   └── utils.ts                 # 通用工具
@@ -115,6 +118,8 @@ scipalette/
 协作开发和改动边界请参阅 [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)。
 
 ## 添加新配色方案
+
+现有色板按“一色板一文件”组织，避免未来几百或几千个色板堆在单个文件中。聚合入口只负责导入、注册和查询；新增色板不要把大对象直接写进 `src/lib/palettes/index.ts`。
 
 新增或修改色板时，编辑 `src/lib/palettes/<palette-id>.ts`，并在 `src/lib/palettes/index.ts` 中注册：
 
