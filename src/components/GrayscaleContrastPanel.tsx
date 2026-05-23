@@ -34,26 +34,38 @@ export function GrayscaleContrastPanel({ palette }: GrayscaleContrastPanelProps)
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="border border-[#dadcd6] bg-[rgb(248_245_236_/_0.68)] p-4">
               <p className="text-xs font-bold uppercase tracking-[0.12em] text-[rgb(33_44_51_/_0.52)]">Minimum grayscale ratio</p>
-              <p className="mt-2 font-display text-3xl font-bold text-[#212c33]">{formatRatio(report.minimumRatio)}</p>
+              <p className="mt-2 font-mono text-3xl font-bold tracking-normal text-[#212c33]">{formatRatio(report.minimumRatio)}</p>
             </div>
             <div className="border border-[#dadcd6] bg-[rgb(248_245_236_/_0.68)] p-4">
               <p className="text-xs font-bold uppercase tracking-[0.12em] text-[rgb(33_44_51_/_0.52)]">Threshold</p>
-              <p className="mt-2 font-display text-3xl font-bold text-[#212c33]">{formatRatio(report.threshold)}</p>
+              <p className="mt-2 font-mono text-3xl font-bold tracking-normal text-[#212c33]">{formatRatio(report.threshold)}</p>
             </div>
             <div className="border border-[#dadcd6] bg-[rgb(248_245_236_/_0.68)] p-4">
               <p className="text-xs font-bold uppercase tracking-[0.12em] text-[rgb(33_44_51_/_0.52)]">Status</p>
-              <p className={`mt-2 font-display text-3xl font-bold ${report.passes ? "text-[#4f6d5f]" : "text-[#8f3c2f]"}`}>
-                {report.passes ? "Pass" : "Review"}
+              <p className={`mt-2 text-3xl font-bold tracking-normal ${report.passes ? "text-[#4f6d5f]" : "text-[#8f3c2f]"}`}>
+                {report.passes ? "Pass" : "Low Contrast"}
               </p>
             </div>
           </div>
 
           <div className="grid gap-2">
+            <div className="grid grid-cols-[7.5rem_1fr_4.5rem] items-end gap-3 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-[rgb(33_44_51_/_0.48)]">
+              <span>Color</span>
+              <span>Grayscale swatch</span>
+              <span className="text-right">Luma</span>
+            </div>
             {palette.colors.map((color) => {
               const luminance = rgbToGrayscaleLuminance(color);
               return (
-                <div key={color} className="grid grid-cols-[5rem_1fr_4.5rem] items-center gap-3 text-sm font-semibold text-[rgb(33_44_51_/_0.68)]">
-                  <span className="font-mono text-xs text-[#212c33]">{color}</span>
+                <div key={color} className="grid grid-cols-[7.5rem_1fr_4.5rem] items-center gap-3 text-sm font-semibold text-[rgb(33_44_51_/_0.68)]">
+                  <span className="flex min-w-0 items-center gap-2">
+                    <span
+                      className="h-3.5 w-3.5 shrink-0 border border-[rgb(33_44_51_/_0.18)]"
+                      style={{ backgroundColor: color }}
+                      aria-hidden="true"
+                    />
+                    <span className="font-mono text-xs text-[#212c33]">{color}</span>
+                  </span>
                   <div className="h-4 border border-[#dadcd6]" style={{ background: `rgb(${luminance} ${luminance} ${luminance})` }} />
                   <span className="text-right font-mono text-xs">{luminance}</span>
                 </div>
