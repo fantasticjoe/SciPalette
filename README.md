@@ -26,6 +26,7 @@ SciPalette 是一个专为科研可视化设计的静态配色方案库。它面
 - **一键复制**：可复制 HEX 列表，也可从卡片直接复制 Python 或 R 代码。
 - **代码与文件导出**：支持 HEX、Python/matplotlib、R/ggplot2、Scanpy、Seurat、GraphPad Prism，并可下载 Adobe ASE 文件。
 - **用户提交配色方案**：配色库页面提供 GitHub Issue 投稿入口，并支持粘贴 Art2Pal 导出的 SciPalette contribution JSON。
+- **论文图灵感收集**：配色库页面提供 DOI、论文链接和 figure reference 的 GitHub Issue 入口，用于记录值得研究的论文图配色来源。
 - **色盲友好标注**：在卡片、详情页和筛选器中标注可访问性信息。
 - **静态部署**：基于 Astro 静态生成，可部署到 GitHub Pages 等静态托管平台。
 - **响应式界面**：桌面、平板和手机均可浏览和复制配色。
@@ -87,6 +88,7 @@ scipalette/
 │   │   ├── SiteFooter.astro         # 全站页脚
 │   │   ├── SiteMark.astro           # 复用同一 favicon.svg 的站点 Logo
 │   │   ├── PaletteContributionPanel.astro # 用户提交配色方案入口
+│   │   ├── PaperInspirationPanel.astro # DOI 与论文图灵感收集入口
 │   │   ├── PaletteBrowser.tsx       # 首页状态组合层
 │   │   ├── HomeHero.tsx             # 首页首屏
 │   │   ├── PaletteLibrarySection.tsx # 可筛选配色库区块
@@ -198,7 +200,7 @@ npm run build
 - [x] 导出 Adobe ASE 文件
 - [x] 导出 CSS 变量
 - [x] 用户提交配色方案
-- [ ] DOI / 论文图灵感收集
+- [x] DOI / 论文图灵感收集
 - [ ] AI 辅助配色推荐
 - [ ] 配色方案对比视图
 

@@ -1,0 +1,40 @@
+name: 论文图灵感 / Paper Figure Inspiration
+description: 提交值得研究的论文图、DOI 或配色灵感来源
+labels: [inspiration]
+body:
+  - type: input
+    id: doi
+    attributes:
+      label: DOI
+      description: 如果有 DOI，请填写完整 DOI。
+      placeholder: 10.1038/s41586-0000-00000-0
+  - type: input
+    id: paper_url
+    attributes:
+      label: 论文链接 / Paper URL
+      description: 论文页面、预印本页面或开放访问链接。
+      placeholder: https://doi.org/10.1038/s41586-0000-00000-0
+    validations:
+      required: true
+  - type: input
+    id: figure_reference
+    attributes:
+      label: 图号或面板 / Figure reference
+      description: 例如 Figure 2、Extended Data Fig. 4、Fig. 3a-c。
+      placeholder: Figure 2b
+    validations:
+      required: true
+  - type: textarea
+    id: palette_notes
+    attributes:
+      label: 配色观察 / Palette notes
+      description: 说明这个图的配色为什么值得参考，以及可能适合 categorical、sequential、diverging 还是 heatmap。
+    validations:
+      required: true
+  - type: textarea
+    id: citation
+    attributes:
+      label: 引用与授权说明 / Citation and rights notes
+      description: 请提供推荐引用格式、开放许可说明，或说明是否只能作为链接参考。不要上传未经授权的论文截图或图版。
+    validations:
+      required: true

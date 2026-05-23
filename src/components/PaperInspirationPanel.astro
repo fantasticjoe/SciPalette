@@ -1,0 +1,45 @@
+---
+import { BookOpenText, ExternalLink, FileSearch } from "lucide-react";
+import { siteConfig } from "../lib/site";
+
+const issueUrl = `${siteConfig.repositoryUrl}/issues/new?template=paper_inspiration.yml`;
+---
+
+<section class="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8" aria-labelledby="paper-inspiration-title">
+  <div class="grid gap-8 border-b border-[#dadcd6] pb-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+    <div>
+      <p class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">
+        <FileSearch class="h-3.5 w-3.5" aria-hidden="true" />
+        paper inspiration
+      </p>
+      <h2 id="paper-inspiration-title" class="font-display mt-3 text-4xl font-bold leading-tight tracking-[-0.02em] text-[#212c33]">
+        Submit paper inspiration for future palettes.
+      </h2>
+      <p class="mt-4 max-w-2xl text-[1.04rem] leading-7 text-[rgb(33_44_51_/_0.72)]">
+        Share a DOI, paper URL, figure reference, or citation note when a published figure has a color system worth studying. SciPalette collects the reference only; figures are not copied into the site unless their rights and source are clear.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href={issueUrl} class="sp-button-primary px-5 py-3 text-sm">
+          <BookOpenText class="h-4 w-4" aria-hidden="true" />
+          Submit paper inspiration
+          <ExternalLink class="h-3.5 w-3.5" aria-hidden="true" />
+        </a>
+      </div>
+    </div>
+
+    <div class="grid gap-4 text-sm leading-6 text-[rgb(33_44_51_/_0.7)] sm:grid-cols-2">
+      <div class="border border-[#dadcd6] bg-[rgb(251_249_242_/_0.7)] p-5">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-[#4f6d5f]">What to include</p>
+        <p class="mt-3">
+          DOI, paper URL, figure number, palette notes, and why the figure is relevant to scientific color design.
+        </p>
+      </div>
+      <div class="border border-[#dadcd6] bg-[rgb(251_249_242_/_0.7)] p-5">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-[#4f6d5f]">Rights boundary</p>
+        <p class="mt-3">
+          Use links and citation details instead of uploading copyrighted figure panels or paper screenshots.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

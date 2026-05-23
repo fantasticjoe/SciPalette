@@ -81,6 +81,12 @@ CI 会在 PR 和 `main` 推送时运行。`main` 推送还会触发 GitHub Pages
 
 不要在源文件中手写 `id`。站点会根据 `src/lib/palettes/index.ts` 中的稳定 route key 自动生成短路由 id。
 
+### 提交论文图灵感
+
+如果你在论文中看到值得研究的配色，可以在配色库页面点击 **Submit paper inspiration**，通过 GitHub Issue 提交 DOI、论文链接、图号或面板、配色观察和引用/授权说明。
+
+请优先提供 DOI、论文页面和 figure reference，不要上传未经授权的论文截图或图版。这个流程只用于收集参考来源；正式配色仍需要整理成项目的数据格式后再合并。
+
 ### 修改界面或功能
 
 - 页面入口在 `src/pages/`。
@@ -181,6 +187,12 @@ Example:
 ```
 
 Do not hand-write an `id` in source files. The site generates a short route id from the stable route key in `src/lib/palettes/index.ts`.
+
+### Submitting Paper Figure Inspiration
+
+If you find a paper figure with a color system worth studying, use **Submit paper inspiration** on the palette library page to open a GitHub Issue with the DOI, paper URL, figure reference, palette notes, and citation or rights notes.
+
+Prefer DOI links, paper pages, and figure references over uploaded screenshots or copied figure panels. This workflow collects references only; accepted inspirations still need to be converted into the project's palette data format before they are merged.
 
 ### Updating UI or Functionality
 

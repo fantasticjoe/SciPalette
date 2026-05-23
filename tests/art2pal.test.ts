@@ -476,15 +476,20 @@ test("site separates homepage showcase from full palette browser route", () => {
   const colorVisionPreview = readFileSync("src/components/ColorVisionPreview.tsx", "utf8");
   const grayscaleContrastPanel = readFileSync("src/components/GrayscaleContrastPanel.tsx", "utf8");
   const contributionPanel = readFileSync("src/components/PaletteContributionPanel.astro", "utf8");
+  const paperInspirationPanel = readFileSync("src/components/PaperInspirationPanel.astro", "utf8");
   const browser = readFileSync("src/components/PaletteBrowser.tsx", "utf8");
   const featured = readFileSync("src/components/FeaturedPaletteSections.tsx", "utf8");
   const site = readFileSync("src/lib/site.ts", "utf8");
   const paletteRequest = readFileSync(".github/ISSUE_TEMPLATE/palette_request.yml", "utf8");
+  const paperInspiration = readFileSync(".github/ISSUE_TEMPLATE/paper_inspiration.yml", "utf8");
+  const readme = readFileSync("README.md", "utf8");
+  const readmeEn = readFileSync("README.en.md", "utf8");
 
   assert.ok(homePage.includes("<PaletteShowcase"));
   assert.ok(!homePage.includes("<PaletteBrowser"));
   assert.ok(palettesPage.includes("<PaletteBrowser"));
   assert.ok(palettesPage.includes("<PaletteContributionPanel"));
+  assert.ok(palettesPage.includes("<PaperInspirationPanel"));
   assert.ok(browser.includes("<PaletteLibrarySection"));
   assert.ok(!featured.includes("<PaletteGrid"));
   assert.ok(!featured.includes("CopyButton"));
@@ -505,6 +510,15 @@ test("site separates homepage showcase from full palette browser route", () => {
   assert.ok(contributionPanel.includes("palette_request.yml"));
   assert.ok(contributionPanel.includes("SciPalette contribution JSON"));
   assert.ok(paletteRequest.includes("SciPalette contribution JSON"));
+  assert.ok(paperInspirationPanel.includes("Submit paper inspiration"));
+  assert.ok(paperInspirationPanel.includes("paper_inspiration.yml"));
+  assert.ok(paperInspirationPanel.includes("DOI"));
+  assert.ok(paperInspiration.includes("doi"));
+  assert.ok(paperInspiration.includes("paper_url"));
+  assert.ok(paperInspiration.includes("figure_reference"));
+  assert.ok(paperInspiration.includes("citation"));
+  assert.ok(readme.includes("- [x] DOI / 论文图灵感收集"));
+  assert.ok(readmeEn.includes("- [x] DOI / paper figure inspiration collection"));
 }
 );
 

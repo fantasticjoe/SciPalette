@@ -26,6 +26,7 @@ Primary users include researchers, bioinformaticians, data scientists, and medic
 - **One-click copying** for HEX values, plus quick Python and R copy actions on palette cards.
 - **Code and file export** for HEX, Python/matplotlib, R/ggplot2, Scanpy, Seurat, GraphPad Prism, and downloadable Adobe ASE files.
 - **User-submitted palettes** through a GitHub Issue entry point on the palette library page, with support for Art2Pal's SciPalette contribution JSON.
+- **Paper figure inspiration collection** through a GitHub Issue entry point for DOI, paper URL, figure reference, and citation notes worth studying for future palette design.
 - **Accessibility labeling** for colorblind-safe palettes.
 - **Static deployment** through Astro, suitable for GitHub Pages and other static hosts.
 - **Responsive UI** for desktop, tablet, and mobile browsing.
@@ -87,6 +88,7 @@ scipalette/
 │   │   ├── SiteFooter.astro         # Shared site footer
 │   │   ├── SiteMark.astro           # Shared site logo sourced from favicon.svg
 │   │   ├── PaletteContributionPanel.astro # User-submitted palette entry point
+│   │   ├── PaperInspirationPanel.astro # DOI and paper figure inspiration entry point
 │   │   ├── PaletteBrowser.tsx       # Home-page state composition
 │   │   ├── HomeHero.tsx             # Home hero
 │   │   ├── PaletteLibrarySection.tsx # Filterable palette library section
@@ -198,7 +200,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the contribution workflow.
 - [x] Adobe ASE export
 - [x] CSS variable export
 - [x] User-submitted palettes
-- [ ] DOI / paper figure inspiration collection
+- [x] DOI / paper figure inspiration collection
 - [ ] AI-assisted palette recommendations
 - [ ] Palette comparison view
 
