@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "immunology-cell-types",
   name: "Immunology Cell Types",
   description: "Carefully selected colors for immune cell populations. Each color represents traditional immunology color conventions.",
   category: "categorical",
@@ -10,6 +9,6 @@ const palette = {
   tags: ["immunology", "cell-types", "flow-cytometry"],
   colorblindSafe: true,
   background: "white"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;

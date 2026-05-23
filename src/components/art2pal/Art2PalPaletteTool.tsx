@@ -1,14 +1,14 @@
 import { useMemo, useState } from "react";
 import { AlertTriangle, Check, FlaskConical, Sparkles } from "lucide-react";
 import type { CandidateColorSet, GeneratedPalette } from "../../lib/art2pal/palette";
-import { generateArt2PalPalettes, generateCategoricalPalette } from "../../lib/art2pal/palette";
+import { createGeneratedPaletteId, generateArt2PalPalettes, generateCategoricalPalette } from "../../lib/art2pal/palette";
 import { isSupportedImage, loadImageToCanvas, type ImageProcessingResult } from "../../lib/art2pal/image";
 import type { PaletteExportFormat } from "../../lib/art2pal/export";
 import { safeCopyText } from "../../lib/art2pal/clipboard";
 import { ImageUploader } from "./ImageUploader";
 import { PaletteSection } from "./PaletteSection";
 import { ParameterPanel } from "./ParameterPanel";
-import { ScientificPreview, type PreviewType } from "./ScientificPreview";
+import { ScientificPreview } from "./ScientificPreview";
 
 type ToolState = "idle" | "loading-image" | "calculating" | "ready" | "error";
 
@@ -22,7 +22,7 @@ type GeneratedPalettes = {
   messages: string[];
 };
 
-const INITIAL_FORMATS: Record<GeneratedPalette["id"], PaletteExportFormat> = {
+const INITIAL_FORMATS: Record<GeneratedPalette["kind"], PaletteExportFormat> = {
   categorical: "hex",
   sequential: "hex",
   diverging: "hex",
@@ -61,7 +61,6 @@ export default function Art2PalPaletteTool() {
   const [palettes, setPalettes] = useState<GeneratedPalettes | undefined>();
   const [categoricalCount, setCategoricalCount] = useState(8);
   const [seed, setSeed] = useState(11);
-  const [previewType, setPreviewType] = useState<PreviewType>("umap");
   const [formats, setFormats] = useState(INITIAL_FORMATS);
   const [copyStatus, setCopyStatus] = useState<{ message: string; ok: boolean } | undefined>();
 
@@ -126,6 +125,7 @@ export default function Art2PalPaletteTool() {
         ...palettes,
         categorical: {
           ...palettes.categorical,
+          id: createGeneratedPaletteId("categorical", colors),
           colors,
         },
       });
@@ -159,32 +159,17 @@ export default function Art2PalPaletteTool() {
         </div>
       </section>
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.55fr)]">
-        <div className="space-y-6">
-          <ImageUploader
-            previewUrl={image?.previewUrl}
-            isBusy={state === "loading-image" || state === "calculating"}
-            statusLabel={statusLabel(state)}
-            error={error}
-            imageInfo={imageInfo(image)}
-            onFileSelect={handleFileSelect}
-          />
+      <div className="space-y-6">
+        <ImageUploader
+          previewUrl={image?.previewUrl}
+          isBusy={state === "loading-image" || state === "calculating"}
+          statusLabel={statusLabel(state)}
+          error={error}
+          imageInfo={imageInfo(image)}
+          onFileSelect={handleFileSelect}
+        />
 
-          {palettes && (
-            <ScientificPreview
-              previewType={previewType}
-              palettes={{
-                categorical: palettes.categorical,
-                sequential: palettes.sequential,
-                diverging: palettes.diverging,
-                neutral: palettes.neutral,
-              }}
-              onPreviewTypeChange={setPreviewType}
-            />
-          )}
-        </div>
-
-        <aside className="space-y-6">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(320px,0.58fr)]">
           <ParameterPanel
             categoricalCount={categoricalCount}
             onCategoricalCountChange={handleCategoricalCountChange}
@@ -201,21 +186,35 @@ export default function Art2PalPaletteTool() {
               <p>4. Generate palettes for categorical and continuous plots.</p>
             </div>
           </section>
+        </div>
 
-          {copyStatus && (
-            <div
-              className={`sp-panel p-4 text-sm font-bold ${
-                copyStatus.ok
-                  ? "border-[rgb(79_109_95_/_0.28)] bg-[rgb(122_158_141_/_0.12)] text-[#2f453d]"
-                  : "border-[rgb(153_87_64_/_0.28)] bg-[rgb(176_91_71_/_0.1)] text-[#7a3d2e]"
-              }`}
-              role="status"
-            >
-              {copyStatus.ok ? <Check className="mr-2 inline h-4 w-4" aria-hidden="true" /> : <AlertTriangle className="mr-2 inline h-4 w-4" aria-hidden="true" />}
-              {copyStatus.message}
-            </div>
-          )}
-        </aside>
+        {copyStatus && (
+          <div
+            className={`sp-panel p-4 text-sm font-bold ${
+              copyStatus.ok
+                ? "border-[rgb(79_109_95_/_0.28)] bg-[rgb(122_158_141_/_0.12)] text-[#2f453d]"
+                : "border-[rgb(153_87_64_/_0.28)] bg-[rgb(176_91_71_/_0.1)] text-[#7a3d2e]"
+            }`}
+            role="status"
+          >
+            {copyStatus.ok ? <Check className="mr-2 inline h-4 w-4" aria-hidden="true" /> : <AlertTriangle className="mr-2 inline h-4 w-4" aria-hidden="true" />}
+            {copyStatus.message}
+          </div>
+        )}
+
+        {palettes && (
+          <div className="grid gap-5 xl:grid-cols-2">
+            {paletteList.map((palette) => (
+              <PaletteSection
+                key={palette.id}
+                palette={palette}
+                format={formats[palette.kind]}
+                onFormatChange={(format) => setFormats((current) => ({ ...current, [palette.kind]: format }))}
+                onCopy={(value) => copyText(value, value.startsWith("#") ? `${value} copied` : `${palette.name} copied`)}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       {palettes?.messages.length ? (
@@ -238,17 +237,14 @@ export default function Art2PalPaletteTool() {
       )}
 
       {palettes && (
-        <div className="mt-8 grid gap-5 xl:grid-cols-2">
-          {paletteList.map((palette) => (
-            <PaletteSection
-              key={palette.id}
-              palette={palette}
-              format={formats[palette.id]}
-              onFormatChange={(format) => setFormats((current) => ({ ...current, [palette.id]: format }))}
-              onCopy={(value) => copyText(value, value.startsWith("#") ? `${value} copied` : `${palette.name} copied`)}
-            />
-          ))}
-        </div>
+        <ScientificPreview
+          palettes={{
+            categorical: palettes.categorical,
+            sequential: palettes.sequential,
+            diverging: palettes.diverging,
+            neutral: palettes.neutral,
+          }}
+        />
       )}
     </main>
   );

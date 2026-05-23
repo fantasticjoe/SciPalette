@@ -1,10 +1,24 @@
 import { useMemo } from "react";
+import * as d3 from "d3";
 import type { Palette } from "../lib/types";
 
 interface PlotPreviewProps {
   palette: Palette;
   type: "bar" | "line" | "scatter" | "umap" | "heatmap" | "volcano";
 }
+
+type Point = {
+  x: number;
+  y: number;
+};
+
+const WIDTH = 400;
+const HEIGHT = 200;
+const MARGIN = { top: 22, right: 32, bottom: 38, left: 44 };
+const PLOT_WIDTH = WIDTH - MARGIN.left - MARGIN.right;
+const PLOT_HEIGHT = HEIGHT - MARGIN.top - MARGIN.bottom;
+const AXIS_COLOR = "#5f6860";
+const GRID_COLOR = "rgb(95 104 96 / 0.18)";
 
 function seededRandom(seed: number) {
   let t = (seed + 0x6d2b79f5) | 0;
@@ -13,151 +27,194 @@ function seededRandom(seed: number) {
   return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 }
 
+function pick(colors: string[], index: number): string {
+  return colors[index % colors.length] ?? "#4f6d5f";
+}
+
+function PlotFrame({ children, xLabel, yLabel, background = "#fbf9f2" }: { children: React.ReactNode; xLabel: string; yLabel: string; background?: string }) {
+  return (
+    <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} role="img" aria-label={`${xLabel} by ${yLabel} preview`} className="h-auto w-full">
+      <rect x="0" y="0" width={WIDTH} height={HEIGHT} fill={background} />
+      <g transform={`translate(${MARGIN.left} ${MARGIN.top})`}>
+        <line x1="0" y1={PLOT_HEIGHT} x2={PLOT_WIDTH} y2={PLOT_HEIGHT} stroke={AXIS_COLOR} strokeOpacity="0.62" />
+        <line x1="0" y1="0" x2="0" y2={PLOT_HEIGHT} stroke={AXIS_COLOR} strokeOpacity="0.62" />
+        {d3.ticks(0, 1, 4).map((tick) => (
+          <line key={tick} x1="0" x2={PLOT_WIDTH} y1={PLOT_HEIGHT - tick * PLOT_HEIGHT} y2={PLOT_HEIGHT - tick * PLOT_HEIGHT} stroke={GRID_COLOR} />
+        ))}
+        {children}
+      </g>
+      <text x={MARGIN.left + PLOT_WIDTH / 2} y={184} fill={AXIS_COLOR} fontSize="10" fontWeight="700" textAnchor="middle">
+        {xLabel}
+      </text>
+      <text x="15" y={MARGIN.top + PLOT_HEIGHT / 2} fill={AXIS_COLOR} fontSize="10" fontWeight="700" textAnchor="middle" transform={`rotate(-90 15 ${MARGIN.top + PLOT_HEIGHT / 2})`}>
+        {yLabel}
+      </text>
+    </svg>
+  );
+}
+
 export function PlotPreview({ palette, type }: PlotPreviewProps) {
   const colors = palette.colors;
 
-  const barHeights = useMemo(() => colors.slice(0, 6).map((_, i) => 60 + seededRandom(i * 11) * 80), [colors]);
-  const linePoints = useMemo(() => colors.slice(0, 4).map((_, i) =>
-    Array.from({ length: 8 }, (_, j) => {
-      const x = 60 + j * 40;
-      const y = 40 + Math.sin(j * 0.5 + i) * 30 + i * 20;
-      return `${x},${y}`;
-    }).join(" ")
-  ), [colors]);
-  const scatterPositions = useMemo(() => colors.slice(0, 5).map((_, groupIdx) =>
-    Array.from({ length: 20 }, (_, i) => {
-      const x = 80 + groupIdx * 60 + (seededRandom(groupIdx * 100 + i * 3) - 0.5) * 40;
-      const y = 60 + groupIdx * 15 + (seededRandom(groupIdx * 200 + i * 7 + 1) - 0.5) * 60;
-      return { x, y };
-    })
-  ), [colors]);
-  const umapData = useMemo(() => colors.map((_, clusterIdx) => {
-    const centerX = 100 + (clusterIdx % 4) * 70 + (seededRandom(clusterIdx * 42) - 0.5) * 20;
-    const centerY = 60 + Math.floor(clusterIdx / 4) * 60 + (seededRandom(clusterIdx * 87 + 1) - 0.5) * 20;
-    const points = Array.from({ length: 30 }, (_, i) => {
-      const angle = seededRandom(clusterIdx * 1000 + i * 17) * Math.PI * 2;
-      const radius = seededRandom(clusterIdx * 1000 + i * 31 + 2) * 25;
-      return {
-        x: centerX + Math.cos(angle) * radius,
-        y: centerY + Math.sin(angle) * radius,
-      };
-    });
-    return { centerX, centerY, points };
-  }), [colors]);
-  const volcanoPoints = useMemo(() =>
-    Array.from({ length: 100 }, (_, i) => ({
-      x: 60 + seededRandom(i * 73) * 280,
-      y: 160 - seededRandom(i * 137 + 1) * 120,
-    }))
-  , []);
+  const barData = useMemo(() => colors.slice(0, 6).map((color, index) => ({ key: `G${index + 1}`, color, value: 0.35 + seededRandom(index * 17) * 0.58 })), [colors]);
+  const lineSeries = useMemo(
+    () =>
+      colors.slice(0, 4).map((color, seriesIndex) => ({
+        color,
+        points: Array.from({ length: 9 }, (_, index) => ({
+          x: index,
+          y: 0.48 + Math.sin(index * 0.72 + seriesIndex * 0.9) * 0.2 + seriesIndex * 0.08,
+        })),
+      })),
+    [colors]
+  );
+  const scatterData = useMemo(
+    () =>
+      colors.slice(0, 5).flatMap((color, groupIndex) =>
+        Array.from({ length: 18 }, (_, pointIndex) => ({
+          color,
+          x: groupIndex + 0.5 + (seededRandom(groupIndex * 101 + pointIndex * 11) - 0.5) * 0.62,
+          y: 0.18 + groupIndex * 0.14 + seededRandom(groupIndex * 149 + pointIndex * 7) * 0.42,
+        }))
+      ),
+    [colors]
+  );
+  const umapData = useMemo(
+    () =>
+      colors.flatMap((color, clusterIndex) => {
+        const centerX = (clusterIndex % 4) * 1.05 + (seededRandom(clusterIndex * 29) - 0.5) * 0.22;
+        const centerY = Math.floor(clusterIndex / 4) * 0.86 + (seededRandom(clusterIndex * 41 + 3) - 0.5) * 0.22;
+
+        return Array.from({ length: 22 }, (_, pointIndex) => {
+          const angle = seededRandom(clusterIndex * 1000 + pointIndex * 17) * Math.PI * 2;
+          const radius = seededRandom(clusterIndex * 1000 + pointIndex * 31 + 2) * 0.32;
+          return {
+            color,
+            x: centerX + Math.cos(angle) * radius,
+            y: centerY + Math.sin(angle) * radius,
+          };
+        });
+      }),
+    [colors]
+  );
+  const heatmapData = useMemo(
+    () =>
+      Array.from({ length: 8 }, (_, row) =>
+        Array.from({ length: 10 }, (_, column) => ({
+          row,
+          column,
+          value: (Math.sin(row * 0.85) + Math.cos(column * 0.65) + 2) / 4,
+        }))
+      ).flat(),
+    []
+  );
+  const volcanoData = useMemo(
+    () =>
+      Array.from({ length: 120 }, (_, index) => {
+        const x = -2.6 + seededRandom(index * 73) * 5.2;
+        const y = seededRandom(index * 137 + 1) * 3.5;
+        return { x, y };
+      }),
+    []
+  );
 
   if (type === "bar") {
+    const x = d3.scaleBand<string>().domain(barData.map((item) => item.key)).range([0, PLOT_WIDTH]).padding(0.28);
+    const y = d3.scaleLinear().domain([0, 1]).range([PLOT_HEIGHT, 0]);
+
     return (
-      <svg viewBox="0 0 400 200" className="w-full h-auto">
-        <line x1="40" y1="160" x2="360" y2="160" stroke="#333" strokeWidth="1.5" />
-        <line x1="40" y1="20" x2="40" y2="160" stroke="#333" strokeWidth="1.5" />
-        {colors.slice(0, 6).map((color, i) => (
-          <rect key={i} x={60 + i * 50} y={160 - barHeights[i]} width="35" height={barHeights[i]} fill={color} opacity="0.9" />
+      <PlotFrame xLabel="Groups" yLabel="Expression">
+        {barData.map((item) => (
+          <rect key={item.key} x={x(item.key)} y={y(item.value)} width={x.bandwidth()} height={PLOT_HEIGHT - y(item.value)} fill={item.color} fillOpacity="0.9" />
         ))}
-        <text x="15" y="90" fontSize="10" fill="#666" transform="rotate(-90 15 90)">Expression</text>
-        <text x="200" y="185" fontSize="10" fill="#666" textAnchor="middle">Groups</text>
-      </svg>
+      </PlotFrame>
     );
   }
 
   if (type === "line") {
+    const x = d3.scaleLinear().domain([0, 8]).range([0, PLOT_WIDTH]);
+    const y = d3.scaleLinear().domain([0.08, 1.05]).range([PLOT_HEIGHT, 0]);
+    const line = d3.line<Point>().x((point) => x(point.x)).y((point) => y(point.y)).curve(d3.curveMonotoneX);
+    const area = d3.area<Point>().x((point) => x(point.x)).y0(PLOT_HEIGHT).y1((point) => y(point.y)).curve(d3.curveMonotoneX);
+
     return (
-      <svg viewBox="0 0 400 200" className="w-full h-auto">
-        <line x1="40" y1="160" x2="360" y2="160" stroke="#333" strokeWidth="1.5" />
-        <line x1="40" y1="20" x2="40" y2="160" stroke="#333" strokeWidth="1.5" />
-        {colors.slice(0, 4).map((color, i) => (
-          <polyline key={i} points={linePoints[i]} fill="none" stroke={color} strokeWidth="2.5" opacity="0.9" />
+      <PlotFrame xLabel="Time" yLabel="Value">
+        {lineSeries.map((series, index) => (
+          <g key={index}>
+            {index === 0 && <path d={area(series.points) ?? undefined} fill={series.color} fillOpacity="0.12" />}
+            <path d={line(series.points) ?? undefined} fill="none" stroke={series.color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          </g>
         ))}
-        <text x="15" y="90" fontSize="10" fill="#666" transform="rotate(-90 15 90)">Value</text>
-        <text x="200" y="185" fontSize="10" fill="#666" textAnchor="middle">Time</text>
-      </svg>
+      </PlotFrame>
     );
   }
 
   if (type === "scatter") {
+    const x = d3.scaleLinear().domain([0, 5]).range([0, PLOT_WIDTH]);
+    const y = d3.scaleLinear().domain([0, 1.1]).range([PLOT_HEIGHT, 0]);
+
     return (
-      <svg viewBox="0 0 400 200" className="w-full h-auto">
-        <line x1="40" y1="160" x2="360" y2="160" stroke="#333" strokeWidth="1.5" />
-        <line x1="40" y1="20" x2="40" y2="160" stroke="#333" strokeWidth="1.5" />
-        {colors.slice(0, 5).map((color, groupIdx) => (
-          <g key={groupIdx}>
-            {scatterPositions[groupIdx].map(({ x, y }, i) => (
-              <circle key={i} cx={x} cy={y} r="3.5" fill={color} opacity="0.7" />
-            ))}
-          </g>
+      <PlotFrame xLabel="PC1" yLabel="PC2">
+        {scatterData.map((point, index) => (
+          <circle key={index} cx={x(point.x)} cy={y(point.y)} r="3.2" fill={point.color} fillOpacity="0.68" />
         ))}
-        <text x="15" y="90" fontSize="10" fill="#666" transform="rotate(-90 15 90)">PC2</text>
-        <text x="200" y="185" fontSize="10" fill="#666" textAnchor="middle">PC1</text>
-      </svg>
+      </PlotFrame>
     );
   }
 
   if (type === "umap") {
+    const xExtent = d3.extent(umapData, (point) => point.x) as [number, number];
+    const yExtent = d3.extent(umapData, (point) => point.y) as [number, number];
+    const x = d3.scaleLinear().domain(xExtent).nice().range([0, PLOT_WIDTH]);
+    const y = d3.scaleLinear().domain(yExtent).nice().range([PLOT_HEIGHT, 0]);
+
     return (
-      <svg viewBox="0 0 400 200" className="w-full h-auto">
-        <rect x="40" y="20" width="320" height="140" fill="#fafafa" />
-        {colors.map((color, clusterIdx) => (
-          <g key={clusterIdx}>
-            {umapData[clusterIdx].points.map(({ x, y }, i) => (
-              <circle key={i} cx={x} cy={y} r="2.5" fill={color} opacity="0.6" />
-            ))}
-          </g>
+      <PlotFrame xLabel="UMAP 1" yLabel="UMAP 2">
+        {umapData.map((point, index) => (
+          <circle key={index} cx={x(point.x)} cy={y(point.y)} r="2.4" fill={point.color} fillOpacity="0.65" />
         ))}
-        <text x="200" y="185" fontSize="10" fill="#666" textAnchor="middle">UMAP 1</text>
-        <text x="15" y="90" fontSize="10" fill="#666" transform="rotate(-90 15 90)">UMAP 2</text>
-      </svg>
+      </PlotFrame>
     );
   }
 
   if (type === "heatmap") {
-    const rows = 8;
-    const cols = 10;
-    const cellWidth = 30;
-    const cellHeight = 15;
+    const x = d3.scaleBand<number>().domain(d3.range(10)).range([0, PLOT_WIDTH]).padding(0.04);
+    const y = d3.scaleBand<number>().domain(d3.range(8)).range([0, PLOT_HEIGHT]).padding(0.04);
+    const color = d3.scaleQuantize<string>().domain([0, 1]).range(colors);
+
     return (
-      <svg viewBox="0 0 400 200" className="w-full h-auto">
-        {Array.from({ length: rows }, (_, i) =>
-          Array.from({ length: cols }, (_, j) => {
-            const colorIdx = Math.floor((i * cols + j) / (rows * cols) * colors.length);
-            const color = colors[Math.min(colorIdx, colors.length - 1)];
-            return (
-              <rect key={`${i}-${j}`} x={50 + j * cellWidth} y={20 + i * cellHeight}
-                width={cellWidth - 1} height={cellHeight - 1} fill={color} opacity="0.9" />
-            );
-          })
-        )}
-        <text x="200" y="185" fontSize="10" fill="#666" textAnchor="middle">Samples</text>
-        <text x="15" y="90" fontSize="10" fill="#666" transform="rotate(-90 15 90)">Genes</text>
-      </svg>
+      <PlotFrame xLabel="Samples" yLabel="Genes">
+        {heatmapData.map((cell) => (
+          <rect
+            key={`${cell.row}-${cell.column}`}
+            x={x(cell.column)}
+            y={y(cell.row)}
+            width={x.bandwidth()}
+            height={y.bandwidth()}
+            fill={color(cell.value)}
+            fillOpacity="0.92"
+          />
+        ))}
+      </PlotFrame>
     );
   }
 
   if (type === "volcano") {
+    const x = d3.scaleLinear().domain([-3, 3]).range([0, PLOT_WIDTH]);
+    const y = d3.scaleLinear().domain([0, 3.7]).range([PLOT_HEIGHT, 0]);
     const upColor = colors[colors.length - 1] || "#E64B35";
     const downColor = colors[0] || "#4DBBD5";
     const nsColor = colors[Math.floor(colors.length / 2)] || "#999999";
+
     return (
-      <svg viewBox="0 0 400 200" className="w-full h-auto">
-        <line x1="200" y1="160" x2="200" y2="20" stroke="#ddd" strokeWidth="1" strokeDasharray="4" />
-        <line x1="40" y1="160" x2="360" y2="160" stroke="#333" strokeWidth="1.5" />
-        <line x1="40" y1="20" x2="40" y2="160" stroke="#333" strokeWidth="1.5" />
-        {volcanoPoints.map(({ x, y }, i) => {
-          const logFC = (x - 200) / 50;
-          const pValue = (160 - y) / 40;
-          let color = nsColor;
-          if (Math.abs(logFC) > 1 && pValue > 1.3) {
-            color = logFC > 0 ? upColor : downColor;
-          }
-          return <circle key={i} cx={x} cy={y} r="2.5" fill={color} opacity="0.6" />;
+      <PlotFrame xLabel="log2 Fold Change" yLabel="-log10 p-value">
+        <line x1={x(0)} y1="0" x2={x(0)} y2={PLOT_HEIGHT} stroke={GRID_COLOR} strokeDasharray="4 4" />
+        {volcanoData.map((point, index) => {
+          const significant = Math.abs(point.x) > 1 && point.y > 1.3;
+          const fill = significant ? (point.x > 0 ? upColor : downColor) : nsColor;
+          return <circle key={index} cx={x(point.x)} cy={y(point.y)} r="2.4" fill={fill} fillOpacity={significant ? 0.72 : 0.46} />;
         })}
-        <text x="200" y="185" fontSize="10" fill="#666" textAnchor="middle">log2 Fold Change</text>
-        <text x="15" y="90" fontSize="10" fill="#666" transform="rotate(-90 15 90)">-log10 p-value</text>
-      </svg>
+      </PlotFrame>
     );
   }
 

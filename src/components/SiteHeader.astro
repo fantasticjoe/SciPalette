@@ -1,5 +1,5 @@
 ---
-import { ExternalLink, FlaskConical, Palette, ShieldCheck } from "lucide-react";
+import { ExternalLink, FlaskConical, Menu, Palette, ShieldCheck } from "lucide-react";
 import { siteConfig } from "../lib/site";
 
 const navIcons = {
@@ -15,16 +15,13 @@ const navIcons = {
     <a href={`${siteConfig.basePath}/`} class="font-display text-2xl font-bold leading-none text-[#212c33]">
       SciPalette
     </a>
-    <div class="flex items-center gap-1 text-sm font-semibold text-[rgb(33_44_51_/_0.68)]">
+    <div class="hidden items-center gap-1 text-sm font-semibold text-[rgb(33_44_51_/_0.68)] md:flex">
       {siteConfig.navigation.map((item) => {
         const Icon = navIcons[item.id];
         return (
           <a
             href={item.href}
-            class:list={[
-              "items-center gap-1.5 px-3 py-2 transition-colors hover:bg-[rgb(122_158_141_/_0.1)] hover:text-[#212c33]",
-              item.hideOnMobile ? "hidden sm:inline-flex" : "inline-flex",
-            ]}
+            class="inline-flex items-center gap-1.5 px-3 py-2 transition-colors hover:bg-[rgb(122_158_141_/_0.1)] hover:text-[#212c33]"
           >
             <Icon class="h-3.5 w-3.5" aria-hidden="true" />
             {item.label}
@@ -32,5 +29,28 @@ const navIcons = {
         );
       })}
     </div>
+    <details class="relative md:hidden">
+      <summary
+        class="sp-button-secondary list-none px-3 py-2 text-sm [&::-webkit-details-marker]:hidden"
+        aria-label="Mobile navigation"
+      >
+        <Menu class="h-4 w-4" aria-hidden="true" />
+        Menu
+      </summary>
+      <div class="absolute right-0 top-12 z-20 w-56 border border-[#dadcd6] bg-[#fbf9f2] p-2 shadow-[0_18px_44px_rgb(33_44_51_/_0.12)]">
+        {siteConfig.navigation.map((item) => {
+          const Icon = navIcons[item.id];
+          return (
+            <a
+              href={item.href}
+              class="flex items-center gap-2 px-3 py-2.5 text-sm font-bold text-[rgb(33_44_51_/_0.72)] transition-colors hover:bg-[rgb(122_158_141_/_0.12)] hover:text-[#212c33]"
+            >
+              <Icon class="h-4 w-4 text-[#4f6d5f]" aria-hidden="true" />
+              {item.label}
+            </a>
+          );
+        })}
+      </div>
+    </details>
   </nav>
 </header>

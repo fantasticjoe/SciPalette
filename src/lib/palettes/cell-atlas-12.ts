@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "cell-atlas-12",
   name: "Cell Atlas 12",
   description: "Vibrant palette designed for single-cell clustering and cell type annotation. High contrast for distinguishing many clusters.",
   category: "categorical",
@@ -11,6 +10,6 @@ const palette = {
   colorblindSafe: false,
   background: "white",
   source: "Optimized for single-cell analysis"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;

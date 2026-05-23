@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "tableau-scientific-10",
   name: "Tableau Scientific 10",
   description: "Balanced palette for scientific data visualization. Good contrast and professional appearance.",
   category: "categorical",
@@ -10,6 +9,6 @@ const palette = {
   tags: ["balanced", "professional"],
   colorblindSafe: true,
   background: "white"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;

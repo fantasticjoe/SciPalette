@@ -11,13 +11,19 @@ import {
   type RgbColor,
 } from "../color";
 import { extractCandidateColors } from "./extractCandidateColors";
-import type { Art2PalPaletteResult, CandidateColor, CandidateColorSet, GeneratedPalette } from "./types";
+import type { Art2PalPaletteResult, CandidateColor, CandidateColorSet, GeneratedPalette, GeneratedPaletteKind } from "./types";
 
 const FALLBACK_CATEGORICAL = ["#4e79a7", "#f28e2b", "#59a14f", "#e15759", "#76b7b2", "#edc948", "#b07aa1", "#9c755f"];
 const FALLBACK_SEQUENTIAL = ["#f3f6ef", "#d6e6d5", "#aacda9", "#75ad7e", "#418a5e", "#206543"];
 const FALLBACK_DIVERGING = ["#315b8c", "#6f90b8", "#bac8d5", "#f3f1ea", "#d9b7a2", "#b87657", "#8f3c2f"];
 const FALLBACK_NEUTRAL = ["#fbf9f2", "#e9e4d8", "#c9c6ba", "#6f746c", "#252d31"];
 const MIN_DIVERGING_HUE_DISTANCE = 80;
+const PALETTE_KIND_PREFIXES: Record<GeneratedPaletteKind, string> = {
+  categorical: "cat",
+  sequential: "seq",
+  diverging: "div",
+  neutral: "neu",
+};
 
 type CountOption = {
   count?: number;
@@ -42,6 +48,24 @@ function normalize(value: number, min: number, max: number): number {
 function chromaScore(chroma: number): number {
   const target = 0.12;
   return 1 - clamp(Math.abs(chroma - target) / 0.12, 0, 1);
+}
+
+function hashPaletteSignature(kind: GeneratedPaletteKind, colors: string[]): string {
+  const signature = `${kind}:${colors.map((color) => color.toLowerCase()).join(",")}`;
+  let first = 0x811c9dc5;
+  let second = 0x9e3779b9;
+
+  for (let index = 0; index < signature.length; index += 1) {
+    const code = signature.charCodeAt(index);
+    first = Math.imul(first ^ code, 0x01000193);
+    second = Math.imul(second ^ code, 0x85ebca6b);
+  }
+
+  return `${(first >>> 0).toString(36).padStart(7, "0")}${(second >>> 0).toString(36).padStart(7, "0")}`;
+}
+
+export function createGeneratedPaletteId(kind: GeneratedPaletteKind, colors: string[]): string {
+  return `a2p-${PALETTE_KIND_PREFIXES[kind]}-${hashPaletteSignature(kind, colors)}`;
 }
 
 function candidateBaseScore(candidate: CandidateColor): number {
@@ -206,7 +230,7 @@ export function generateNeutralPalette(candidates: CandidateColorSet): string[] 
   return [background, surface, grid, axis, text];
 }
 
-function makePalette(id: GeneratedPalette["id"], colors: string[]): GeneratedPalette {
+function makePalette(kind: GeneratedPaletteKind, colors: string[]): GeneratedPalette {
   const meta = {
     categorical: {
       name: "Categorical",
@@ -228,9 +252,9 @@ function makePalette(id: GeneratedPalette["id"], colors: string[]): GeneratedPal
       description: "Paper, grid, axis, and text neutrals derived from the artwork when possible.",
       usage: "Backgrounds, axes, grid, labels",
     },
-  }[id];
+  }[kind];
 
-  return { id, colors, ...meta };
+  return { id: createGeneratedPaletteId(kind, colors), kind, colors, ...meta };
 }
 
 export function generateArt2PalPalettes(

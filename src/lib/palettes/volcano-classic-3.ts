@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "volcano-classic-3",
   name: "Volcano Classic 3",
   description: "Traditional three-color scheme for volcano plots. Gray for non-significant, red for upregulated, blue for downregulated.",
   category: "categorical",
@@ -10,6 +9,6 @@ const palette = {
   tags: ["volcano-plot", "differential-expression", "genomics"],
   colorblindSafe: true,
   background: "white"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;

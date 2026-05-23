@@ -1,5 +1,5 @@
-import PaletteGrid from "./PaletteGrid";
 import type { FeaturedPaletteGroups } from "../lib/homepage";
+import type { Palette } from "../lib/types";
 import { Accessibility, Flame, ScanLine } from "lucide-react";
 
 interface FeaturedPaletteSectionsProps {
@@ -21,7 +21,7 @@ export function FeaturedPaletteSections({ className, groups }: FeaturedPaletteSe
             </h2>
             <p className="mt-1 text-[rgb(33_44_51_/_0.68)]">Optimized for UMAP, t-SNE, and cluster annotation.</p>
           </div>
-          <PaletteGrid palettes={singleCellPalettes.slice(0, 3)} />
+          <ShowcaseGrid palettes={singleCellPalettes.slice(0, 3)} />
         </div>
       )}
 
@@ -34,7 +34,7 @@ export function FeaturedPaletteSections({ className, groups }: FeaturedPaletteSe
             </h2>
             <p className="mt-1 text-[rgb(33_44_51_/_0.68)]">Accessible to readers with common color vision deficiencies.</p>
           </div>
-          <PaletteGrid palettes={colorblindSafePalettes.slice(0, 3)} />
+          <ShowcaseGrid palettes={colorblindSafePalettes.slice(0, 3)} />
         </div>
       )}
 
@@ -47,9 +47,32 @@ export function FeaturedPaletteSections({ className, groups }: FeaturedPaletteSe
             </h2>
             <p className="mt-1 text-[rgb(33_44_51_/_0.68)]">Sequential and diverging palettes for expression and correlation matrices.</p>
           </div>
-          <PaletteGrid palettes={heatmapPalettes.slice(0, 3)} />
+          <ShowcaseGrid palettes={heatmapPalettes.slice(0, 3)} />
         </div>
       )}
     </section>
+  );
+}
+
+function ShowcaseGrid({ palettes }: { palettes: Palette[] }) {
+  return (
+    <div className="grid gap-4 md:grid-cols-3">
+      {palettes.map((palette) => (
+        <article className="border border-[#dadcd6] bg-[rgb(251_249_242_/_0.76)] p-4" key={palette.id}>
+          <div className="flex h-16 overflow-hidden border border-[rgb(33_44_51_/_0.08)]">
+            {palette.colors.slice(0, 12).map((color, index) => (
+              <div className="flex-1" style={{ backgroundColor: color }} title={color} key={`${palette.id}-${color}-${index}`} />
+            ))}
+          </div>
+          <div className="mt-4">
+            <h3 className="font-display text-2xl font-bold leading-tight text-[#212c33]">{palette.name}</h3>
+            <p className="mt-1 line-clamp-2 text-sm leading-6 text-[rgb(33_44_51_/_0.68)]">{palette.description}</p>
+            <a href={`/palettes/${palette.id}`} className="mt-4 inline-flex text-sm font-bold text-[#4f6d5f] hover:text-[#212c33]">
+              View palette
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
   );
 }

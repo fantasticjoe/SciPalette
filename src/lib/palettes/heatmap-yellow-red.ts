@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "heatmap-yellow-red",
   name: "Heatmap Yellow-Red",
   description: "Sequential heatmap gradient from light yellow to dark red. Ideal for intensity data and p-values.",
   category: "heatmap",
@@ -10,6 +9,6 @@ const palette = {
   tags: ["heatmap", "intensity", "p-value"],
   colorblindSafe: false,
   background: "white"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;

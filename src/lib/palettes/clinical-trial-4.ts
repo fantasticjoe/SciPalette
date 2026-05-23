@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "clinical-trial-4",
   name: "Clinical Trial 4",
   description: "Clean, distinguishable colors for clinical trial groups. Designed for clarity in medical publications.",
   category: "categorical",
@@ -10,6 +9,6 @@ const palette = {
   tags: ["clinical", "medical", "trial-groups"],
   colorblindSafe: true,
   background: "white"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;

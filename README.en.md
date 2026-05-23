@@ -122,11 +122,10 @@ For contribution boundaries and architecture notes, see [docs/ARCHITECTURE.md](.
 
 Curated palettes are split one file per palette so the library can scale to hundreds or thousands of palettes without one oversized data file.
 
-To add or update a palette, edit `src/lib/palettes/<palette-id>.ts` and register it in `src/lib/palettes/index.ts`:
+To add or update a palette, edit `src/lib/palettes/<palette-name>.ts` and register the import in `src/lib/palettes/index.ts`. Do not hand-write an `id` in the source file; detail-page routes use short stable IDs derived from the registration key in `src/lib/palettes/index.ts`, so routine name, description, or color edits are not exposed directly in the URL:
 
 ```ts
 {
-  id: "your-palette-id",
   name: "Your Palette Name",
   description: "Describe where this palette works best.",
   category: "categorical",
@@ -153,8 +152,7 @@ type PlotType =
   | "volcano"
   | "boxplot";
 
-type Palette = {
-  id: string;
+type PaletteSource = {
   name: string;
   description: string;
   category: PaletteCategory;

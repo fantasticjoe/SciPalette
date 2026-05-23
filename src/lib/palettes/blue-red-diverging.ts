@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "blue-red-diverging",
   name: "Blue-Red Diverging",
   description: "Classic diverging palette for heatmaps and correlation matrices. Blue for negative, red for positive values.",
   category: "diverging",
@@ -10,6 +9,6 @@ const palette = {
   tags: ["heatmap", "correlation", "diverging"],
   colorblindSafe: false,
   background: "white"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;

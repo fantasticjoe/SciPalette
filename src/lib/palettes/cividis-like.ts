@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "cividis-like",
   name: "Cividis-like",
   description: "Optimized for colorblind readers. Blue to yellow sequential palette with excellent accessibility.",
   category: "sequential",
@@ -11,6 +10,6 @@ const palette = {
   colorblindSafe: true,
   background: "white",
   source: "Inspired by matplotlib cividis"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;

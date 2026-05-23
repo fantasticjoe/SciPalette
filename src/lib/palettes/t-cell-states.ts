@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "t-cell-states",
   name: "T Cell States",
   description: "Specialized palette for T cell differentiation states. Colors progress from naive to effector to memory.",
   category: "categorical",
@@ -10,6 +9,6 @@ const palette = {
   tags: ["immunology", "T-cells", "differentiation"],
   colorblindSafe: true,
   background: "white"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;

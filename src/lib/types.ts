@@ -21,3 +21,5 @@ export type Palette = {
   background: "white" | "light" | "dark";
   source?: string;
 };
+
+export type PaletteSource = Omit<Palette, "id">;

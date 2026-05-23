@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "nature-muted-8",
   name: "Nature Muted 8",
   description: "Soft, professional colors inspired by high-impact journals. Perfect for multi-group comparisons in publication figures.",
   category: "categorical",
@@ -11,6 +10,6 @@ const palette = {
   colorblindSafe: true,
   background: "white",
   source: "Inspired by scientific visualization best practices"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;

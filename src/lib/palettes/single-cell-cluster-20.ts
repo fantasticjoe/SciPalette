@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "single-cell-cluster-20",
   name: "Single-cell Cluster 20",
   description: "Extended palette for large-scale single-cell datasets with many clusters. Maximum distinguishability.",
   category: "categorical",
@@ -10,6 +9,6 @@ const palette = {
   tags: ["single-cell", "many-clusters", "scRNA-seq"],
   colorblindSafe: false,
   background: "white"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;

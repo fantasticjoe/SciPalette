@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "okabe-ito",
   name: "Okabe-Ito",
   description: "The gold standard for colorblind-friendly scientific figures. Widely recommended by Nature and Science journals.",
   category: "categorical",
@@ -11,6 +10,6 @@ const palette = {
   colorblindSafe: true,
   background: "white",
   source: "Okabe & Ito (2008)"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;

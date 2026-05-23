@@ -20,8 +20,11 @@ export type CandidateColorSet = {
   rejected: CandidateColor[];
 };
 
+export type GeneratedPaletteKind = "categorical" | "sequential" | "diverging" | "neutral";
+
 export type GeneratedPalette = {
-  id: "categorical" | "sequential" | "diverging" | "neutral";
+  id: string;
+  kind: GeneratedPaletteKind;
   name: string;
   description: string;
   usage: string;

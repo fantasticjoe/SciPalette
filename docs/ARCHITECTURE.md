@@ -8,9 +8,11 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 - `src/layouts/BaseLayout.astro` owns the document shell, SEO defaults, and shared page chrome.
 - `src/components/SiteHeader.astro` owns the global navigation.
 - `src/pages/art2pal/index.astro` owns the Art2Pal Palette route and hydrates the browser-only React tool.
-- `src/components/PaletteBrowser.tsx` owns home-page state and composes the home sections.
-- `src/components/HomeHero.tsx` owns the home hero and random palette copy action surface.
-- `src/components/PaletteLibrarySection.tsx` owns the filterable palette library section.
+- `src/pages/palettes/index.astro` owns the searchable full palette browser route and hydrates `PaletteBrowser`.
+- `src/components/PaletteShowcase.tsx` owns the home-page showcase composition.
+- `src/components/PaletteBrowser.tsx` owns full-library filter state and copy actions.
+- `src/components/HomeHero.tsx` owns the home hero.
+- `src/components/PaletteLibrarySection.tsx` owns the filterable full palette library section.
 - `src/components/FeaturedPaletteSections.tsx` owns the curated home-page recommendation sections.
 - `src/components/PaletteDetailHeader.astro` owns palette metadata, tags, and accessibility labeling on detail pages.
 - `src/components/PaletteColorSection.astro` owns the detail-page color swatch grid.
@@ -18,7 +20,7 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 - `src/components/PaletteExportSection.astro` owns the detail-page export panel shell.
 - `src/components/SimilarPalettesSection.astro` owns detail-page similar palette recommendations.
 - `src/components/*.tsx` owns interactive UI rendered by Astro client directives.
-- `src/lib/palettes/` is the palette data source. Each file owns one palette, and `src/lib/palettes/index.ts` owns the aggregated export plus lookup helpers.
+- `src/lib/palettes/` is the palette data source. Each file owns one id-free `PaletteSource`, and `src/lib/palettes/index.ts` owns stable route-key registration, short id generation, aggregated exports, and lookup helpers.
 - `src/lib/art2pal/` owns browser-local image processing, color-space conversion, OKLab K-means clustering, scientific palette generation, mock preview data, and export formatting for the Art2Pal Palette tool.
 - `src/lib/homepage.ts` owns home-page grouping helpers and derived counts.
 - `src/lib/filter-options.ts` owns filter dropdown labels and values.
@@ -31,11 +33,11 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 
 Use these boundaries when preparing a PR:
 
-- **New or updated palette:** edit `src/lib/palettes/<palette-id>.ts` and register it in `src/lib/palettes/index.ts`; only touch UI if the data model must change.
-- **New palette field:** update `src/lib/types.ts`, the affected `src/lib/palettes/<palette-id>.ts` files, `src/lib/palettes/index.ts`, affected components, and README examples together.
+- **New or updated palette:** edit an id-free `src/lib/palettes/<palette-name>.ts` source file and register its import plus stable route key in `src/lib/palettes/index.ts`; only touch UI if the data model must change.
+- **New palette field:** update `src/lib/types.ts`, the affected `src/lib/palettes/<palette-name>.ts` files, `src/lib/palettes/index.ts`, affected components, and README examples together.
 - **Filtering or export behavior:** edit `src/lib/palette-utils.ts` first; keep component changes limited to wiring or labels.
 - **Filter labels or available filter values:** edit `src/lib/filter-options.ts`; edit `src/components/PaletteFilters.tsx` only for layout or interaction changes.
-- **Home-page hero or featured sections:** edit the matching home component first; edit `src/components/PaletteBrowser.tsx` only when state wiring changes.
+- **Home-page hero or featured sections:** edit `src/components/PaletteShowcase.tsx`, `HomeHero`, or `FeaturedPaletteSections`; keep full-library filtering in `src/components/PaletteBrowser.tsx`.
 - **Home-page grouping rules:** edit `src/lib/homepage.ts`; keep rendering components focused on presentation.
 - **Palette detail page presentation:** edit the matching `PaletteDetail*` or `SimilarPalettesSection` component first; edit `src/pages/palettes/[id].astro` only when route data or section ordering changes.
 - **Global navigation or repository links:** edit `src/lib/site.ts` and, if needed, `src/components/SiteHeader.astro`.
@@ -65,6 +67,7 @@ npm run build
 For UI changes, also preview the site locally and check:
 
 - Home page at `/`
-- A palette detail page under `/palettes/<id>/`
+- Full palette browser at `/palettes/`
+- A palette detail page under `/palettes/<short-stable-id>/`
 - A narrow mobile viewport around 390 px wide
-- Anchor links for `#palettes` and `#accessible`
+- Header navigation, including the mobile menu

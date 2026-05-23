@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "purple-orange-diverging",
   name: "Purple-Orange Diverging",
   description: "Colorblind-friendly diverging palette. Excellent for showing positive and negative changes.",
   category: "diverging",
@@ -10,6 +9,6 @@ const palette = {
   tags: ["diverging", "colorblind-safe", "fold-change"],
   colorblindSafe: true,
   background: "white"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;

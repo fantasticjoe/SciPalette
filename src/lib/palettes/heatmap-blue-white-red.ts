@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "heatmap-blue-white-red",
   name: "Heatmap Blue-White-Red",
   description: "Standard heatmap gradient for gene expression data. White center for zero/baseline values.",
   category: "heatmap",
@@ -10,6 +9,6 @@ const palette = {
   tags: ["heatmap", "gene-expression", "z-score"],
   colorblindSafe: false,
   background: "white"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;

@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "soft-pastel-6",
   name: "Soft Pastel 6",
   description: "Gentle, muted colors for elegant figures. Works well for presentations and posters.",
   category: "categorical",
@@ -10,6 +9,6 @@ const palette = {
   tags: ["pastel", "presentation", "poster"],
   colorblindSafe: false,
   background: "white"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;

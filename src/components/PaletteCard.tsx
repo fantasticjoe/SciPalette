@@ -23,7 +23,7 @@ export default function PaletteCard({ palette, className }: PaletteCardProps) {
             />
           ))}
         </div>
-        <div className="absolute right-6 top-6 border border-[#dadcd6] bg-[rgb(248_245_236_/_0.92)] px-2.5 py-1 text-xs font-bold text-[#212c33] shadow-sm">
+        <div className="absolute right-6 top-6 whitespace-nowrap border border-[#dadcd6] bg-[rgb(248_245_236_/_0.92)] px-2.5 py-1 text-xs font-bold text-[#212c33] shadow-sm">
           {palette.colors.length} colors
         </div>
       </div>

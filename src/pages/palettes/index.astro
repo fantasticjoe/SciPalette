@@ -1,0 +1,11 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PaletteBrowser from "../../components/PaletteBrowser";
+---
+
+<BaseLayout
+  title="Palette Library - SciPalette"
+  description="Search, filter, preview, and export all SciPalette color palettes for publication-ready scientific figures."
+>
+  <PaletteBrowser client:load />
+</BaseLayout>

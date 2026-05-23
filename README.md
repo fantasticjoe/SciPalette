@@ -122,11 +122,10 @@ scipalette/
 
 现有色板按“一色板一文件”组织，避免未来几百或几千个色板堆在单个文件中。聚合入口只负责导入、注册和查询；新增色板不要把大对象直接写进 `src/lib/palettes/index.ts`。
 
-新增或修改色板时，编辑 `src/lib/palettes/<palette-id>.ts`，并在 `src/lib/palettes/index.ts` 中注册：
+新增或修改色板时，编辑 `src/lib/palettes/<palette-name>.ts`，并在 `src/lib/palettes/index.ts` 中注册导入。源文件不要手写 `id`；网页详情路由使用短的稳定 ID，这个 ID 由 `src/lib/palettes/index.ts` 中的注册 key 派生，名称、描述或颜色微调不会直接暴露到 URL：
 
 ```ts
 {
-  id: "your-palette-id",
   name: "Your Palette Name",
   description: "描述这个配色方案的用途和特点。",
   category: "categorical",
@@ -153,8 +152,7 @@ type PlotType =
   | "volcano"
   | "boxplot";
 
-type Palette = {
-  id: string;
+type PaletteSource = {
   name: string;
   description: string;
   category: PaletteCategory;

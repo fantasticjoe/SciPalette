@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "colorblind-safe-8",
   name: "Colorblind Safe 8",
   description: "Scientifically validated palette safe for all types of color vision deficiency. Recommended for maximum accessibility.",
   category: "categorical",
@@ -11,6 +10,6 @@ const palette = {
   colorblindSafe: true,
   background: "white",
   source: "Based on colorblind-safe color theory"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;

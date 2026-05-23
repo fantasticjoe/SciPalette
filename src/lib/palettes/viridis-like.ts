@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "viridis-like",
   name: "Viridis-like",
   description: "Perceptually uniform sequential palette. Excellent for continuous data and maintains clarity in grayscale.",
   category: "sequential",
@@ -11,6 +10,6 @@ const palette = {
   colorblindSafe: true,
   background: "white",
   source: "Inspired by matplotlib viridis"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;

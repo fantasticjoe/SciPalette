@@ -1,4 +1,4 @@
-import { Check, Database, Palette, Shuffle } from "lucide-react";
+import { Database, Palette } from "lucide-react";
 import type { Palette as PaletteType } from "../lib/types";
 
 interface HomeHeroProps {
@@ -7,8 +7,6 @@ interface HomeHeroProps {
   paletteCount: number;
   categoryCount: number;
   accessibleCount: number;
-  copiedPaletteName: string | null;
-  onCopyRandomPalette: () => void;
 }
 
 export function HomeHero({
@@ -17,8 +15,6 @@ export function HomeHero({
   paletteCount,
   categoryCount,
   accessibleCount,
-  copiedPaletteName,
-  onCopyRandomPalette,
 }: HomeHeroProps) {
   return (
     <section className={`sp-lift relative overflow-hidden border-b border-[#dadcd6] bg-[#f8f5ec] ${className ?? ""}`}>
@@ -39,19 +35,12 @@ export function HomeHero({
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <a
-              href="#palettes"
+              href="/palettes/"
               className="sp-button-primary px-6 py-3 text-sm shadow-[0_14px_32px_rgb(33_44_51_/_0.12)]"
             >
               <Database className="h-5 w-5" />
               Explore Palettes
             </a>
-            <button
-              onClick={onCopyRandomPalette}
-              className="sp-button-secondary px-6 py-3 text-sm shadow-sm"
-            >
-              {copiedPaletteName ? <Check className="h-5 w-5" /> : <Shuffle className="h-5 w-5" />}
-              {copiedPaletteName ? `Copied ${copiedPaletteName}` : "Copy Random Palette"}
-            </button>
           </div>
         </div>
 

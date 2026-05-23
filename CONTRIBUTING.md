@@ -46,9 +46,8 @@ CI 会在 PR 和 `main` 推送时运行。`main` 推送还会触发 GitHub Pages
 
 这是最常见的贡献方式。
 
-1. 新增或修改 `src/lib/palettes/<palette-id>.ts`，并在 `src/lib/palettes/index.ts` 中注册。
+1. 新增或修改 `src/lib/palettes/<palette-name>.ts`，并在 `src/lib/palettes/index.ts` 中注册导入和稳定 route key；不要在源文件或贡献 JSON 中手写 `id`。
 2. 字段要求：
-   - `id`：全局唯一，使用 kebab-case。
    - `name`：配色方案名称。
    - `description`：一句话说明适用场景和特点。
    - `category`：必须是 `categorical`、`sequential`、`diverging` 或 `heatmap` 之一。
@@ -64,7 +63,6 @@ CI 会在 PR 和 `main` 推送时运行。`main` 推送还会触发 GitHub Pages
 
 ```ts
 {
-  id: "viridis-lite",
   name: "Viridis Lite",
   description: "Perceptually uniform sequential palette for heatmaps and density plots.",
   category: "sequential",
@@ -76,6 +74,8 @@ CI 会在 PR 和 `main` 推送时运行。`main` 推送还会触发 GitHub Pages
   source: "Inspired by matplotlib viridis"
 }
 ```
+
+不要在源文件中手写 `id`。站点会根据 `src/lib/palettes/index.ts` 中的稳定 route key 自动生成短路由 id。
 
 ### 修改界面或功能
 
@@ -143,9 +143,8 @@ CI runs on pull requests and pushes to `main`. Pushes to `main` also trigger Git
 
 This is the most common contribution type.
 
-1. Add or update `src/lib/palettes/<palette-id>.ts`, then register it in `src/lib/palettes/index.ts`.
+1. Add or update `src/lib/palettes/<palette-name>.ts`, then register its import and stable route key in `src/lib/palettes/index.ts`; do not hand-write an `id` in source files or contribution JSON.
 2. Field requirements:
-   - `id`: globally unique, kebab-case.
    - `name`: palette name.
    - `description`: one-line note on where the palette works best.
    - `category`: one of `categorical`, `sequential`, `diverging`, or `heatmap`.
@@ -161,7 +160,6 @@ Example:
 
 ```ts
 {
-  id: "viridis-lite",
   name: "Viridis Lite",
   description: "Perceptually uniform sequential palette for heatmaps and density plots.",
   category: "sequential",
@@ -173,6 +171,8 @@ Example:
   source: "Inspired by matplotlib viridis"
 }
 ```
+
+Do not hand-write an `id` in source files. The site generates a short route id from the stable route key in `src/lib/palettes/index.ts`.
 
 ### Updating UI or Functionality
 

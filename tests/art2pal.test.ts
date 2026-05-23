@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import {
   calculateContrastRatio,
   hexToRgb,
@@ -10,7 +10,7 @@ import {
   rgbToOklab,
   rgbToOklch,
 } from "../src/lib/art2pal/color";
-import { formatPaletteExport } from "../src/lib/art2pal/export";
+import { formatPaletteExport, paletteExportFormats } from "../src/lib/art2pal/export";
 import { safeCopyText } from "../src/lib/art2pal/clipboard";
 import { extractCandidateColors } from "../src/lib/art2pal/palette/extractCandidateColors";
 import {
@@ -28,6 +28,7 @@ import {
 import { kMeansOklab } from "../src/lib/art2pal/palette/kMeans";
 import type { CandidateColor, CandidateColorSet } from "../src/lib/art2pal/palette/types";
 import { siteConfig } from "../src/lib/site";
+import { createPaletteId, paletteRouteKeys, palettes, paletteSources } from "../src/lib/palettes";
 
 function candidateFromHex(hex: string, overrides: Partial<CandidateColor> = {}): CandidateColor {
   const rgb = hexToRgb(hex);
@@ -238,6 +239,25 @@ test("falls back to complete scientific palettes when image colors are insuffici
   assert.ok(result.messages.length > 0);
 });
 
+test("assigns stable internal palette ids from palette kind and colors", () => {
+  const pixels = [
+    ...Array.from({ length: 20 }, () => ({ r: 178, g: 73, b: 68 })),
+    ...Array.from({ length: 18 }, () => ({ r: 56, g: 112, b: 164 })),
+    ...Array.from({ length: 16 }, () => ({ r: 83, g: 132, b: 83 })),
+    ...Array.from({ length: 14 }, () => ({ r: 191, g: 145, b: 63 })),
+  ];
+
+  const first = generateArt2PalPalettes(pixels, { categoricalCount: 8, seed: 3 });
+  const second = generateArt2PalPalettes(pixels, { categoricalCount: 8, seed: 3 });
+  const shorter = generateArt2PalPalettes(pixels, { categoricalCount: 4, seed: 3 });
+
+  assert.match(first.categorical.id, /^a2p-cat-[0-9a-z]{14}$/);
+  assert.ok(first.categorical.id.length <= 24);
+  assert.equal(first.categorical.id, second.categorical.id);
+  assert.notEqual(first.categorical.id, shorter.categorical.id);
+  assert.equal(new Set([first.categorical.id, first.sequential.id, first.diverging.id, first.neutral.id]).size, 4);
+});
+
 test("formats palette exports for common scientific workflows", () => {
   const colors = ["#123456", "#abcdef", "#e07a5f"];
 
@@ -247,6 +267,25 @@ test("formats palette exports for common scientific workflows", () => {
   assert.equal(formatPaletteExport(colors, "python"), 'palette = ["#123456", "#abcdef", "#e07a5f"]');
   assert.match(formatPaletteExport(colors, "r"), /scale_color_manual\(values = c\("#123456", "#abcdef", "#e07a5f"\)\)/);
   assert.match(formatPaletteExport(colors, "r"), /scale_fill_manual\(values = c\("#123456", "#abcdef", "#e07a5f"\)\)/);
+
+  const contribution = JSON.parse(
+    formatPaletteExport(colors, "scipalette-json", {
+      kind: "categorical",
+      name: "Categorical",
+      usage: "UMAP, t-SNE, cell types, groups",
+      description: "Distinct source image colors.",
+    })
+  );
+
+  assert.equal(contribution.name, "Your Palette Name");
+  assert.equal(Object.hasOwn(contribution, "id"), false);
+  assert.equal(Object.hasOwn(contribution, "uid"), false);
+  assert.equal(contribution.category, "categorical");
+  assert.deepEqual(contribution.colors, colors);
+  assert.deepEqual(contribution.recommendedFor, ["umap", "scatter"]);
+  assert.deepEqual(contribution.tags, ["art2pal", "categorical"]);
+  assert.equal(contribution.source, "Generated locally with Art2Pal");
+  assert.ok(paletteExportFormats.some((option) => option.value === "scipalette-json" && option.label === "SciPalette contribution JSON"));
 });
 
 test("copy helper reports success and failure without throwing", async () => {
@@ -285,6 +324,38 @@ test("uses custom-domain root paths for deployed assets and links", () => {
   assert.ok(!contributing.includes("http://localhost:4321/SciPalette/"));
   assert.ok(!contributing.includes('base: "/SciPalette"'));
   assert.ok(!architecture.includes("GitHub Pages base path"));
+  assert.ok(baseLayout.includes('src="https://track.fantasticjoe.com/script.js"'));
+  assert.ok(baseLayout.includes('data-website-id="ff401d40-86b3-480c-a3d7-6202d62d1cc5"'));
+  assert.ok(baseLayout.includes("is:inline"));
+});
+
+test("curated palette source files keep ids implicit and generated ids stable", () => {
+  const paletteFiles = readdirSync("src/lib/palettes").filter((file) => file.endsWith(".ts") && file !== "index.ts");
+  const paletteFileKeys = new Set(paletteFiles.map((file) => file.replace(/\.ts$/, "")));
+  const ids = palettes.map((palette) => palette.id);
+
+  assert.equal(paletteSources.length, paletteFiles.length);
+  assert.equal(paletteRouteKeys.length, paletteFiles.length);
+  assert.equal(new Set(ids).size, ids.length);
+  assert.equal(new Set(paletteRouteKeys).size, paletteRouteKeys.length);
+
+  for (const key of paletteRouteKeys) {
+    assert.ok(paletteFileKeys.has(key), `${key} should match a palette source file`);
+  }
+
+  for (const file of paletteFiles) {
+    const source = readFileSync(`src/lib/palettes/${file}`, "utf8");
+    assert.ok(!source.includes("id:"), `${file} should not define an explicit id`);
+    assert.ok(source.includes("satisfies PaletteSource"), `${file} should satisfy PaletteSource`);
+  }
+
+  for (const palette of palettes) {
+    assert.match(palette.id, /^sp-[0-9a-z]{12}$/);
+    assert.ok(palette.id.length <= 15);
+  }
+
+  assert.equal(palettes[0].id, createPaletteId(paletteRouteKeys[0]));
+  assert.notEqual(createPaletteId(paletteRouteKeys[0]), createPaletteId(paletteRouteKeys[1]));
 });
 
 test("workflow actions stay on current Node-backed releases", () => {
@@ -298,4 +369,76 @@ test("workflow actions stay on current Node-backed releases", () => {
   assert.ok(!workflows.includes("actions/configure-pages@v4"));
   assert.ok(!workflows.includes("actions/upload-pages-artifact@v3"));
   assert.ok(!workflows.includes("actions/deploy-pages@v4"));
+});
+
+test("Art2Pal shows palettes before all scientific previews", () => {
+  const tool = readFileSync("src/components/art2pal/Art2PalPaletteTool.tsx", "utf8");
+  const preview = readFileSync("src/components/art2pal/ScientificPreview.tsx", "utf8");
+  const paletteSection = readFileSync("src/components/art2pal/PaletteSection.tsx", "utf8");
+  const paletteCard = readFileSync("src/components/PaletteCard.tsx", "utf8");
+  const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
+
+  assert.ok(tool.indexOf("<ImageUploader") < tool.indexOf("<ParameterPanel"));
+  assert.ok(tool.indexOf("<ParameterPanel") < tool.indexOf("<PaletteSection"));
+  assert.ok(tool.indexOf("<PaletteSection") < tool.indexOf("<ScientificPreview"));
+  assert.ok(!tool.includes("previewType"));
+  assert.ok(!tool.includes("setPreviewType"));
+  assert.ok(!preview.includes("<select"));
+  assert.ok(!preview.includes("onPreviewTypeChange"));
+  assert.ok(packageJson.dependencies.d3);
+  assert.ok(preview.includes('from "d3"'));
+  assert.ok(preview.includes("d3.scaleLinear"));
+  assert.ok(preview.includes("d3.line"));
+  assert.ok(preview.includes("d3.area"));
+  assert.ok(preview.includes("<UmapPreview palettes={palettes} />"));
+  assert.ok(preview.includes("<HeatmapPreview palettes={palettes} />"));
+  assert.ok(preview.includes("<DensityPreview palettes={palettes} />"));
+  assert.ok(preview.includes("<BarPreview palettes={palettes} />"));
+  assert.ok(paletteSection.includes("whitespace-nowrap"));
+  assert.ok(paletteCard.includes("whitespace-nowrap"));
+});
+
+test("palette detail plot previews are rebuilt with D3 scales and shapes", () => {
+  const plotPreview = readFileSync("src/components/PlotPreview.tsx", "utf8");
+  const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
+
+  assert.ok(packageJson.dependencies.d3);
+  assert.ok(packageJson.devDependencies["@types/d3"]);
+  assert.ok(plotPreview.includes('from "d3"'));
+  assert.ok(plotPreview.includes("d3.scaleLinear"));
+  assert.ok(plotPreview.includes("d3.scaleBand"));
+  assert.ok(plotPreview.includes("d3.line"));
+  assert.ok(plotPreview.includes("d3.area"));
+});
+
+test("site separates homepage showcase from full palette browser route", () => {
+  const homePage = readFileSync("src/pages/index.astro", "utf8");
+  const palettesPage = readFileSync("src/pages/palettes/index.astro", "utf8");
+  const detailPage = readFileSync("src/pages/palettes/[id].astro", "utf8");
+  const browser = readFileSync("src/components/PaletteBrowser.tsx", "utf8");
+  const featured = readFileSync("src/components/FeaturedPaletteSections.tsx", "utf8");
+  const site = readFileSync("src/lib/site.ts", "utf8");
+
+  assert.ok(homePage.includes("<PaletteShowcase"));
+  assert.ok(!homePage.includes("<PaletteBrowser"));
+  assert.ok(palettesPage.includes("<PaletteBrowser"));
+  assert.ok(browser.includes("<PaletteLibrarySection"));
+  assert.ok(!featured.includes("<PaletteGrid"));
+  assert.ok(!featured.includes("CopyButton"));
+  assert.ok(!featured.includes("generatePythonCode"));
+  assert.ok(site.includes('href: "/palettes/"'));
+  assert.ok(!site.includes('href: "/#palettes"'));
+  assert.ok(detailPage.includes('href={`${siteConfig.basePath}/palettes/`}'));
+}
+);
+
+test("site header has an adaptive mobile navigation menu", () => {
+  const header = readFileSync("src/components/SiteHeader.astro", "utf8");
+
+  assert.ok(header.includes("<details"));
+  assert.ok(header.includes("<summary"));
+  assert.ok(header.includes("md:hidden"));
+  assert.ok(header.includes("hidden items-center"));
+  assert.ok(header.includes("md:flex"));
+  assert.ok(header.includes("Mobile navigation"));
 });

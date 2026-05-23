@@ -1,7 +1,6 @@
-import type { Palette } from "../types";
+import type { PaletteSource } from "../types";
 
 const palette = {
-  id: "plasma-like",
   name: "Plasma-like",
   description: "Vibrant sequential palette from dark purple to bright yellow. High contrast for highlighting patterns.",
   category: "sequential",
@@ -11,6 +10,6 @@ const palette = {
   colorblindSafe: true,
   background: "white",
   source: "Inspired by matplotlib plasma"
-} satisfies Palette;
+} satisfies PaletteSource;
 
 export default palette;
