@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 
 export interface Props {
   title?: string;
@@ -30,6 +31,7 @@ const { title = "SciPalette - Scientific Color Palettes for Publication Figures"
   <div class="min-h-screen text-[#212c33]">
     <SiteHeader />
     <slot />
+    <SiteFooter />
   </div>
 </body>
 </html>

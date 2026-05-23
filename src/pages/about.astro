@@ -1,0 +1,148 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../lib/site";
+---
+
+<BaseLayout
+  title="About - SciPalette"
+  description="About SciPalette, a focused color resource for scientific figures, and the design philosophy behind Art2Pal."
+>
+  <main class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <section class="sp-reveal grid gap-10 border-b border-[#dadcd6] pb-14 lg:grid-cols-[0.92fr_1.08fr] lg:items-end">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#4f6d5f]">About SciPalette</p>
+        <h1 class="font-display mt-4 max-w-3xl text-5xl font-bold leading-[0.95] text-[#212c33] sm:text-6xl">
+          Color systems for figures that need to think clearly.
+        </h1>
+      </div>
+      <p class="max-w-2xl text-xl leading-8 text-[rgb(33_44_51_/_0.72)]">
+        SciPalette is a focused color resource for scientific figures. It treats palette choice as part of evidence design: aesthetic enough to invite attention, disciplined enough to keep the data legible.
+      </p>
+    </section>
+
+    <section class="grid gap-6 py-14 lg:grid-cols-3">
+      <article class="border border-[#dadcd6] bg-[rgb(251_249_242_/_0.72)] p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Author</p>
+        <h2 class="font-display mt-3 text-3xl font-bold text-[#212c33]">Zhouyue Zhu</h2>
+        <p class="mt-4 text-[1.02rem] leading-7 text-[rgb(33_44_51_/_0.72)]">
+          Zhouyue Zhu is a Biomedical Informatics student at the ZJU-UoE Institute. His work sits between bioinformatics, visual communication, photography, and the practical problem of making complex results easier to see.
+        </p>
+        <a href="https://www.fantasticjoe.com/" class="mt-5 inline-flex text-sm font-bold text-[#4f6d5f] hover:text-[#212c33]">
+          Visit fantasticjoe.com
+        </a>
+      </article>
+
+      <article class="border border-[#dadcd6] bg-[rgb(251_249_242_/_0.72)] p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Purpose</p>
+        <h2 class="font-display mt-3 text-3xl font-bold text-[#212c33]">For scientific use</h2>
+        <p class="mt-4 text-[1.02rem] leading-7 text-[rgb(33_44_51_/_0.72)]">
+          The library is built for UMAP, t-SNE, heatmaps, bar plots, sequential ramps, diverging scales, and colorblind-aware figure design. Each palette is meant to be used directly, not treated as decoration after the figure is already finished.
+        </p>
+        <a href="/art2pal/" class="mt-5 inline-flex text-sm font-bold text-[#4f6d5f] hover:text-[#212c33]">
+          Open Art2Pal
+        </a>
+      </article>
+
+      <article class="border border-[#dadcd6] bg-[rgb(251_249_242_/_0.72)] p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Palette</p>
+        <h2 class="font-display mt-3 text-3xl font-bold text-[#212c33]">Wheat and cypress</h2>
+        <p class="mt-4 text-[1.02rem] leading-7 text-[rgb(33_44_51_/_0.72)]">
+          The website atmosphere comes from Vincent van Gogh's <span class="font-semibold text-[#212c33]">Wheat Field with Cypresses</span> (麦田与柏树): warm paper, green structure, muted wheat, blue-gray air, and dark ink translated into a restrained interface.
+        </p>
+        <a href="/palettes/" class="mt-5 inline-flex text-sm font-bold text-[#4f6d5f] hover:text-[#212c33]">
+          Browse palettes
+        </a>
+      </article>
+    </section>
+
+    <section class="sp-reveal sp-reveal-delay-1 border-y border-[#dadcd6] py-12">
+      <div class="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Philosophy</p>
+          <h2 class="font-display mt-3 text-4xl font-bold text-[#212c33]">Color is not a finish. It is part of the argument.</h2>
+        </div>
+        <div class="space-y-5 text-[1.08rem] leading-8 text-[rgb(33_44_51_/_0.74)]">
+          <p>
+            Color determines what a reader notices first, which groups feel distinct, where a gradient appears to change, and whether a figure can be trusted at a glance. In scientific graphics, palette choice is not cosmetic. It shapes attention, comparison, uncertainty, and the boundary between signal and noise.
+          </p>
+          <p>
+            SciPalette exists because many research figures still treat color as an afterthought: default rainbows, inconsistent category colors, ramps with uneven contrast, or palettes that look attractive but fail under labels, print, projectors, and color vision differences. The goal is to make better defaults available before the figure is made, so visual taste and scientific readability can work together instead of competing.
+          </p>
+          <p>
+            Art2Pal follows the same discipline from a different direction. It starts with an artwork or image, but it does not simply extract dominant colors. It reorganizes visual atmosphere into categorical, sequential, diverging, and neutral systems, filtering for contrast, separability, and white-background scientific use while keeping the source image's character intact.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-14">
+      <div class="grid gap-8 border-y border-[#dadcd6] py-10 lg:grid-cols-[0.62fr_1.38fr] lg:items-start">
+        <div class="lg:pr-4">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Website palette</p>
+          <h2 class="font-display mt-3 text-4xl font-bold text-[#212c33]">From Wheat Field with Cypresses to interface color.</h2>
+          <p class="mt-4 text-[1.04rem] leading-7 text-[rgb(33_44_51_/_0.72)]">
+            This page uses the painting as a source of roles rather than a literal swatch set: paper for reading, cypress green for structure, wheat for warmth, blue-gray for atmosphere, and ink for contrast.
+          </p>
+        </div>
+
+        <div class="grid gap-4 border border-[#dadcd6] bg-[rgb(251_249_242_/_0.72)] p-4 lg:grid-cols-[0.96fr_1.04fr] lg:gap-5 lg:p-5">
+          <figure class="flex min-h-full flex-col">
+            <div class="overflow-hidden border border-[#dadcd6] bg-[#f8f5ec]">
+              <img
+                src="/images/van-gogh-wheat-field-with-cypresses.webp"
+                alt="Vincent van Gogh's Wheat Field with Cypresses, the original painting that inspired the SciPalette website color atmosphere"
+                class="aspect-[1.258/1] w-full object-cover"
+                loading="eager"
+                fetchpriority="high"
+                width="1400"
+                height="1113"
+              />
+            </div>
+            <figcaption class="mt-3 border-t border-[#dadcd6] pt-3">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-[rgb(33_44_51_/_0.52)]">Original painting</p>
+              <p class="mt-1 flex flex-col gap-1 text-sm font-semibold leading-5 text-[rgb(33_44_51_/_0.72)] sm:flex-row sm:items-center sm:justify-between">
+                <span>Wheat Field with Cypresses</span>
+                <span>Vincent van Gogh</span>
+              </p>
+            </figcaption>
+          </figure>
+
+          <div class="grid min-h-full gap-3 sm:auto-rows-fr sm:grid-cols-2" aria-label="SciPalette website palette roles">
+            <div class="flex min-h-28 flex-col justify-between border border-[#dadcd6] bg-[#F8F5EC] p-4">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-[rgb(33_44_51_/_0.52)]">Paper ground</p>
+              <p class="mt-4 font-mono text-sm font-bold text-[#212c33]">#F8F5EC</p>
+            </div>
+            <div class="flex min-h-28 flex-col justify-between border border-[#dadcd6] bg-[#4F6D5F] p-4 text-[#f8f5ec]">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-[rgb(248_245_236_/_0.76)]">Cypress green</p>
+              <p class="mt-4 font-mono text-sm font-bold">#4F6D5F</p>
+            </div>
+            <div class="flex min-h-28 flex-col justify-between border border-[#dadcd6] bg-[#BFA05A] p-4 text-[#212c33]">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-[rgb(33_44_51_/_0.62)]">Muted wheat</p>
+              <p class="mt-4 font-mono text-sm font-bold">#BFA05A</p>
+            </div>
+            <div class="flex min-h-28 flex-col justify-between border border-[#dadcd6] bg-[#6F8792] p-4 text-[#f8f5ec]">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-[rgb(248_245_236_/_0.78)]">Blue-gray air</p>
+              <p class="mt-4 font-mono text-sm font-bold">#6F8792</p>
+            </div>
+            <div class="flex min-h-28 flex-col justify-between border border-[#dadcd6] bg-[#212C33] p-4 text-[#f8f5ec] sm:col-span-2">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-[rgb(248_245_236_/_0.74)]">Figure ink</p>
+              <p class="mt-4 font-mono text-sm font-bold">#212C33</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-12">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Open project</p>
+          <h2 class="font-display mt-2 text-3xl font-bold text-[#212c33]">Built as a lightweight front-end resource.</h2>
+        </div>
+        <a href={siteConfig.repositoryUrl} class="sp-button-secondary w-fit px-5 py-3 text-sm">
+          View GitHub
+        </a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

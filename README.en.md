@@ -20,6 +20,7 @@ Primary users include researchers, bioinformaticians, data scientists, and medic
 - **Multi-dimensional filtering** by search query, category, plot type, color count, and colorblind-safe status.
 - **Scientific plot previews** for recommended use cases such as bar, line, scatter, UMAP, heatmap, and volcano plots.
 - **Art2Pal Palette** extracts color style from PNG, JPEG, or WebP images locally in the browser and rebuilds it into categorical, sequential, diverging, and neutral scientific palettes.
+- **About and design philosophy** explaining SciPalette's color principles, Art2Pal's design philosophy, and the site palette inspired by *Wheat Field with Cypresses*.
 - **One-click copying** for HEX values, plus quick Python and R copy actions on palette cards.
 - **Code export** for HEX, Python/matplotlib, R/ggplot2, Scanpy, Seurat, and GraphPad Prism.
 - **Accessibility labeling** for colorblind-safe palettes.
@@ -72,12 +73,15 @@ scipalette/
 ├── src/
 │   ├── pages/
 │   │   ├── index.astro              # Home page and browser entry
+│   │   ├── about.astro              # About page, design philosophy, and site palette
 │   │   ├── art2pal/index.astro      # Art2Pal Palette local image-to-palette tool
+│   │   ├── palettes/index.astro     # Full palette browser page
 │   │   └── palettes/[id].astro      # Static palette detail pages
 │   ├── layouts/
 │   │   └── BaseLayout.astro         # HTML shell and SEO meta
 │   ├── components/
 │   │   ├── SiteHeader.astro         # Global navigation
+│   │   ├── SiteFooter.astro         # Shared site footer
 │   │   ├── PaletteBrowser.tsx       # Home-page state composition
 │   │   ├── HomeHero.tsx             # Home hero
 │   │   ├── PaletteLibrarySection.tsx # Filterable palette library section
@@ -106,7 +110,8 @@ scipalette/
 │   │   └── utils.ts                 # Shared utilities
 │   └── styles/
 │       └── global.css               # Tailwind and global design variables
-├── public/                          # Static assets
+├── public/
+│   └── images/                      # Static image assets, including the Wheat Field WebP
 ├── .github/workflows/               # CI, deploy, and release workflows
 ├── docs/ARCHITECTURE.md             # Architecture and contribution boundaries
 ├── astro.config.ts                  # Astro config

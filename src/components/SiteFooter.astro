@@ -1,0 +1,57 @@
+---
+import { Code2, ExternalLink, Palette, UserRound } from "lucide-react";
+import { siteConfig } from "../lib/site";
+
+const footerLinks = [
+  { label: "Palette Library", href: "/palettes/" },
+  { label: "Art2Pal", href: "/art2pal/" },
+  { label: "About", href: "/about/" },
+];
+---
+
+<footer class="mt-16 border-t border-[#cfd2ca] bg-[rgb(238_233_219_/_0.72)]" aria-label="Site footer">
+  <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.4fr_0.8fr_0.8fr] lg:px-8">
+    <section>
+      <a href={`${siteConfig.basePath}/`} class="font-display text-3xl font-bold leading-none text-[#212c33]">
+        SciPalette
+      </a>
+      <p class="mt-4 max-w-xl text-[1rem] leading-7 text-[rgb(33_44_51_/_0.7)]">
+        A quiet palette library and browser-local tool for turning color into usable scientific figures. The visual atmosphere takes its warmth from Vincent van Gogh's <span class="font-semibold text-[#212c33]">Wheat Field with Cypresses</span>.
+      </p>
+      <p class="mt-5 max-w-xl font-display text-2xl font-semibold leading-8 text-[#4f6d5f]">
+        Color is treated as evidence: expressive enough to carry attention, restrained enough to keep the data legible.
+      </p>
+    </section>
+
+    <nav aria-label="Footer navigation">
+      <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Explore</p>
+      <div class="mt-4 grid gap-2">
+        {footerLinks.map((link) => (
+          <a href={link.href} class="inline-flex w-fit items-center gap-2 text-sm font-bold text-[rgb(33_44_51_/_0.68)] transition-colors hover:text-[#212c33]">
+            <Palette class="h-3.5 w-3.5 text-[#4f6d5f]" aria-hidden="true" />
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </nav>
+
+    <section>
+      <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#4f6d5f]">Author</p>
+      <div class="mt-4 grid gap-2">
+        <a href="https://www.fantasticjoe.com/" class="inline-flex w-fit items-center gap-2 text-sm font-bold text-[rgb(33_44_51_/_0.68)] transition-colors hover:text-[#212c33]">
+          <UserRound class="h-3.5 w-3.5 text-[#4f6d5f]" aria-hidden="true" />
+          fantasticjoe.com
+          <ExternalLink class="h-3 w-3" aria-hidden="true" />
+        </a>
+        <a href={siteConfig.repositoryUrl} class="inline-flex w-fit items-center gap-2 text-sm font-bold text-[rgb(33_44_51_/_0.68)] transition-colors hover:text-[#212c33]">
+          <Code2 class="h-3.5 w-3.5 text-[#4f6d5f]" aria-hidden="true" />
+          GitHub
+          <ExternalLink class="h-3 w-3" aria-hidden="true" />
+        </a>
+      </div>
+      <p class="mt-6 text-xs font-semibold uppercase tracking-[0.12em] text-[rgb(33_44_51_/_0.5)]">
+        Built for publication figures, single-cell maps, heatmaps, and research communication.
+      </p>
+    </section>
+  </div>
+</footer>

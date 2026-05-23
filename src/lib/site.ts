@@ -4,6 +4,7 @@ export const siteConfig = {
   navigation: [
     { id: "palettes", label: "Palettes", href: "/palettes/" },
     { id: "art2pal", label: "Art2Pal", href: "/art2pal/" },
+    { id: "about", label: "About", href: "/about/" },
     { id: "accessible", label: "Accessible", href: "/palettes/?accessibility=colorblind-safe", hideOnMobile: true },
     { id: "github", label: "GitHub", href: "https://github.com/fantasticjoe/SciPalette", hideOnMobile: true },
   ],

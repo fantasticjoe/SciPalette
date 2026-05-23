@@ -35,13 +35,6 @@ export default function PaletteShowcase() {
         </div>
       </section>
 
-      <footer className="sp-fade-border mt-4 border-t border-[#dadcd6] bg-[rgb(251_249_242_/_0.62)]">
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <p className="text-center text-sm font-medium text-[rgb(33_44_51_/_0.62)]">
-            SciPalette, a curated collection of scientific color palettes.
-          </p>
-        </div>
-      </footer>
     </>
   );
 }
