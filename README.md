@@ -20,6 +20,7 @@ SciPalette 是一个专为科研可视化设计的静态配色方案库。它面
 - **多维筛选**：支持按关键词、类别、图类型、颜色数量、色盲友好性筛选。
 - **科研图预览**：详情页按推荐场景展示 bar、line、scatter、UMAP、heatmap、volcano 等预览。
 - **色盲模拟预览**：详情页可切换 Original、Protanopia、Deuteranopia、Tritanopia，检查色板在常见色觉缺陷场景下的可区分度。
+- **灰度对比度检查**：详情页计算色板转为灰度后的最小对比度，帮助判断打印或低饱和环境下是否仍可区分。
 - **Art2Pal Palette**：浏览器本地从 PNG、JPEG 或 WebP 图片中提取色彩风格，并重组为 categorical、sequential、diverging、neutral 科研配色。
 - **About 与设计哲学**：About 页面说明 SciPalette 的配色原则、Art2Pal 的设计哲学、来自《麦田与柏树》的站点视觉系统，以及统一应用在标签栏、导航栏、About 页面和页脚的 Logo system。
 - **一键复制**：可复制 HEX 列表，也可从卡片直接复制 Python 或 R 代码。
@@ -99,6 +100,7 @@ scipalette/
 │   │   ├── ColorSwatch.tsx          # 单色块展示与复制
 │   │   ├── PlotPreview.tsx          # 科研图模拟预览
 │   │   ├── ColorVisionPreview.tsx   # 色盲模拟预览
+│   │   ├── GrayscaleContrastPanel.tsx # 灰度对比度检查面板
 │   │   ├── CodeExport.tsx           # 多格式代码导出
 │   │   ├── CopyButton.tsx           # 复制按钮
 │   │   └── BadgeList.tsx            # 标签列表
@@ -110,6 +112,7 @@ scipalette/
 │   │   ├── art2pal/                 # Art2Pal 颜色空间、聚类、生成、导出逻辑
 │   │   ├── palette-utils.ts         # 筛选、导出和相似推荐逻辑
 │   │   ├── color-vision.ts          # 色觉缺陷模拟矩阵与色板转换
+│   │   ├── grayscale-contrast.ts    # 灰度亮度和对比度检查
 │   │   ├── types.ts                 # TypeScript 类型定义
 │   │   └── utils.ts                 # 通用工具
 │   └── styles/
@@ -188,7 +191,7 @@ npm run build
 
 - [x] 上传图片提取配色方案
 - [x] 色盲模拟预览
-- [ ] 灰度对比度检查
+- [x] 灰度对比度检查
 - [ ] 导出 Adobe ASE 文件
 - [x] 导出 CSS 变量
 - [ ] 用户提交配色方案

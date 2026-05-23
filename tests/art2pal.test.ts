@@ -17,6 +17,11 @@ import {
   simulateColorVisionDeficiency,
   simulatePaletteColorVision,
 } from "../src/lib/color-vision";
+import {
+  calculateGrayscaleContrast,
+  getGrayscaleContrastReport,
+  rgbToGrayscaleLuminance,
+} from "../src/lib/grayscale-contrast";
 import { extractCandidateColors } from "../src/lib/art2pal/palette/extractCandidateColors";
 import {
   getResizeDimensions,
@@ -333,6 +338,20 @@ test("simulates color vision deficiencies for HEX palettes", () => {
   assert.ok(simulateColorVisionDeficiency("#abcdef", "tritanopia").startsWith("#"));
 });
 
+test("checks grayscale contrast for scientific palette separability", () => {
+  assert.equal(rgbToGrayscaleLuminance("#000000"), 0);
+  assert.equal(rgbToGrayscaleLuminance("#ffffff"), 255);
+  assert.ok(calculateGrayscaleContrast("#000000", "#ffffff") >= 20);
+  assert.ok(calculateGrayscaleContrast("#777777", "#808080") < 1.2);
+
+  const report = getGrayscaleContrastReport(["#000000", "#777777", "#808080"], 2);
+
+  assert.equal(report.pairs.length, 3);
+  assert.equal(report.failingPairs.length, 1);
+  assert.equal(report.passes, false);
+  assert.ok(report.minimumRatio < 2);
+});
+
 test("uses custom-domain root paths for deployed assets and links", () => {
   const astroConfig = readFileSync("astro.config.ts", "utf8");
   const baseLayout = readFileSync("src/layouts/BaseLayout.astro", "utf8");
@@ -439,6 +458,7 @@ test("site separates homepage showcase from full palette browser route", () => {
   const palettesPage = readFileSync("src/pages/palettes/index.astro", "utf8");
   const detailPage = readFileSync("src/pages/palettes/[id].astro", "utf8");
   const colorVisionPreview = readFileSync("src/components/ColorVisionPreview.tsx", "utf8");
+  const grayscaleContrastPanel = readFileSync("src/components/GrayscaleContrastPanel.tsx", "utf8");
   const browser = readFileSync("src/components/PaletteBrowser.tsx", "utf8");
   const featured = readFileSync("src/components/FeaturedPaletteSections.tsx", "utf8");
   const site = readFileSync("src/lib/site.ts", "utf8");
@@ -459,6 +479,9 @@ test("site separates homepage showcase from full palette browser route", () => {
   assert.ok(colorVisionModes.some((mode) => mode.label === "Protanopia"));
   assert.ok(colorVisionModes.some((mode) => mode.label === "Deuteranopia"));
   assert.ok(colorVisionModes.some((mode) => mode.label === "Tritanopia"));
+  assert.ok(detailPage.includes("<GrayscaleContrastPanel"));
+  assert.ok(grayscaleContrastPanel.includes("Grayscale contrast check"));
+  assert.ok(grayscaleContrastPanel.includes("Minimum grayscale ratio"));
 }
 );
 
