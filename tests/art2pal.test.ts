@@ -620,6 +620,33 @@ test("site header has an adaptive mobile navigation menu", () => {
   assert.ok(header.includes("<SiteMark"));
 });
 
+test("GitHub issue templates include bilingual Chinese and English guidance", () => {
+  const issueTemplateFiles = [
+    ".github/ISSUE_TEMPLATE/bug_report.yml",
+    ".github/ISSUE_TEMPLATE/palette_request.yml",
+    ".github/ISSUE_TEMPLATE/paper_inspiration.yml",
+  ];
+
+  for (const file of issueTemplateFiles) {
+    const source = readFileSync(file, "utf8");
+
+    assert.match(source, /name: .+ \/ .+/, `${file} should have a bilingual name`);
+    assert.match(source, /description: .+ \/ .+/, `${file} should have a bilingual description`);
+    assert.match(source, /label: .+ \/ .+/, `${file} should have bilingual field labels`);
+    assert.ok(/[\u4e00-\u9fff]/.test(source), `${file} should include Chinese text`);
+    assert.ok(/[A-Za-z]{4,}/.test(source), `${file} should include English text`);
+    assert.ok(source.includes("中文"));
+    assert.ok(source.includes("English"));
+  }
+
+  const config = readFileSync(".github/ISSUE_TEMPLATE/config.yml", "utf8");
+
+  assert.match(config, /name: .+ \/ .+/);
+  assert.match(config, /about: .+ \/ .+/);
+  assert.ok(config.includes("中文"));
+  assert.ok(config.includes("English"));
+});
+
 test("site has a shared footer and about page with palette philosophy", () => {
   const baseLayout = readFileSync("src/layouts/BaseLayout.astro", "utf8");
   const footer = readFileSync("src/components/SiteFooter.astro", "utf8");

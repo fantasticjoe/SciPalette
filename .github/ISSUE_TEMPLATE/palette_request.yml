@@ -1,17 +1,24 @@
 name: 配色方案建议 / Palette Suggestion
-description: 建议收录一个新的配色方案
+description: 建议收录一个新的配色方案 / Suggest a new color palette
 labels: [palette]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        请使用中文或英文填写。/ Please fill this form in Chinese or English.
   - type: input
     id: name
     attributes:
       label: 配色名称 / Palette Name
+      description: 写出建议收录的配色名称。/ Provide the name of the palette you are suggesting.
+      placeholder: "中文 / English: Immune Atlas 8"
     validations:
       required: true
   - type: dropdown
     id: category
     attributes:
       label: 类别 / Category
+      description: 选择最接近的配色类型。/ Choose the closest palette family.
       options:
         - categorical（分类型）
         - sequential（连续型）
@@ -23,19 +30,29 @@ body:
     id: colors
     attributes:
       label: 颜色值 / Colors
-      description: HEX 颜色，建议至少 3 个。请按数组、逗号分隔列表，或 Art2Pal 导出的 SciPalette contribution JSON 提供。
+      description: HEX 颜色，建议至少 3 个。请按数组、逗号分隔列表，或 Art2Pal 导出的 SciPalette contribution JSON 提供。/ Provide HEX colors, preferably at least 3, as an array, comma-separated list, or Art2Pal SciPalette contribution JSON.
+      placeholder: |
+        中文：#123456, #abcdef, #e07a5f
+        English: ["#123456", "#abcdef", "#e07a5f"]
     validations:
       required: true
   - type: textarea
     id: contribution_json
     attributes:
       label: SciPalette contribution JSON（可选 / Optional）
-      description: 如果你从 Art2Pal 复制了 SciPalette contribution JSON，可以直接粘贴到这里。不要手写 id。
+      description: 如果你从 Art2Pal 复制了 SciPalette contribution JSON，可以直接粘贴到这里。不要手写 id。/ Paste Art2Pal SciPalette contribution JSON here if you have it. Do not write an id manually.
+      placeholder: |
+        中文 / English:
+        {
+          "name": "Your Palette Name",
+          "colors": ["#123456", "#abcdef", "#e07a5f"]
+        }
       render: json
   - type: dropdown
     id: colorblind
     attributes:
       label: 是否色盲友好 / Colorblind-safe?
+      description: 如果不确定，请选择未验证。/ Choose not verified if you are unsure.
       options:
         - "是 / Yes"
         - "否 / No"
@@ -46,5 +63,9 @@ body:
     id: description
     attributes:
       label: 适用场景 / Use Case
+      description: 说明这个配色适合哪些科研图或数据场景。/ Describe which scientific figures or data contexts this palette supports.
+      placeholder: |
+        中文：适合 UMAP 细胞类型标注、实验组别柱状图等。
+        English: Useful for UMAP cell type annotation, experimental group bar plots, and similar figures.
     validations:
       required: true

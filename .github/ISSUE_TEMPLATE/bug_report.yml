@@ -2,33 +2,52 @@ name: Bug 报告 / Bug Report
 description: 报告一个问题 / Report a problem
 labels: [bug]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        请使用中文或英文填写。/ Please fill this form in Chinese or English.
   - type: textarea
     id: description
     attributes:
       label: 问题描述 / Description
-      description: 清晰简要地描述这个 Bug。
+      description: 清晰简要地描述这个 Bug。/ Clearly and briefly describe the bug.
+      placeholder: |
+        中文：页面、按钮或导出结果出现了什么问题？
+        English: What went wrong on the page, button, or export result?
     validations:
       required: true
   - type: textarea
     id: reproduce
     attributes:
       label: 复现步骤 / Steps to Reproduce
+      description: 写出可以稳定复现问题的步骤。/ List the steps that reliably reproduce the issue.
       placeholder: |
-        1. ...
-        2. ...
-        3. ...
+        中文：
+        1. 打开 ...
+        2. 点击 ...
+        3. 看到 ...
+
+        English:
+        1. Open ...
+        2. Click ...
+        3. See ...
     validations:
       required: true
   - type: textarea
     id: expected
     attributes:
       label: 期望行为 / Expected Behavior
+      description: 说明你原本期望发生什么。/ Describe what you expected to happen.
+      placeholder: |
+        中文：我期望 ...
+        English: I expected ...
     validations:
       required: true
   - type: textarea
     id: environment
     attributes:
       label: 运行环境 / Environment
-      placeholder: "Node: 22.0.0, OS: macOS 15, Browser: Chrome 130"
+      description: 提供系统、浏览器和相关版本。/ Provide OS, browser, and relevant versions.
+      placeholder: "中文 / English: Node: 22.0.0, OS: macOS 15, Browser: Chrome 130"
     validations:
       required: false
