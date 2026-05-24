@@ -118,7 +118,7 @@ function scorePalette(palette: Palette, input: PaletteRecommendationInput): Pale
     reasons.push(`Designed for ${input.background} background figures`);
   }
 
-  if (matchesColorCount(palette.colors.length, input.colorCount)) {
+  if (matchesColorCount(palette.colors.length, input.colorCount, palette.category)) {
     score += 10;
     if (input.colorCount !== "all") {
       reasons.push(`Fits the requested ${input.colorCount} color range`);
@@ -173,7 +173,22 @@ function scoreIntent(palette: Palette, intent: string, reasons: string[]): numbe
   return score;
 }
 
-function matchesColorCount(count: number, range: RecommendationColorCount): boolean {
+function matchesColorCount(count: number, range: RecommendationColorCount, category: PaletteCategory): boolean {
+  if (category === "categorical") {
+    switch (range) {
+      case "2-4":
+        return count >= 2;
+      case "5-8":
+        return count >= 5;
+      case "9-12":
+        return count >= 9;
+      case "12+":
+        return count >= 12;
+      case "all":
+        return true;
+    }
+  }
+
   switch (range) {
     case "2-4":
       return count >= 2 && count <= 4;
@@ -182,7 +197,7 @@ function matchesColorCount(count: number, range: RecommendationColorCount): bool
     case "9-12":
       return count >= 9 && count <= 12;
     case "12+":
-      return count > 12;
+      return count >= 12;
     case "all":
       return true;
   }

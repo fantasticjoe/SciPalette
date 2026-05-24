@@ -35,7 +35,7 @@ import {
   getPaletteColorDistance,
   normalizePaletteColor,
 } from "../src/lib/palette-deduplication";
-import { getPaletteSimilarityScore } from "../src/lib/palette-utils";
+import { filterPalettes, getPaletteSimilarityScore } from "../src/lib/palette-utils";
 import { extractCandidateColors } from "../src/lib/art2pal/palette/extractCandidateColors";
 import {
   getResizeDimensions,
@@ -479,6 +479,21 @@ test("recommends palettes from local scientific intent signals", () => {
   assert.ok(heatmap[0].reasons.length >= 2);
 });
 
+test("categorical color-count filtering accepts larger palettes for smaller group counts", () => {
+  const filtered = filterPalettes("", "categorical", "umap", false, "9-12");
+  const recommended = getPaletteRecommendations({
+    plotType: "umap",
+    category: "categorical",
+    colorCount: "9-12",
+    colorblindOnly: false,
+    background: "white",
+    intent: "single-cell cluster annotation",
+  });
+
+  assert.ok(filtered.some((palette) => palette.name === "Immune States 15"));
+  assert.ok(recommended.some((item) => item.palette.name === "Immune States 15"));
+});
+
 test("compares palettes by overlap, use cases, and grayscale contrast", () => {
   const first = palettes.find((palette) => palette.name === "Cell Atlas 12");
   const second = palettes.find((palette) => palette.name === "Immunology Cell Types");
@@ -636,7 +651,7 @@ test("research expansion keeps sourced palettes distinct", () => {
     return source.includes("Original SciPalette research expansion");
   });
 
-  assert.ok(expansion.length >= 30);
+  assert.ok(expansion.length >= 20);
   assert.equal(expansionFiles.length, expansion.length);
   assert.ok(expansion.every((palette) => palette.source));
   assert.ok(expansion.some((palette) => palette.category === "categorical"));
@@ -648,6 +663,29 @@ test("research expansion keeps sourced palettes distinct", () => {
   assert.deepEqual(duplicateReport.exact, []);
   assert.deepEqual(duplicateReport.orderInsensitive, []);
   assert.deepEqual(duplicateReport.near, []);
+});
+
+test("research expansion does not keep categorical count variants of the same system", () => {
+  const categoricalExpansion = palettes.filter((palette) => {
+    return palette.category === "categorical" && palette.source?.includes("Original SciPalette research expansion");
+  });
+  const redundantPairs: string[] = [];
+
+  for (let firstIndex = 0; firstIndex < categoricalExpansion.length; firstIndex += 1) {
+    for (let secondIndex = firstIndex + 1; secondIndex < categoricalExpansion.length; secondIndex += 1) {
+      const first = categoricalExpansion[firstIndex];
+      const second = categoricalExpansion[secondIndex];
+
+      if (first.colors.length === second.colors.length) continue;
+
+      const distance = getPaletteColorDistance(first.colors, second.colors);
+      if (distance < 0.065) {
+        redundantPairs.push(`${first.name} (${first.colors.length}) vs ${second.name} (${second.colors.length}): ${distance.toFixed(3)}`);
+      }
+    }
+  }
+
+  assert.deepEqual(redundantPairs, []);
 });
 
 test("palette catalog endpoint exposes a lightweight skill manifest", () => {

@@ -20,13 +20,7 @@ import heatmapYellowRed from "./heatmap-yellow-red";
 import singleCellCluster20 from "./single-cell-cluster-20";
 import tCellStates from "./t-cell-states";
 import tumorMicroenvironment from "./tumor-microenvironment";
-import atlasBright10 from "./atlas-bright-10";
-import editorialCategorical8 from "./editorial-categorical-8";
 import immuneStates15 from "./immune-states-15";
-import microbiomeGroups12 from "./microbiome-groups-12";
-import neuroClusters10 from "./neuro-clusters-10";
-import spatialRegions11 from "./spatial-regions-11";
-import tissuePanel14 from "./tissue-panel-14";
 import blueExpression7 from "./blue-expression-7";
 import greenModuleScore7 from "./green-module-score-7";
 import densityTeal8 from "./density-teal-8";
@@ -73,13 +67,7 @@ const paletteEntries = [
   ["single-cell-cluster-20", singleCellCluster20],
   ["t-cell-states", tCellStates],
   ["tumor-microenvironment", tumorMicroenvironment],
-  ["atlas-bright-10", atlasBright10],
-  ["editorial-categorical-8", editorialCategorical8],
   ["immune-states-15", immuneStates15],
-  ["microbiome-groups-12", microbiomeGroups12],
-  ["neuro-clusters-10", neuroClusters10],
-  ["spatial-regions-11", spatialRegions11],
-  ["tissue-panel-14", tissuePanel14],
   ["blue-expression-7", blueExpression7],
   ["green-module-score-7", greenModuleScore7],
   ["density-teal-8", densityTeal8],

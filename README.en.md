@@ -17,7 +17,7 @@ Primary users include researchers, bioinformaticians, data scientists, and medic
 ## Features
 
 - **20+ curated palettes** across categorical, sequential, diverging, and heatmap families.
-- **Multi-dimensional filtering** by search query, category, plot type, color count, and automatically calculated colorblind-safe status.
+- **Multi-dimensional filtering** by search query, category, plot type, color count, and automatically calculated colorblind-safe status. Categorical palettes are filtered by minimum supported group count, so larger palettes can serve smaller categorical figures.
 - **Scientific plot previews** for recommended use cases such as bar, line, scatter, UMAP, heatmap, and volcano plots.
 - **Color vision simulation** on palette detail pages with Original, Protanopia, Deuteranopia, and Tritanopia previews.
 - **Grayscale contrast checks** on palette detail pages to estimate whether colors remain separable in print or low-saturation viewing conditions.

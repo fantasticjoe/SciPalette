@@ -21,9 +21,9 @@ export const plotTypeOptions: { value: PlotType | "all"; label: string }[] = [
 
 export const colorCountOptions = [
   { value: "all", label: "All counts" },
-  { value: "2-4", label: "2-4 colors" },
-  { value: "5-8", label: "5-8 colors" },
-  { value: "9-12", label: "9-12 colors" },
+  { value: "2-4", label: "2-4+ categorical colors" },
+  { value: "5-8", label: "5-8+ categorical colors" },
+  { value: "9-12", label: "9-12+ categorical colors" },
   { value: "12+", label: "12+ colors" },
 ] as const;
 

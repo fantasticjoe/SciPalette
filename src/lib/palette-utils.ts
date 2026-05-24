@@ -111,6 +111,21 @@ export function filterPalettes(
   if (colorCount !== "all") {
     filtered = filtered.filter(p => {
       const count = p.colors.length;
+      if (p.category === "categorical") {
+        switch (colorCount) {
+          case "2-4":
+            return count >= 2;
+          case "5-8":
+            return count >= 5;
+          case "9-12":
+            return count >= 9;
+          case "12+":
+            return count >= 12;
+          default:
+            return true;
+        }
+      }
+
       switch (colorCount) {
         case "2-4":
           return count >= 2 && count <= 4;
@@ -119,7 +134,7 @@ export function filterPalettes(
         case "9-12":
           return count >= 9 && count <= 12;
         case "12+":
-          return count > 12;
+          return count >= 12;
         default:
           return true;
       }
