@@ -66,12 +66,15 @@ Astro prints the development URL in the terminal, usually http://localhost:4321/
 
 ```bash
 npm run test
+npm run audit:palettes
 npm run typecheck
 npm run build
 npm run preview
 ```
 
 `npm run build` writes the static site to `dist/`. The live site is served from the custom-domain root, so asset and page links use root-relative paths.
+
+`npm run audit:palettes` runs the palette quality gate, including duplicate checks and research-expansion categorical capacity-variant checks. CI blocks palettes that fail this audit.
 
 ### Lightweight Palette Catalog
 

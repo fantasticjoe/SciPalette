@@ -35,6 +35,7 @@ import {
   getPaletteColorDistance,
   normalizePaletteColor,
 } from "../src/lib/palette-deduplication";
+import { auditPalettes } from "../src/lib/palette-audit";
 import { filterPalettes, getPaletteSimilarityScore } from "../src/lib/palette-utils";
 import { extractCandidateColors } from "../src/lib/art2pal/palette/extractCandidateColors";
 import {
@@ -686,6 +687,48 @@ test("research expansion does not keep categorical count variants of the same sy
   }
 
   assert.deepEqual(redundantPairs, []);
+});
+
+test("palette audit reports blocking duplicate and capacity violations", () => {
+  const source = "Original SciPalette research expansion informed by qualitative palette design guidance.";
+  const large = paletteFixture({
+    id: "large",
+    name: "Large Categorical",
+    colors: ["#244f7a", "#d45f4a", "#3f8f6a", "#7a4fb0", "#c8a02f", "#2f9a9a", "#c24f7a", "#8a8f2f", "#8f5f32", "#4f63b0", "#5f9a4f", "#b86a3f"],
+    category: "categorical",
+    recommendedFor: ["umap"],
+    source,
+  });
+  const coveredSmall = paletteFixture({
+    id: "covered-small",
+    name: "Covered Small",
+    colors: ["#244f7a", "#d45f4a", "#3f8f6a", "#7a4fb0", "#c8a02f", "#2f9a9a", "#c24f7a", "#8a8f2f"],
+    category: "categorical",
+    recommendedFor: ["umap"],
+    source,
+  });
+  const exactDuplicate = paletteFixture({
+    id: "exact-duplicate",
+    name: "Exact Duplicate",
+    colors: large.colors,
+    category: "categorical",
+    recommendedFor: ["umap"],
+    source,
+  });
+
+  const report = auditPalettes([large, coveredSmall, exactDuplicate]);
+
+  assert.equal(report.passed, false);
+  assert.ok(report.issues.some((issue) => issue.kind === "exact-duplicate"));
+  assert.ok(report.issues.some((issue) => issue.kind === "categorical-capacity-variant"));
+  assert.match(report.summary, /2 blocking palette audit issues/);
+});
+
+test("palette audit passes the curated library", () => {
+  const report = auditPalettes(palettes);
+
+  assert.equal(report.passed, true);
+  assert.deepEqual(report.issues, []);
 });
 
 test("palette catalog endpoint exposes a lightweight skill manifest", () => {

@@ -66,12 +66,15 @@ npm run dev
 
 ```bash
 npm run test
+npm run audit:palettes
 npm run typecheck
 npm run build
 npm run preview
 ```
 
 `npm run build` 会生成 `dist/` 静态站点。线上站点从自定义域名根路径提供服务，因此静态资源和页面链接都使用根路径。
+
+`npm run audit:palettes` 会检查配色库质量门禁，包括重复色板和 research expansion categorical 色板的容量型重复，CI 会阻断不合格色板。
 
 ### 轻量配色目录
 

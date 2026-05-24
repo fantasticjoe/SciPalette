@@ -11,6 +11,7 @@ The expansion follows these design rules:
 - New palettes are checked for exact duplicates, order-insensitive duplicates, and near-duplicates in OKLab space.
 - The research expansion is curated for distinct palette systems, not a target count. If a candidate repeats an existing hue scaffold, it should be revised or removed instead of kept as filler.
 - Categorical palettes are treated as minimum-capacity systems: a 15-color categorical palette can serve 8, 10, or 12 groups by selecting a subset, so SciPalette should not publish smaller count variants of the same visual system.
+- `npm run audit:palettes` is the CI-facing quality gate for this policy. It reports blocking issue kinds and palette names so repeated systems are removed or redesigned before merge.
 
 Reference families used as design guidance:
 

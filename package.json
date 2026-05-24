@@ -27,6 +27,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "audit:palettes": "tsc -p tsconfig.test.json && node .tmp/art2pal-tests/scripts/audit-palettes.js",
     "test": "tsc -p tsconfig.test.json && node --test .tmp/art2pal-tests/tests/*.test.js",
     "typecheck": "tsc --noEmit"
   },

@@ -53,6 +53,7 @@ SciPalette is an Astro static site with React islands for interactive browsing, 
 Use these boundaries when preparing a PR:
 
 - **New or updated palette:** edit an id-free `src/lib/palettes/<palette-name>.ts` source file and register its import plus stable route key in `src/lib/palettes/index.ts`; do not add manual `colorblindSafe`, because registration derives the score and classification.
+- **Palette quality gate:** run `npm run audit:palettes` before submitting palette changes. The audit blocks exact duplicates, order-insensitive duplicates, and research-expansion categorical count variants where a larger palette can serve the smaller group count.
 - **External palette recommendation skill:** consume `/palettes/catalog.json` or the bundled skill snapshot. Do not require cloning, sparse-checking, importing, or scanning the full repository; the repository can grow to thousands of palette files while the skill reads only the compact published catalog.
 - **User-submitted palette workflow:** edit `.github/ISSUE_TEMPLATE/palette_request.yml`, `src/pages/contribute/index.astro`, `src/components/PaletteContributionPanel.astro`, and contribution docs. Keep submissions on GitHub Issues or PRs unless a backend is explicitly introduced later.
 - **Paper figure inspiration workflow:** edit `.github/ISSUE_TEMPLATE/paper_inspiration.yml`, `src/pages/contribute/index.astro`, `src/components/PaperInspirationPanel.astro`, and contribution docs. Keep DOI and figure references as links and citation notes unless rights are explicit.
@@ -89,6 +90,7 @@ Before opening a PR, run:
 
 ```bash
 npm run test
+npm run audit:palettes
 npm run typecheck
 npm run build
 ```

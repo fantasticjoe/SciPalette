@@ -9,6 +9,6 @@
     "rootDir": ".",
     "types": ["node"]
   },
-  "include": ["src/lib/art2pal/**/*.ts", "tests/**/*.test.ts"],
+  "include": ["src/lib/**/*.ts", "scripts/**/*.ts", "tests/**/*.test.ts"],
   "exclude": ["node_modules", "dist", ".tmp"]
 }
