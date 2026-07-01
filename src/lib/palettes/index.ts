@@ -630,6 +630,177 @@ import amfe113 from "./amfe-113";
 import amfe114 from "./amfe-114";
 import amfe115 from "./amfe-115";
 import amfe116 from "./amfe-116";
+import peptide1 from "./peptide-1";
+import peptide2 from "./peptide-2";
+import peptide3 from "./peptide-3";
+import peptide4 from "./peptide-4";
+import peptide5 from "./peptide-5";
+import peptide6 from "./peptide-6";
+import peptide7 from "./peptide-7";
+import peptide8 from "./peptide-8";
+import peptide9 from "./peptide-9";
+import peptide10 from "./peptide-10";
+import peptide11 from "./peptide-11";
+import peptide12 from "./peptide-12";
+import peptide13 from "./peptide-13";
+import peptide14 from "./peptide-14";
+import peptide15 from "./peptide-15";
+import peptide16 from "./peptide-16";
+import peptide17 from "./peptide-17";
+import peptide18 from "./peptide-18";
+import peptide19 from "./peptide-19";
+import peptide20 from "./peptide-20";
+import peptide21 from "./peptide-21";
+import peptide22 from "./peptide-22";
+import peptide23 from "./peptide-23";
+import peptide24 from "./peptide-24";
+import peptide25 from "./peptide-25";
+import peptide26 from "./peptide-26";
+import peptide27 from "./peptide-27";
+import peptide28 from "./peptide-28";
+import peptide29 from "./peptide-29";
+import peptide30 from "./peptide-30";
+import peptide31 from "./peptide-31";
+import peptide32 from "./peptide-32";
+import peptide33 from "./peptide-33";
+import peptide34 from "./peptide-34";
+import peptide35 from "./peptide-35";
+import peptide36 from "./peptide-36";
+import peptide37 from "./peptide-37";
+import peptide38 from "./peptide-38";
+import peptide39 from "./peptide-39";
+import peptide40 from "./peptide-40";
+import peptide41 from "./peptide-41";
+import peptide42 from "./peptide-42";
+import peptide43 from "./peptide-43";
+import peptide44 from "./peptide-44";
+import peptide45 from "./peptide-45";
+import peptide46 from "./peptide-46";
+import peptide47 from "./peptide-47";
+import peptide48 from "./peptide-48";
+import peptide49 from "./peptide-49";
+import peptide50 from "./peptide-50";
+import peptide51 from "./peptide-51";
+import peptide52 from "./peptide-52";
+import peptide53 from "./peptide-53";
+import peptide54 from "./peptide-54";
+import peptide55 from "./peptide-55";
+import peptide56 from "./peptide-56";
+import peptide57 from "./peptide-57";
+import peptide58 from "./peptide-58";
+import peptide59 from "./peptide-59";
+import peptide60 from "./peptide-60";
+import peptide61 from "./peptide-61";
+import peptide62 from "./peptide-62";
+import peptide63 from "./peptide-63";
+import peptide64 from "./peptide-64";
+import peptide65 from "./peptide-65";
+import peptide66 from "./peptide-66";
+import peptide67 from "./peptide-67";
+import peptide68 from "./peptide-68";
+import peptide69 from "./peptide-69";
+import peptide70 from "./peptide-70";
+import peptide71 from "./peptide-71";
+import peptide72 from "./peptide-72";
+import peptide73 from "./peptide-73";
+import peptide74 from "./peptide-74";
+import peptide75 from "./peptide-75";
+import peptide76 from "./peptide-76";
+import peptide77 from "./peptide-77";
+import peptide78 from "./peptide-78";
+import peptide79 from "./peptide-79";
+import peptide80 from "./peptide-80";
+import peptide81 from "./peptide-81";
+import peptide82 from "./peptide-82";
+import peptide83 from "./peptide-83";
+import peptide84 from "./peptide-84";
+import peptide85 from "./peptide-85";
+import peptide86 from "./peptide-86";
+import peptide87 from "./peptide-87";
+import peptide88 from "./peptide-88";
+import peptide89 from "./peptide-89";
+import peptide90 from "./peptide-90";
+import peptide91 from "./peptide-91";
+import peptide92 from "./peptide-92";
+import peptide93 from "./peptide-93";
+import peptide94 from "./peptide-94";
+import peptide95 from "./peptide-95";
+import peptide96 from "./peptide-96";
+import peptide97 from "./peptide-97";
+import peptide98 from "./peptide-98";
+import peptide99 from "./peptide-99";
+import peptide100 from "./peptide-100";
+import peptide101 from "./peptide-101";
+import peptide102 from "./peptide-102";
+import peptide103 from "./peptide-103";
+import peptide104 from "./peptide-104";
+import peptide105 from "./peptide-105";
+import peptide106 from "./peptide-106";
+import peptide107 from "./peptide-107";
+import peptide108 from "./peptide-108";
+import peptide109 from "./peptide-109";
+import peptide110 from "./peptide-110";
+import peptide111 from "./peptide-111";
+import peptide112 from "./peptide-112";
+import peptide113 from "./peptide-113";
+import peptide114 from "./peptide-114";
+import peptide115 from "./peptide-115";
+import peptide116 from "./peptide-116";
+import peptide117 from "./peptide-117";
+import peptide118 from "./peptide-118";
+import peptide119 from "./peptide-119";
+import peptide120 from "./peptide-120";
+import peptide121 from "./peptide-121";
+import peptide122 from "./peptide-122";
+import peptide123 from "./peptide-123";
+import peptide124 from "./peptide-124";
+import peptide125 from "./peptide-125";
+import peptide126 from "./peptide-126";
+import peptide127 from "./peptide-127";
+import peptide128 from "./peptide-128";
+import peptide129 from "./peptide-129";
+import peptide130 from "./peptide-130";
+import peptide131 from "./peptide-131";
+import peptide132 from "./peptide-132";
+import peptide133 from "./peptide-133";
+import peptide134 from "./peptide-134";
+import peptide135 from "./peptide-135";
+import peptide136 from "./peptide-136";
+import peptide137 from "./peptide-137";
+import peptide138 from "./peptide-138";
+import peptide139 from "./peptide-139";
+import peptide140 from "./peptide-140";
+import peptide141 from "./peptide-141";
+import peptide142 from "./peptide-142";
+import peptide143 from "./peptide-143";
+import peptide144 from "./peptide-144";
+import peptide145 from "./peptide-145";
+import peptide146 from "./peptide-146";
+import peptide147 from "./peptide-147";
+import peptide148 from "./peptide-148";
+import peptide149 from "./peptide-149";
+import peptide150 from "./peptide-150";
+import peptide151 from "./peptide-151";
+import peptide152 from "./peptide-152";
+import peptide153 from "./peptide-153";
+import peptide154 from "./peptide-154";
+import peptide155 from "./peptide-155";
+import peptide156 from "./peptide-156";
+import peptide157 from "./peptide-157";
+import peptide158 from "./peptide-158";
+import peptide159 from "./peptide-159";
+import peptide160 from "./peptide-160";
+import peptide161 from "./peptide-161";
+import peptide162 from "./peptide-162";
+import peptide163 from "./peptide-163";
+import peptide164 from "./peptide-164";
+import peptide165 from "./peptide-165";
+import peptide166 from "./peptide-166";
+import peptide167 from "./peptide-167";
+import peptide168 from "./peptide-168";
+import peptide169 from "./peptide-169";
+import peptide170 from "./peptide-170";
+import peptide171 from "./peptide-171";
 const paletteEntries = [
   ["nature-muted-8", natureMuted8],
   ["cell-atlas-12", cellAtlas12],
@@ -1260,6 +1431,177 @@ const paletteEntries = [
   ["amfe-114", amfe114],
   ["amfe-115", amfe115],
   ["amfe-116", amfe116],
+  ["peptide-1", peptide1],
+  ["peptide-2", peptide2],
+  ["peptide-3", peptide3],
+  ["peptide-4", peptide4],
+  ["peptide-5", peptide5],
+  ["peptide-6", peptide6],
+  ["peptide-7", peptide7],
+  ["peptide-8", peptide8],
+  ["peptide-9", peptide9],
+  ["peptide-10", peptide10],
+  ["peptide-11", peptide11],
+  ["peptide-12", peptide12],
+  ["peptide-13", peptide13],
+  ["peptide-14", peptide14],
+  ["peptide-15", peptide15],
+  ["peptide-16", peptide16],
+  ["peptide-17", peptide17],
+  ["peptide-18", peptide18],
+  ["peptide-19", peptide19],
+  ["peptide-20", peptide20],
+  ["peptide-21", peptide21],
+  ["peptide-22", peptide22],
+  ["peptide-23", peptide23],
+  ["peptide-24", peptide24],
+  ["peptide-25", peptide25],
+  ["peptide-26", peptide26],
+  ["peptide-27", peptide27],
+  ["peptide-28", peptide28],
+  ["peptide-29", peptide29],
+  ["peptide-30", peptide30],
+  ["peptide-31", peptide31],
+  ["peptide-32", peptide32],
+  ["peptide-33", peptide33],
+  ["peptide-34", peptide34],
+  ["peptide-35", peptide35],
+  ["peptide-36", peptide36],
+  ["peptide-37", peptide37],
+  ["peptide-38", peptide38],
+  ["peptide-39", peptide39],
+  ["peptide-40", peptide40],
+  ["peptide-41", peptide41],
+  ["peptide-42", peptide42],
+  ["peptide-43", peptide43],
+  ["peptide-44", peptide44],
+  ["peptide-45", peptide45],
+  ["peptide-46", peptide46],
+  ["peptide-47", peptide47],
+  ["peptide-48", peptide48],
+  ["peptide-49", peptide49],
+  ["peptide-50", peptide50],
+  ["peptide-51", peptide51],
+  ["peptide-52", peptide52],
+  ["peptide-53", peptide53],
+  ["peptide-54", peptide54],
+  ["peptide-55", peptide55],
+  ["peptide-56", peptide56],
+  ["peptide-57", peptide57],
+  ["peptide-58", peptide58],
+  ["peptide-59", peptide59],
+  ["peptide-60", peptide60],
+  ["peptide-61", peptide61],
+  ["peptide-62", peptide62],
+  ["peptide-63", peptide63],
+  ["peptide-64", peptide64],
+  ["peptide-65", peptide65],
+  ["peptide-66", peptide66],
+  ["peptide-67", peptide67],
+  ["peptide-68", peptide68],
+  ["peptide-69", peptide69],
+  ["peptide-70", peptide70],
+  ["peptide-71", peptide71],
+  ["peptide-72", peptide72],
+  ["peptide-73", peptide73],
+  ["peptide-74", peptide74],
+  ["peptide-75", peptide75],
+  ["peptide-76", peptide76],
+  ["peptide-77", peptide77],
+  ["peptide-78", peptide78],
+  ["peptide-79", peptide79],
+  ["peptide-80", peptide80],
+  ["peptide-81", peptide81],
+  ["peptide-82", peptide82],
+  ["peptide-83", peptide83],
+  ["peptide-84", peptide84],
+  ["peptide-85", peptide85],
+  ["peptide-86", peptide86],
+  ["peptide-87", peptide87],
+  ["peptide-88", peptide88],
+  ["peptide-89", peptide89],
+  ["peptide-90", peptide90],
+  ["peptide-91", peptide91],
+  ["peptide-92", peptide92],
+  ["peptide-93", peptide93],
+  ["peptide-94", peptide94],
+  ["peptide-95", peptide95],
+  ["peptide-96", peptide96],
+  ["peptide-97", peptide97],
+  ["peptide-98", peptide98],
+  ["peptide-99", peptide99],
+  ["peptide-100", peptide100],
+  ["peptide-101", peptide101],
+  ["peptide-102", peptide102],
+  ["peptide-103", peptide103],
+  ["peptide-104", peptide104],
+  ["peptide-105", peptide105],
+  ["peptide-106", peptide106],
+  ["peptide-107", peptide107],
+  ["peptide-108", peptide108],
+  ["peptide-109", peptide109],
+  ["peptide-110", peptide110],
+  ["peptide-111", peptide111],
+  ["peptide-112", peptide112],
+  ["peptide-113", peptide113],
+  ["peptide-114", peptide114],
+  ["peptide-115", peptide115],
+  ["peptide-116", peptide116],
+  ["peptide-117", peptide117],
+  ["peptide-118", peptide118],
+  ["peptide-119", peptide119],
+  ["peptide-120", peptide120],
+  ["peptide-121", peptide121],
+  ["peptide-122", peptide122],
+  ["peptide-123", peptide123],
+  ["peptide-124", peptide124],
+  ["peptide-125", peptide125],
+  ["peptide-126", peptide126],
+  ["peptide-127", peptide127],
+  ["peptide-128", peptide128],
+  ["peptide-129", peptide129],
+  ["peptide-130", peptide130],
+  ["peptide-131", peptide131],
+  ["peptide-132", peptide132],
+  ["peptide-133", peptide133],
+  ["peptide-134", peptide134],
+  ["peptide-135", peptide135],
+  ["peptide-136", peptide136],
+  ["peptide-137", peptide137],
+  ["peptide-138", peptide138],
+  ["peptide-139", peptide139],
+  ["peptide-140", peptide140],
+  ["peptide-141", peptide141],
+  ["peptide-142", peptide142],
+  ["peptide-143", peptide143],
+  ["peptide-144", peptide144],
+  ["peptide-145", peptide145],
+  ["peptide-146", peptide146],
+  ["peptide-147", peptide147],
+  ["peptide-148", peptide148],
+  ["peptide-149", peptide149],
+  ["peptide-150", peptide150],
+  ["peptide-151", peptide151],
+  ["peptide-152", peptide152],
+  ["peptide-153", peptide153],
+  ["peptide-154", peptide154],
+  ["peptide-155", peptide155],
+  ["peptide-156", peptide156],
+  ["peptide-157", peptide157],
+  ["peptide-158", peptide158],
+  ["peptide-159", peptide159],
+  ["peptide-160", peptide160],
+  ["peptide-161", peptide161],
+  ["peptide-162", peptide162],
+  ["peptide-163", peptide163],
+  ["peptide-164", peptide164],
+  ["peptide-165", peptide165],
+  ["peptide-166", peptide166],
+  ["peptide-167", peptide167],
+  ["peptide-168", peptide168],
+  ["peptide-169", peptide169],
+  ["peptide-170", peptide170],
+  ["peptide-171", peptide171],
 ] as const satisfies ReadonlyArray<readonly [string, PaletteSource]>;
 
 export const paletteRouteKeys = paletteEntries.map(([key]) => key);
