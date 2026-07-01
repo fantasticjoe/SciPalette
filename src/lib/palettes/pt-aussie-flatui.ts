@@ -1,0 +1,14 @@
+import type { PaletteSource } from "../types";
+
+const palette = {
+  name: "aussie flatui",
+  description: "Qualitative palette “aussie flatui” from the ggsci collection. Well-separated hues for multi-group categorical figures.",
+  category: "categorical",
+  colors: ["#F9CA24", "#F0932B", "#EB4D4B", "#6AB04C", "#C7ECEE", "#22A6B3", "#BE2EDD", "#4834D4", "#130F40", "#535C68"],
+  recommendedFor: ["bar", "line", "scatter", "boxplot", "umap"],
+  tags: ["categorical", "multi-group", "paletteer", "ggsci"],
+  background: "white",
+  source: "ggsci (via paletteer)"
+} satisfies PaletteSource;
+
+export default palette;
