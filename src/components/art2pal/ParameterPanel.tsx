@@ -12,7 +12,7 @@ export function ParameterPanel({ categoricalCount, canRegenerate, onCategoricalC
     if (!Number.isFinite(value)) {
       return;
     }
-    onCategoricalCountChange(Math.max(4, Math.min(12, value)));
+    onCategoricalCountChange(Math.max(4, Math.min(20, value)));
   };
 
   return (
@@ -29,7 +29,7 @@ export function ParameterPanel({ categoricalCount, canRegenerate, onCategoricalC
               className="sp-control w-16 px-2 py-1 text-center font-mono text-sm text-[#4f6d5f]"
               type="number"
               min={4}
-              max={12}
+              max={20}
               value={categoricalCount}
               aria-label="Categorical color count"
               onInput={(event) => setCount(Number(event.currentTarget.value))}
@@ -42,14 +42,14 @@ export function ParameterPanel({ categoricalCount, canRegenerate, onCategoricalC
             aria-label="Categorical color count slider"
             type="range"
             min={4}
-            max={12}
+            max={20}
             step={1}
             value={categoricalCount}
             className="mt-3 w-full accent-[#4f6d5f]"
             onInput={(event) => setCount(Number(event.currentTarget.value))}
             onChange={(event) => setCount(Number(event.target.value))}
           />
-          <span className="mt-1 block text-xs font-medium text-[rgb(33_44_51_/_0.56)]">Use 4-12 colors for cell types, groups, or clusters.</span>
+          <span className="mt-1 block text-xs font-medium text-[rgb(33_44_51_/_0.56)]">Use 4-20 colors for cell types, groups, or clusters. When the image has fewer distinct hues than requested categories, Art2Pal expands additional colors from the source palette.</span>
         </label>
         <button type="button" className="sp-button-secondary w-full px-4 py-3 text-sm" onClick={onRegenerate} disabled={!canRegenerate}>
           <RotateCcw className="h-4 w-4" aria-hidden="true" />

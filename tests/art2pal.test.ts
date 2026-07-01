@@ -44,6 +44,7 @@ import {
   sampleImageData,
 } from "../src/lib/art2pal/image";
 import {
+  fallbackPalettes,
   generateArt2PalPalettes,
   generateCategoricalPalette,
   generateDivergingPalette,
@@ -239,6 +240,44 @@ test("does not pad generated categorical palettes with unrelated fallback colors
   assert.equal(new Set(palette).size, palette.length);
 });
 
+test("supports up to 20 categorical colors for large single-cell cluster palettes", () => {
+  const colors = [
+    "#E41A1C",
+    "#377EB8",
+    "#4DAF4A",
+    "#984EA3",
+    "#FF7F00",
+    "#FFFF33",
+    "#A65628",
+    "#F781BF",
+    "#999999",
+    "#66C2A5",
+    "#FC8D62",
+    "#8DA0CB",
+    "#E78AC3",
+    "#A6D854",
+    "#FFD92F",
+    "#E5C494",
+    "#B3B3B3",
+    "#8DD3C7",
+    "#BEBADA",
+    "#FB8072",
+  ];
+  const candidates: CandidateColorSet = {
+    all: colors.map((hex, index) => candidateFromHex(hex, { weight: 1 - index * 0.03, pool: "main" })),
+    main: [],
+    neutral: [],
+    rejected: [],
+  };
+  candidates.main = candidates.all;
+
+  const palette = generateCategoricalPalette(candidates, { count: 20, seed: 5 });
+
+  assert.equal(palette.length, 20);
+  assert.equal(new Set(palette).size, 20);
+  assert.ok(colors.every((color) => palette.includes(color)));
+});
+
 test("generates monotonic sequential and neutral-centered diverging palettes", () => {
   const candidates = extractCandidateColors(
     [
@@ -312,6 +351,21 @@ test("falls back to complete scientific palettes when image colors are insuffici
   assert.equal(result.diverging.colors.length, 7);
   assert.equal(result.neutral.colors.length, 5);
   assert.ok(result.messages.length > 0);
+});
+
+test("expands limited source hues to 20 categorical colors without switching to a curated palette", () => {
+  const pixels = [
+    ...Array.from({ length: 30 }, () => ({ r: 178, g: 73, b: 68 })),
+    ...Array.from({ length: 26 }, () => ({ r: 56, g: 112, b: 164 })),
+    ...Array.from({ length: 24 }, () => ({ r: 83, g: 132, b: 83 })),
+    ...Array.from({ length: 12 }, () => ({ r: 205, g: 199, b: 185 })),
+  ];
+  const result = generateArt2PalPalettes(pixels, { categoricalCount: 20, seed: 1 });
+
+  assert.equal(result.categorical.colors.length, 20);
+  assert.equal(new Set(result.categorical.colors).size, 20);
+  assert.notDeepEqual(result.categorical.colors, fallbackPalettes.categorical);
+  assert.ok(result.messages.every((message) => !message.includes("curated fallback")));
 });
 
 test("assigns stable internal palette ids from palette kind and colors", () => {
@@ -869,6 +923,15 @@ test("Art2Pal categorical count changes automatically recalculate palettes from 
   assert.ok(handler.includes("calculatePalettes(image.pixels, nextCount"));
   assert.ok(!handler.includes("generateCategoricalPalette(palettes.candidates"));
   assert.ok(!handler.includes("setPalettes({"));
+});
+
+test("Art2Pal palette controls allow up to 20 categorical colors for large cluster maps", () => {
+  const panel = readFileSync("src/components/art2pal/ParameterPanel.tsx", "utf8");
+
+  assert.ok(panel.includes("Math.min(20, value)"));
+  assert.ok(panel.includes("max={20}"));
+  assert.ok(panel.includes("Use 4-20 colors"));
+  assert.ok(!panel.includes("curated fallback"));
 });
 
 test("palette detail plot previews are rebuilt with D3 scales and shapes", () => {

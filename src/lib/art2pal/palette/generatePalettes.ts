@@ -18,6 +18,8 @@ const FALLBACK_SEQUENTIAL = ["#f3f6ef", "#d6e6d5", "#aacda9", "#75ad7e", "#418a5
 const FALLBACK_DIVERGING = ["#315b8c", "#6f90b8", "#bac8d5", "#f3f1ea", "#d9b7a2", "#b87657", "#8f3c2f"];
 const FALLBACK_NEUTRAL = ["#fbf9f2", "#e9e4d8", "#c9c6ba", "#6f746c", "#252d31"];
 const MIN_DIVERGING_HUE_DISTANCE = 80;
+const DEFAULT_CATEGORICAL_COUNT = 8;
+const MAX_CATEGORICAL_COUNT = 20;
 const PALETTE_KIND_PREFIXES: Record<GeneratedPaletteKind, string> = {
   categorical: "cat",
   sequential: "seq",
@@ -52,14 +54,35 @@ function chromaScore(chroma: number): number {
 
 function deriveCategoricalColor(candidate: CandidateColor, variantIndex: number): string {
   const direction = variantIndex % 2 === 0 ? 1 : -1;
-  const step = Math.floor(variantIndex / 2) + 1;
+  const step = Math.floor(variantIndex / 4) + 1;
+  const lane = variantIndex % 4;
+  const lightnessOffset = [0.055, -0.055, 0.11, -0.11][lane] * step;
+  const chromaMultiplier = [0.9, 1.06, 0.78, 0.94][lane];
+  const hueOffset = direction * Math.min(20, 4 + step * 4 + lane * 2);
   const lch: OklchColor = {
-    L: clamp(candidate.lightness + direction * step * 0.075, 0.38, 0.86),
-    C: clamp(candidate.chroma * (direction > 0 ? 0.82 : 1.08), 0.045, 0.18),
-    h: candidate.hue,
+    L: clamp(candidate.lightness + lightnessOffset, 0.36, 0.88),
+    C: clamp(candidate.chroma * chromaMultiplier, 0.045, 0.18),
+    h: (candidate.hue + hueOffset + 360) % 360,
   };
 
   return rgbToHex(oklchToRgb(lch));
+}
+
+function createSyntheticCandidate(hex: string): CandidateColor {
+  const rgb = hexToRgb(hex);
+  const lch = rgbToOklch(rgb);
+  return {
+    center: rgbToOklab(rgb),
+    rgb,
+    hex,
+    count: 1,
+    weight: 1,
+    lightness: lch.L,
+    chroma: lch.C,
+    hue: lch.h,
+    contrastWithWhite: calculateContrastRatio(rgb),
+    pool: "main",
+  };
 }
 
 function hashPaletteSignature(kind: GeneratedPaletteKind, colors: string[]): string {
@@ -85,12 +108,40 @@ function candidateBaseScore(candidate: CandidateColor): number {
   return 0.45 * Math.sqrt(candidate.weight) + 0.25 * contrastScore + 0.3 * chromaScore(candidate.chroma);
 }
 
+function clampCategoricalCount(count?: number): number {
+  return clamp(count ?? DEFAULT_CATEGORICAL_COUNT, 4, MAX_CATEGORICAL_COUNT);
+}
+
+function getFallbackCategoricalColors(count: number): string[] {
+  const safeCount = clampCategoricalCount(count);
+  if (safeCount <= FALLBACK_CATEGORICAL.length) {
+    return FALLBACK_CATEGORICAL.slice(0, safeCount);
+  }
+
+  const sourceColors = [...FALLBACK_CATEGORICAL];
+  const sourceCandidates = FALLBACK_CATEGORICAL.map(createSyntheticCandidate);
+  const derivedColors: string[] = [];
+  let variantIndex = 0;
+  const variantLimit = Math.max(safeCount * 8, sourceCandidates.length * 16);
+
+  while (sourceColors.length + derivedColors.length < safeCount && variantIndex < variantLimit) {
+    const candidate = sourceCandidates[variantIndex % sourceCandidates.length];
+    const color = deriveCategoricalColor(candidate, variantIndex);
+    if (!sourceColors.includes(color) && !derivedColors.includes(color)) {
+      derivedColors.push(color);
+    }
+    variantIndex += 1;
+  }
+
+  return [...sourceColors, ...derivedColors].slice(0, safeCount);
+}
+
 export function generateCategoricalPalette(candidates: CandidateColorSet, options: CountOption & SeedOption = {}): string[] {
-  const count = clamp(options.count ?? 8, 4, 12);
+  const count = clampCategoricalCount(options.count);
   const source = candidates.main.length >= 2 ? candidates.main : candidates.all.filter((candidate) => candidate.pool !== "rejected");
 
-  if (source.length < 2) {
-    return FALLBACK_CATEGORICAL.slice(0, count);
+  if (source.length === 0) {
+    return getFallbackCategoricalColors(count);
   }
 
   const selected: CandidateColor[] = [];
@@ -149,8 +200,9 @@ export function generateCategoricalPalette(candidates: CandidateColorSet, option
 
   const derivedColors: string[] = [];
   let variantIndex = 0;
+  const variantLimit = Math.max(count * 8, source.length * 16);
 
-  while (sourceColors.length + derivedColors.length < count && variantIndex < source.length * 6) {
+  while (sourceColors.length + derivedColors.length < count && variantIndex < variantLimit) {
     const candidate = source[variantIndex % source.length];
     const color = deriveCategoricalColor(candidate, variantIndex);
     if (!sourceColors.includes(color) && !derivedColors.includes(color)) {
@@ -161,7 +213,7 @@ export function generateCategoricalPalette(candidates: CandidateColorSet, option
 
   const generatedColors = [...sourceColors, ...derivedColors];
 
-  return generatedColors.length > 0 ? generatedColors.slice(0, count) : FALLBACK_CATEGORICAL.slice(0, count);
+  return generatedColors.length > 0 ? generatedColors.slice(0, count) : getFallbackCategoricalColors(count);
 }
 
 function pickMainHue(candidates: CandidateColorSet): CandidateColor | null {
@@ -298,17 +350,25 @@ export function generateArt2PalPalettes(
   pixels: RgbColor[],
   options: Art2PalGenerateOptions = {}
 ): Art2PalPaletteResult {
-  const candidates = extractCandidateColors(pixels, { k: 32, seed: options.seed ?? 42 });
+  const categoricalCount = clampCategoricalCount(options.categoricalCount);
+  const candidateClusterCount = clamp(Math.max(32, categoricalCount * 3), 32, 64);
+  const candidates = extractCandidateColors(pixels, { k: candidateClusterCount, seed: options.seed ?? 42 });
   const hasEnoughMainColors = candidates.main.length >= 3;
+  const hasAnyCategoricalSource =
+    (candidates.main.length >= 2 ? candidates.main : candidates.all.filter((candidate) => candidate.pool !== "rejected")).length > 0;
   const messages: string[] = [];
 
-  if (!hasEnoughMainColors) {
+  if (!hasAnyCategoricalSource) {
     messages.push("The image did not provide enough distinct scientific colors, so fallback palettes were used.");
+  } else if (categoricalCount > candidates.main.length) {
+    messages.push("The image provided fewer distinct scientific hues than requested categories, so additional categorical colors were expanded from the source palette.");
   }
 
-  const categoricalColors = hasEnoughMainColors
-    ? generateCategoricalPalette(candidates, { count: options.categoricalCount ?? 8, seed: options.seed })
-    : FALLBACK_CATEGORICAL.slice(0, options.categoricalCount ?? 8);
+  if (!hasEnoughMainColors) {
+    messages.push("The image did not provide enough distinct scientific colors for continuous ramps, so sequential or diverging palettes may use fallbacks.");
+  }
+
+  const categoricalColors = generateCategoricalPalette(candidates, { count: categoricalCount, seed: options.seed });
   const sequentialColors = hasEnoughMainColors ? generateSequentialPalette(candidates) : FALLBACK_SEQUENTIAL;
   const divergingColors = hasEnoughMainColors ? generateDivergingPalette(candidates) : FALLBACK_DIVERGING;
   const neutralColors = generateNeutralPalette(candidates);
@@ -337,7 +397,7 @@ export function validatePaletteDistance(colors: string[], minimumDistance = 0.07
 }
 
 export const fallbackPalettes = {
-  categorical: FALLBACK_CATEGORICAL,
+  categorical: getFallbackCategoricalColors(MAX_CATEGORICAL_COUNT),
   sequential: FALLBACK_SEQUENTIAL,
   diverging: FALLBACK_DIVERGING,
   neutral: FALLBACK_NEUTRAL,
